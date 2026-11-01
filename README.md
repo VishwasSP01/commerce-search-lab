@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, and first Java/Lucene BM25 candidate-ranking baseline are complete. Validation results are measured; neural training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, Java/Lucene BM25 baseline, error analysis and one controlled title-plus-bullet ablation are complete. The ablation did not improve overall validation ranking, so title-only remains the baseline. Neural training and deployment are future work.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -63,6 +63,16 @@ The [aggregate diagnostic report](reports/bm25-error-analysis-v1.json) and [qual
 
 ```sh
 uv run --locked --no-sync python scripts/analyze_bm25_errors.py
+```
+
+## Completed step: title-plus-bullet ablation
+
+One weight was committed before measurement: `title BM25 + 0.25 × bullet BM25`. On the same validation candidates, overall NDCG@10 changes from **0.696695 to 0.696164** (paired 95% delta interval **[−0.003199, +0.002264]**). The adoption rule fails, so **title-only remains the baseline**. The official test stays unscored.
+
+The [experiment write-up](docs/bm25-title-bullet.md) documents improvements, regressions, missing metadata and added storage. The [aggregate report](reports/bm25-title-bullet-v1.json) records full results, and the [independent-repeat checks](reports/bm25-title-bullet-v1-reproduction.json) record exact score and metric reproduction. This is an unsuccessful validation-development variant, not a neural or full-catalog quality claim.
+
+```sh
+uv run --locked --no-sync python scripts/run_title_bullet.py
 ```
 
 ## Continuous integration
