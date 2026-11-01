@@ -1,0 +1,19 @@
+{
+  "version": "catalog-dense-exact-v1",
+  "partition": "validation",
+  "retrieval_cutoff": 100,
+  "coverage_cutoff": 10,
+  "query_batch_size": 128,
+  "cpu_threads": 4,
+  "dimensions": 384,
+  "scoring": "exhaustive CPU torch.mm float32 inner product on saved unit-normalized vectors; no ANN, quantization, score threshold or candidate filtering",
+  "ranking": "descending computed float32 score, then ascending product_id, including all cutoff ties; no approximate tie tolerance",
+  "encoding": "unchanged pinned E5 encoder/settings; NFKC and query: prefix, max_length 128, batch size 32, float32; MPS if available otherwise explicit CPU",
+  "corpus": "verified catalog-embeddings-v1; each query searches every product in its own locale",
+  "metrics": "same known-Exact Recall@100 and actual-returned judgment coverage@10 definitions as catalog-bm25-title-v1; unknown relevance stays unknown; coverage is not precision",
+  "confidence": {"resamples": 2000, "seed": 20261101},
+  "comparison": "paired percentile bootstrap over identical locale-normalized query groups; dense minus BM25; query-weighted overall and per locale, secondary equal-locale means",
+  "hypothesis": "dense retrieval may recover vocabulary gaps but may regress lexical matches; no minimum gain or adoption threshold is assumed",
+  "repeat": "two fresh runs must agree on query inputs/vectors, ranked results, per-query metrics and confidence intervals; resource timings may differ",
+  "scope": "fixed validation-development reference; no hyperparameter/model tuning, fusion, ANN, training, LLM judgments, API or official test access"
+}

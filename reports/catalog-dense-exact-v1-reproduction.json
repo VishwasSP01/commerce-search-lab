@@ -1,0 +1,84 @@
+{
+  "first_report_sha256": "6d7d92516316da15f4c93396f19726b346379a402829a6930d551102a2859d3f",
+  "repeat_report_sha256": "ad53edb66539eb4a92dce4f549a1c82ef127880893fa1b61b83ebb65316d1b23",
+  "repeat_command": "uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/run_dense.py --output-dir data/processed/catalog-dense-exact-v1-repeat --report data/processed/catalog-dense-exact-v1-repeat-report.json",
+  "checks": {
+    "fresh_query_encoding_both_runs": true,
+    "all_five_artifact_hashes_equal": true,
+    "both_runs_artifact_bytes_verified": true,
+    "all_metrics_and_intervals_equal": true,
+    "provenance_and_sources_equal": true
+  },
+  "equal_report_fields": [
+    "config",
+    "catalog",
+    "overall_query_weighted",
+    "metrics_by_locale",
+    "locale_macro_mean",
+    "comparison_with_bm25",
+    "checks",
+    "provenance"
+  ],
+  "artifacts": [
+    {
+      "name": "queries.tsv",
+      "bytes": 144518,
+      "sha256": "843c9f7224dd489580c9df4e50a3d1c0fb31b00b4bcff3b900019d7c32092968"
+    },
+    {
+      "name": "queries.json",
+      "bytes": 309704,
+      "sha256": "4ec3a4b1148514d25dc090872d2095cd986623de7c3d2dc31229731c63b5824b"
+    },
+    {
+      "name": "query-vectors.f32",
+      "bytes": 5190144,
+      "sha256": "201cb9ca16c800700e41f3ad6a97521289271dc19dbc351f6e3db47d4bd0ec9a"
+    },
+    {
+      "name": "results.tsv",
+      "bytes": 14183477,
+      "sha256": "ce756f19ec3e73ed7866d61f93b757a50ad9864c52fcb003c1bb9d668ddf5974"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1335343,
+      "sha256": "f41028f48eb3913007b2f69bd0f18bf44befaf1b5ea3292b0bb9892c88cb6588"
+    }
+  ],
+  "execution_first": {
+    "verified_setup_seconds": 0.7509945000019798,
+    "search_compute_and_selection_seconds_by_locale": {
+      "es": 1.3957767050123948,
+      "jp": 2.3467421249952167,
+      "us": 23.926326373028132
+    },
+    "scan_with_verification_seconds": 32.376493417003076,
+    "scan_verification_and_iteration_seconds": 4.707648213967332,
+    "main_wall_seconds": 39.7127008330026,
+    "max_process_rss_bytes": 1045872640,
+    "search_device": "cpu",
+    "torch_threads": 4,
+    "raw_catalog_vector_bytes": 2787723264,
+    "query_vector_bytes": 5190144,
+    "note": "Single local batch. Main wall includes verification, encoding, scan, metrics/bootstrap and artifact hashing; excludes interpreter/import startup and final report serialization. Scan includes checksums, ID parsing and norms. Process RSS includes model load, encoding and search; observed MPS allocations are not true peaks and not additive. No API latency, QPS or production capacity claim."
+  },
+  "execution_repeat": {
+    "verified_setup_seconds": 0.7025909170006344,
+    "search_compute_and_selection_seconds_by_locale": {
+      "es": 1.404532079013734,
+      "jp": 2.328838626977813,
+      "us": 23.57113710898193
+    },
+    "scan_with_verification_seconds": 31.974505958998634,
+    "scan_verification_and_iteration_seconds": 4.669998144025158,
+    "main_wall_seconds": 38.415520083002775,
+    "max_process_rss_bytes": 1050361856,
+    "search_device": "cpu",
+    "torch_threads": 4,
+    "raw_catalog_vector_bytes": 2787723264,
+    "query_vector_bytes": 5190144,
+    "note": "Single local batch. Main wall includes verification, encoding, scan, metrics/bootstrap and artifact hashing; excludes interpreter/import startup and final report serialization. Scan includes checksums, ID parsing and norms. Process RSS includes model load, encoding and search; observed MPS allocations are not true peaks and not additive. No API latency, QPS or production capacity claim."
+  },
+  "limits": "Two same-machine runs with unchanged backend/settings, not cross-platform bitwise reproducibility. Fresh query encoding and exhaustive scan in both; catalog vectors reused unchanged. Repeat report and both full run manifests retained under ignored data. Timing and memory observations may differ."
+}
