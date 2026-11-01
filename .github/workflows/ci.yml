@@ -68,7 +68,7 @@ jobs:
       - name: Install locked pilot dependencies (CPU-only on Linux)
         run: uv sync --locked --project experiments/embedding-pilot
 
-      - name: Verify local safetensors, pooling, prefixes and truncation
+      - name: Verify offline encoder, shard integrity and exhaustive search
         env:
           HF_HUB_OFFLINE: "1"
           TRANSFORMERS_OFFLINE: "1"

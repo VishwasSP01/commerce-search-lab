@@ -1,0 +1,398 @@
+{
+  "config": {
+    "version": "catalog-dense-exact-v1",
+    "partition": "validation",
+    "retrieval_cutoff": 100,
+    "coverage_cutoff": 10,
+    "query_batch_size": 128,
+    "cpu_threads": 4,
+    "dimensions": 384,
+    "scoring": "exhaustive CPU torch.mm float32 inner product on saved unit-normalized vectors; no ANN, quantization, score threshold or candidate filtering",
+    "ranking": "descending computed float32 score, then ascending product_id, including all cutoff ties; no approximate tie tolerance",
+    "encoding": "unchanged pinned E5 encoder/settings; NFKC and query: prefix, max_length 128, batch size 32, float32; MPS if available otherwise explicit CPU",
+    "corpus": "verified catalog-embeddings-v1; each query searches every product in its own locale",
+    "metrics": "same known-Exact Recall@100 and actual-returned judgment coverage@10 definitions as catalog-bm25-title-v1; unknown relevance stays unknown; coverage is not precision",
+    "confidence": {
+      "resamples": 2000,
+      "seed": 20261101
+    },
+    "comparison": "paired percentile bootstrap over identical locale-normalized query groups; dense minus BM25; query-weighted overall and per locale, secondary equal-locale means",
+    "hypothesis": "dense retrieval may recover vocabulary gaps but may regress lexical matches; no minimum gain or adoption threshold is assumed",
+    "repeat": "two fresh runs must agree on query inputs/vectors, ranked results, per-query metrics and confidence intervals; resource timings may differ",
+    "scope": "fixed validation-development reference; no hyperparameter/model tuning, fusion, ANN, training, LLM judgments, API or official test access"
+  },
+  "partition": "validation",
+  "official_test_read": false,
+  "catalog": {
+    "counts": {
+      "es": 260011,
+      "jp": 339059,
+      "us": 1215854
+    },
+    "shards": 444,
+    "vector_bytes": 2787723264,
+    "ids_bytes": 76226808,
+    "vector_sequence_sha256": "0d0e303b902a3f48420bac38ec819aea80a3e5e27fd4cced00445bdbee7771fb",
+    "id_sequence_sha256": "d40f48cde0ef65bcbf2b906ab25f3a601c67fb87f679fd1f3d93c61a06185ed4"
+  },
+  "overall_query_weighted": {
+    "queries": 3379,
+    "normalized_query_groups": 3379,
+    "known_exact_recall_at_100": {
+      "mean": 0.4947514828490834,
+      "ci95": [
+        0.48255949605425474,
+        0.5066439630708678
+      ],
+      "defined_queries": 3379,
+      "normalized_query_groups": 3379
+    },
+    "judgment_coverage_at_10": {
+      "mean": 0.2836046167505179,
+      "ci95": [
+        0.27401598105948505,
+        0.2933116306599586
+      ],
+      "defined_queries": 3379,
+      "normalized_query_groups": 3379
+    },
+    "queries_without_known_exact": 0,
+    "known_exact_products": 34232,
+    "retrieved_known_exact_at_100": 15774,
+    "queries_with_a_known_exact_hit_at_100": 2837,
+    "zero_result_queries": 0,
+    "queries_with_fewer_than_10_results": 0,
+    "queries_with_fewer_than_100_results": 0,
+    "mean_returned_at_10": 10.0,
+    "mean_top_10_slot_fill": 1.0,
+    "returned_at_100": 337900,
+    "judged_at_10_count": 9583
+  },
+  "metrics_by_locale": {
+    "es": {
+      "queries": 563,
+      "normalized_query_groups": 563,
+      "known_exact_recall_at_100": {
+        "mean": 0.4793671424694422,
+        "ci95": [
+          0.4520958039115658,
+          0.5052738022267793
+        ],
+        "defined_queries": 563,
+        "normalized_query_groups": 563
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.2886323268206039,
+        "ci95": [
+          0.2651865008880995,
+          0.3115452930728242
+        ],
+        "defined_queries": 563,
+        "normalized_query_groups": 563
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 6384,
+      "retrieved_known_exact_at_100": 2789,
+      "queries_with_a_known_exact_hit_at_100": 495,
+      "zero_result_queries": 0,
+      "queries_with_fewer_than_10_results": 0,
+      "queries_with_fewer_than_100_results": 0,
+      "mean_returned_at_10": 10.0,
+      "mean_top_10_slot_fill": 1.0,
+      "returned_at_100": 56300,
+      "judged_at_10_count": 1625
+    },
+    "jp": {
+      "queries": 728,
+      "normalized_query_groups": 728,
+      "known_exact_recall_at_100": {
+        "mean": 0.5353357033845787,
+        "ci95": [
+          0.5091953565895939,
+          0.5626078576920897
+        ],
+        "defined_queries": 728,
+        "normalized_query_groups": 728
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.3711538461538461,
+        "ci95": [
+          0.3476614010989011,
+          0.39532967032967037
+        ],
+        "defined_queries": 728,
+        "normalized_query_groups": 728
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 9784,
+      "retrieved_known_exact_at_100": 4885,
+      "queries_with_a_known_exact_hit_at_100": 637,
+      "zero_result_queries": 0,
+      "queries_with_fewer_than_10_results": 0,
+      "queries_with_fewer_than_100_results": 0,
+      "mean_returned_at_10": 10.0,
+      "mean_top_10_slot_fill": 1.0,
+      "returned_at_100": 72800,
+      "judged_at_10_count": 2702
+    },
+    "us": {
+      "queries": 2088,
+      "normalized_query_groups": 2088,
+      "known_exact_recall_at_100": {
+        "mean": 0.4847496011842834,
+        "ci95": [
+          0.4695598361552102,
+          0.49977802288311207
+        ],
+        "defined_queries": 2088,
+        "normalized_query_groups": 2088
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.2517241379310345,
+        "ci95": [
+          0.24027777777777778,
+          0.2626472701149425
+        ],
+        "defined_queries": 2088,
+        "normalized_query_groups": 2088
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 18064,
+      "retrieved_known_exact_at_100": 8100,
+      "queries_with_a_known_exact_hit_at_100": 1705,
+      "zero_result_queries": 0,
+      "queries_with_fewer_than_10_results": 0,
+      "queries_with_fewer_than_100_results": 0,
+      "mean_returned_at_10": 10.0,
+      "mean_top_10_slot_fill": 1.0,
+      "returned_at_100": 208800,
+      "judged_at_10_count": 5256
+    }
+  },
+  "locale_macro_mean": {
+    "known_exact_recall_at_100": 0.49981748234610146,
+    "judgment_coverage_at_10": 0.30383677030182815
+  },
+  "comparison_with_bm25": {
+    "overall_query_weighted": {
+      "known_exact_recall_at_100": {
+        "dense_minus_bm25": -0.00814785994071975,
+        "paired_delta_ci95": [
+          -0.017711168768872486,
+          0.0010950454120842443
+        ],
+        "defined_queries": 3379,
+        "normalized_query_groups": 3379,
+        "improved_queries": 917,
+        "regressed_queries": 1091,
+        "tied_queries": 1371
+      },
+      "judgment_coverage_at_10": {
+        "dense_minus_bm25": -0.045511962306872045,
+        "paired_delta_ci95": [
+          -0.0531724745980073,
+          -0.03744079621095751
+        ],
+        "defined_queries": 3379,
+        "normalized_query_groups": 3379,
+        "improved_queries": 888,
+        "regressed_queries": 1340,
+        "tied_queries": 1151
+      }
+    },
+    "by_locale": {
+      "es": {
+        "known_exact_recall_at_100": {
+          "dense_minus_bm25": -0.10140149655427448,
+          "paired_delta_ci95": [
+            -0.12478100503981468,
+            -0.07750703791802172
+          ],
+          "defined_queries": 563,
+          "normalized_query_groups": 563,
+          "improved_queries": 114,
+          "regressed_queries": 286,
+          "tied_queries": 163
+        },
+        "judgment_coverage_at_10": {
+          "dense_minus_bm25": -0.1359384251036116,
+          "paired_delta_ci95": [
+            -0.1581719952634695,
+            -0.11474171107164002
+          ],
+          "defined_queries": 563,
+          "normalized_query_groups": 563,
+          "improved_queries": 112,
+          "regressed_queries": 312,
+          "tied_queries": 139
+        }
+      },
+      "jp": {
+        "known_exact_recall_at_100": {
+          "dense_minus_bm25": -0.002377129289241024,
+          "paired_delta_ci95": [
+            -0.022701044404892796,
+            0.018069698691869588
+          ],
+          "defined_queries": 728,
+          "normalized_query_groups": 728,
+          "improved_queries": 219,
+          "regressed_queries": 230,
+          "tied_queries": 279
+        },
+        "judgment_coverage_at_10": {
+          "dense_minus_bm25": -0.06490221088435374,
+          "paired_delta_ci95": [
+            -0.08406748757195186,
+            -0.04554442209576139
+          ],
+          "defined_queries": 728,
+          "normalized_query_groups": 728,
+          "improved_queries": 191,
+          "regressed_queries": 325,
+          "tied_queries": 212
+        }
+      },
+      "us": {
+        "known_exact_recall_at_100": {
+          "dense_minus_bm25": 0.014984661850063198,
+          "paired_delta_ci95": [
+            0.0032495571742358507,
+            0.026883821729746404
+          ],
+          "defined_queries": 2088,
+          "normalized_query_groups": 2088,
+          "improved_queries": 584,
+          "regressed_queries": 575,
+          "tied_queries": 929
+        },
+        "judgment_coverage_at_10": {
+          "dense_minus_bm25": -0.01436914644529587,
+          "paired_delta_ci95": [
+            -0.022434912462750103,
+            -0.006402159163473823
+          ],
+          "defined_queries": 2088,
+          "normalized_query_groups": 2088,
+          "improved_queries": 585,
+          "regressed_queries": 703,
+          "tied_queries": 800
+        }
+      }
+    }
+  },
+  "checks": {
+    "query_input_identical_to_bm25": true,
+    "all_catalog_shards_verified": true,
+    "every_locale_product_scored_for_every_locale_query": true,
+    "query_coverage_and_label_denominators_match_bm25": true,
+    "score_id_ties_and_full_cutoffs_valid": true,
+    "no_product_reencoding": true
+  },
+  "query_encoding": {
+    "device": "mps",
+    "model_load_seconds": 0.5630953749969194,
+    "by_locale": {
+      "es": {
+        "queries": 563,
+        "warmup_and_length_seconds": 0.1201550000005227,
+        "encode_seconds": 0.7324476659996435,
+        "truncated_queries": 0,
+        "max_untruncated_tokens": 20
+      },
+      "jp": {
+        "queries": 728,
+        "warmup_and_length_seconds": 0.05210537500170176,
+        "encode_seconds": 0.5288855409999087,
+        "truncated_queries": 0,
+        "max_untruncated_tokens": 37
+      },
+      "us": {
+        "queries": 2088,
+        "warmup_and_length_seconds": 0.03548841700103367,
+        "encode_seconds": 1.053856332997384,
+        "truncated_queries": 0,
+        "max_untruncated_tokens": 42
+      }
+    },
+    "norm_min": 0.9999998807907104,
+    "norm_max": 1.0000001192092896,
+    "observed_mps_tensor_bytes": 479415296,
+    "observed_mps_driver_bytes": 1152106496
+  },
+  "execution": {
+    "verified_setup_seconds": 0.7509945000019798,
+    "search_compute_and_selection_seconds_by_locale": {
+      "es": 1.3957767050123948,
+      "jp": 2.3467421249952167,
+      "us": 23.926326373028132
+    },
+    "scan_with_verification_seconds": 32.376493417003076,
+    "scan_verification_and_iteration_seconds": 4.707648213967332,
+    "main_wall_seconds": 39.7127008330026,
+    "max_process_rss_bytes": 1045872640,
+    "search_device": "cpu",
+    "torch_threads": 4,
+    "raw_catalog_vector_bytes": 2787723264,
+    "query_vector_bytes": 5190144,
+    "note": "Single local batch. Main wall includes verification, encoding, scan, metrics/bootstrap and artifact hashing; excludes interpreter/import startup and final report serialization. Scan includes checksums, ID parsing and norms. Process RSS includes model load, encoding and search; observed MPS allocations are not true peaks and not additive. No API latency, QPS or production capacity claim."
+  },
+  "provenance": {
+    "embedding_report_sha256": "35ea4613e3ea3d6565239076b0e0b9ae7c4680e722cde392e0ffb6c3717550a5",
+    "catalog_contract_sha256": "211c81cc35e9a630a919c757f525f9f0bc5486ea98fee71dc71ea7900c5b757b",
+    "catalog_manifest_sha256": "d0a05ada184796e1678c27b187c48784d3b2dc76006c9d01fca42bc9f1844172",
+    "bm25_report_sha256": "1c741278e78256d91f122d261d35c1a510ed88d7574306cc4c676beeef85bcbf",
+    "validation_input": {
+      "name": "validation.parquet",
+      "bytes": 742502,
+      "sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36"
+    },
+    "model_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "source_sha256": {
+      "config/catalog-dense-exact-v1.json": "f3e0b0a62c1b53dfc7e559b790f55a490d262746f2ff26ef73e211f3d740b8ae",
+      "docs/decisions/0006-exact-dense-retrieval.md": "5542ed0c86957ad7668ab747e844b8d52ca3fd974896867ea70e971d7b245e1f",
+      "experiments/embedding-pilot/run_dense.py": "8f50245f1470469a447dca404240787b5187d0c27a3d31de6fe04b1fdb517574",
+      "experiments/embedding-pilot/exact_search.py": "b1bd9e5b711df191928a674038b7fe9a62b62b8f262578c8e697af6adc861b88",
+      "scripts/dense_metrics.py": "af09006e971faa0fc1dfb83ed6b0054a3f2b6c12f5d5e67ce6d17c2acde89dc1",
+      "tests/test_dense_metrics.py": "2bba5792702fc2526810d7bb5ddd12a52841e9441ee8bf11475966003d1e659c",
+      "experiments/embedding-pilot/tests/test_exact_search.py": "8f0b61d0a0cf72508edadcaf958cdc8eb41ec614f52943b9ef3bd6e6c4ef0c9d"
+    },
+    "runtime": {
+      "python": "3.12.16",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "numpy": "2.3.4",
+      "torch": "2.9.1",
+      "transformers": "4.57.1",
+      "duckdb": "2.0.0",
+      "torch_build": "PyTorch built with:\n  - GCC 4.2\n  - C++ Version: 201703\n  - clang 15.0.0\n  - OpenMP 201811\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: DEFAULT\n  - Build settings: BLAS_INFO=accelerate, BUILD_TYPE=Release, COMMIT_SHA=5811a8d7da873dd699ff6687092c225caffcf1bb, CXX_COMPILER=/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_PYTORCH_QNNPACK -DAT_BUILD_ARM_VEC256_WITH_SLEEF -DUSE_XNNPACK -DUSE_PYTORCH_METAL_EXPORT -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DUSE_COREML_DELEGATE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=braced-scalar-init -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wvla-extension -Wsuggest-override -Wnewline-eof -Winconsistent-missing-override -Winconsistent-missing-destructor-override -Wno-pass-failed -Wno-error=old-style-cast -Wconstant-conversion -Qunused-arguments -faligned-new -fno-math-errno -fno-trapping-math -Werror=format -DUSE_MPS -Wno-missing-braces, LAPACK_INFO=accelerate, TORCH_VERSION=2.9.1, USE_CUDA=OFF, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_EIGEN_FOR_BLAS=ON, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=OFF, USE_MKLDNN=OFF, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "queries.tsv",
+      "bytes": 144518,
+      "sha256": "843c9f7224dd489580c9df4e50a3d1c0fb31b00b4bcff3b900019d7c32092968"
+    },
+    {
+      "name": "queries.json",
+      "bytes": 309704,
+      "sha256": "4ec3a4b1148514d25dc090872d2095cd986623de7c3d2dc31229731c63b5824b"
+    },
+    {
+      "name": "query-vectors.f32",
+      "bytes": 5190144,
+      "sha256": "201cb9ca16c800700e41f3ad6a97521289271dc19dbc351f6e3db47d4bd0ec9a"
+    },
+    {
+      "name": "results.tsv",
+      "bytes": 14183477,
+      "sha256": "ce756f19ec3e73ed7866d61f93b757a50ad9864c52fcb003c1bb9d668ddf5974"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1335343,
+      "sha256": "f41028f48eb3913007b2f69bd0f18bf44befaf1b5ea3292b0bb9892c88cb6588"
+    }
+  ],
+  "limits": "Validation-development and known positives only; unknown relevance is not Irrelevant. Judgment coverage is not precision. Exhaustive float32 search has no ANN candidate loss but still has numerical rounding. No test, training, fusion, quantization, online effect or API capacity result."
+}

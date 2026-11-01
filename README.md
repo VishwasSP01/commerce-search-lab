@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, candidate-ranking BM25, error analysis, bullet ablation, catalog BM25, embedding pilot and full-catalog title embedding export are complete. Title-only BM25 remains the measured retrieval baseline. Dense retrieval, training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, candidate-ranking BM25, error analysis, bullet ablation, catalog BM25, embedding export and exhaustive dense retrieval comparison are complete. Dense does not demonstrate an overall gain; title-only BM25 remains the baseline. Fusion, training and deployment are future work.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -113,11 +113,28 @@ Read the [results and reproduction instructions](docs/full-catalog-embeddings.md
 uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/export_catalog.py
 ```
 
+## Completed step: exhaustive dense retrieval
+
+The pinned multilingual E5-small model searches every product in each query's locale, reusing the saved title vectors. Two fresh runs, including query encoding, reproduce all five artifact hashes and every metric/interval. The official test remains reserved.
+
+| Validation known-Exact Recall@100 | English | Spanish | Japanese | Overall, query-weighted |
+| --- | ---: | ---: | ---: | ---: |
+| Title BM25 | 46.98% | 58.08% | 53.77% | **50.29%** |
+| Exhaustive dense | 48.47% | 47.94% | 53.53% | **49.48%** |
+
+The paired overall change is **−0.81 percentage points**, 95% interval **[−1.77, +0.11] pp**: no demonstrated overall gain. Spanish regresses substantially. Judgment coverage@10 changes from 32.91% to 28.36%; coverage is not precision, and unjudged products retain unknown relevance. **Keep BM25 as the baseline.**
+
+The first run takes **39.71 seconds** of main wall time, including query encoding, verification and evaluation; maximum process RSS is **0.974 GiB**. This is an exhaustive CPU batch reference, with MPS query encoding, not API capacity or ANN performance. Read the [results, interpretation and reproduction instructions](docs/full-catalog-dense.md), [predeclared protocol](docs/decisions/0006-exact-dense-retrieval.md), [aggregate evidence](reports/catalog-dense-exact-v1.json) and [independent-repeat verification](reports/catalog-dense-exact-v1-reproduction.json).
+
+```sh
+uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/run_dense.py
+```
+
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled, and each job has a five-minute timeout.
 
-The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, without downloading pretrained weights. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
 To run the same commands locally:
 
