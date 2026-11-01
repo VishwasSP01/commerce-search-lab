@@ -1,0 +1,137 @@
+{
+  "config": {
+    "version": "catalog-embeddings-v1",
+    "encoding_policy": "config/embedding-pilot-v1.json",
+    "encoding_policy_sha256": "a3664199dc825b668408adf2bfaa3a7f1008e97f104d1ed87b5641eaa18f66cd",
+    "model_source": "config/multilingual-e5-small-source.json",
+    "corpus": "all 1,814,924 pinned ESCI locale-product titles; metadata only",
+    "order": "locale es, jp, us; ascending product_id within each locale",
+    "shard_rows": 4096,
+    "shard_boundaries": "never mix locales; final shard of each locale may be shorter",
+    "encoding": "unchanged pilot encoder, model revision, NFKC, passage prefix, float32, eager attention, batch size 32, max_length 128, masked mean and L2 normalization; 4 CPU threads; MPS if available, otherwise explicit CPU; unsupported-operator fallback disabled",
+    "storage": "one little-endian row-major float32 payload, row-aligned locale/product-ID JSONL and atomic checkpoint manifest per shard; one writer lock for the export",
+    "resume": "verify contract, source data, identities, payload checksums and norms; skip committed shards; reject corrupt commits and changed contracts; replace only uncommitted orphans",
+    "validation": "exact per-locale counts and strict key ordering; shape, finite values, unit norm within 1e-5; compare all 3,072 pilot identities to their reference vectors with max absolute difference <=1e-5 and minimum cosine >=0.99999",
+    "restart_experiment": "controlled stop after two committed shards, then resume without re-encoding those 8,192 titles; preserve session measurements and completed replay artifacts",
+    "measurement": "record per-locale encode time, main wall time across actual sessions, load/warmup/validation/checkpoint work, kernel-reported process max RSS, observed MPS allocations, truncation and actual disk bytes; do not sum overlapping unified-memory readings",
+    "scope": "embedding export only; no dense index, retrieval-quality evaluation, fusion, training, query/judgment partition access or official test exposure"
+  },
+  "official_test_read": false,
+  "relevance_evaluated": false,
+  "completion": {
+    "counts": {
+      "es": 260011,
+      "jp": 339059,
+      "us": 1215854
+    },
+    "shards": 444,
+    "vector_bytes": 2787723264,
+    "ids_bytes": 76226808,
+    "vector_sequence_sha256": "0d0e303b902a3f48420bac38ec819aea80a3e5e27fd4cced00445bdbee7771fb",
+    "id_sequence_sha256": "d40f48cde0ef65bcbf2b906ab25f3a601c67fb87f679fd1f3d93c61a06185ed4"
+  },
+  "by_locale": {
+    "es": {
+      "titles": 260011,
+      "shards": 64,
+      "encode_seconds": 301.6660658111323,
+      "titles_per_encode_second": 861.9166338808164,
+      "truncated_titles": 22,
+      "mean_untruncated_tokens": 39.046332655156895,
+      "max_untruncated_tokens": 216,
+      "norm_min": 0.9999998807907104,
+      "norm_max": 1.0000001192092896
+    },
+    "jp": {
+      "titles": 339059,
+      "shards": 83,
+      "encode_seconds": 513.7892736950052,
+      "titles_per_encode_second": 659.9184088869704,
+      "truncated_titles": 715,
+      "mean_untruncated_tokens": 42.19646138282718,
+      "max_untruncated_tokens": 271,
+      "norm_min": 0.9999998211860657,
+      "norm_max": 1.0000001192092896
+    },
+    "us": {
+      "titles": 1215854,
+      "shards": 297,
+      "encode_seconds": 1332.5383275410786,
+      "titles_per_encode_second": 912.4345430600896,
+      "truncated_titles": 52,
+      "mean_untruncated_tokens": 34.57849791175585,
+      "max_untruncated_tokens": 223,
+      "norm_min": 0.9999998211860657,
+      "norm_max": 1.0000001192092896
+    }
+  },
+  "pilot_reference_comparison": {
+    "identities_compared": 3072,
+    "max_absolute_difference": 1.043081283569336e-07,
+    "minimum_cosine": 0.9999999999998463
+  },
+  "execution": {
+    "runtime": {
+      "python": "3.12.16",
+      "torch": "2.9.1",
+      "transformers": "4.57.1",
+      "numpy": "2.3.4",
+      "duckdb": "2.0.0",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "device": "mps"
+    },
+    "sessions": [
+      {
+        "status": "controlled_stop",
+        "new_shards": 2,
+        "reused_shards": 0,
+        "new_rows": 8192,
+        "main_wall_seconds": 10.901969832997565,
+        "model_load_seconds": 0.5937951660016552,
+        "warmup_seconds": 0.2120992499985732,
+        "shard_io_validation_seconds": 0.14644804099953035,
+        "process_max_rss_bytes": 932560896,
+        "observed_mps_tensor_bytes_after_forward": 482395136,
+        "observed_mps_driver_bytes_after_forward": 1135296512
+      },
+      {
+        "status": "finished",
+        "new_shards": 442,
+        "reused_shards": 2,
+        "new_rows": 1806732,
+        "main_wall_seconds": 2239.720483208999,
+        "model_load_seconds": 0.42105575000095996,
+        "warmup_seconds": 0.1735197079979116,
+        "shard_io_validation_seconds": 34.565673513938236,
+        "process_max_rss_bytes": 1732755456,
+        "observed_mps_tensor_bytes_after_forward": 481811456,
+        "observed_mps_driver_bytes_after_forward": 1144881152
+      }
+    ],
+    "sum_recorded_session_wall_seconds": 2250.622453041997,
+    "all_rows_attributed_to_recorded_sessions": true,
+    "max_process_rss_bytes": 1732755456,
+    "max_observed_mps_tensor_bytes": 482395136,
+    "max_observed_mps_driver_bytes": 1144881152,
+    "note": "Wall time includes source/model/reference checks, metadata scan/sort, encoding, validation, persistence and per-session setup; excludes between-invocation downtime, interpreter bootstrap and final report serialization. MPS observations are not true GPU peaks or additive to RSS; RSS is process, not whole host."
+  },
+  "storage": {
+    "logical_export_file_bytes": 2864726393,
+    "reported_file_block_bytes": 2866159616,
+    "note": "File bytes/blocks exclude directory metadata, original catalog, model cache and public report; not a measurement of whole-filesystem physical flash use."
+  },
+  "provenance": {
+    "contract_sha256": "211c81cc35e9a630a919c757f525f9f0bc5486ea98fee71dc71ea7900c5b757b",
+    "export_manifest_sha256": "d0a05ada184796e1678c27b187c48784d3b2dc76006c9d01fca42bc9f1844172",
+    "source_sha256": {
+      "config/catalog-embeddings-v1.json": "d93bb95ac8b832c2771ef9cb92d9f467b4bab84e0b1197731995b69b46d6560b",
+      "docs/decisions/0005-full-catalog-embeddings.md": "4f6293a67bbc9d060f3219356e1b16bfffdb6e4db7df099ec415c1d4b2ac9b58",
+      "experiments/embedding-pilot/export_catalog.py": "d2063610d60c210449ca933ff1a95a5d9e05282fcb4e77e51a9a05979fdba0b4",
+      "scripts/catalog_embedding_store.py": "d9f66d9c7ead7ac9930317012b5811c56cd290bb20bdd5d888d8579cf88e5fb4",
+      "tests/test_catalog_embedding_store.py": "6fdc2ce7c807dd7705d9474dd2bff0dab4fc55310f4655fe9d0726950302d888",
+      "experiments/embedding-pilot/tests/test_catalog_export.py": "49ebc36abc667d934c5b091b209f403f501c3d6a60c25d017e3cd01cbab2b61e"
+    },
+    "pilot_report_sha256": "e07e165f35d6671313d512bebf7d18ca5b0079512fd684191379609599141ead"
+  },
+  "limits": "One full-catalog title export with fixed 128-token truncation; no ANN index, retrieval relevance, fusion, training or serving capacity measured. Full-run restart was a controlled stop; prior SIGKILL evidence belongs to the pilot."
+}

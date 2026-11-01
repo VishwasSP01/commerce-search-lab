@@ -1,0 +1,23 @@
+{
+  "experiment": "catalog-embeddings-v1",
+  "main_report_sha256": "35ea4613e3ea3d6565239076b0e0b9ae7c4680e722cde392e0ffb6c3717550a5",
+  "controlled_stop": {
+    "committed_titles_preserved": 8192,
+    "shards_preserved": 2,
+    "all_8_prefix_artifact_hashes_unchanged": true,
+    "snapshot_sha256": "9647aea0dbf6263a3b969a0486ff51372c4fa013623d9655d23e99eb55d017df"
+  },
+  "completed_replay": {
+    "command": "uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/export_catalog.py",
+    "verified_shards": 444,
+    "encoded_shards": 0,
+    "artifact_files": 1336,
+    "all_artifact_hashes_unchanged": true,
+    "public_report_hash_unchanged": true,
+    "tree_fingerprint_before": "868c7cbd988cf6d05b9548c68ec90afaf6a5b5fa28a5dd19b1e4d22863a50704",
+    "tree_fingerprint_after": "868c7cbd988cf6d05b9548c68ec90afaf6a5b5fa28a5dd19b1e4d22863a50704",
+    "fingerprint_method": "SHA256 of compact sorted-key UTF-8 JSON mapping relative artifact path to file SHA256; excludes dot-prefixed writer lock files",
+    "before_snapshot_sha256": "9c6d41cd4305de65a156fdaa156ced6b4f30ff311549b66fe78797e4bb74b95d"
+  },
+  "scope": "One full encode across two cleanly recorded sessions, then full validation replay. Every vector checked for shape, finite values and unit norm; every ID map and committed checksum verified. No second full encode, relevance evaluation or official test exposure."
+}
