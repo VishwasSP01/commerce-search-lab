@@ -26,4 +26,4 @@
 
 ## Immediate milestone
 
-The first technical milestone is an ESCI data audit: provenance, schema, identifiers, locale coverage, duplicates, joins, and split integrity. Retrieval implementation follows the audit.
+The ESCI data audit is complete; read `docs/esci-data-audit.md` and its machine-readable evidence. The next increment is the evaluation split and overlap policy, including training exclusions and grouped validation. Retrieval implementation follows that step.

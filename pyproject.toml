@@ -1,0 +1,8 @@
+[project]
+name = "commerce-search-lab"
+version = "0.1.0"
+description = "Reproducible multilingual product-search experiments"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb==2.0.0",
+]

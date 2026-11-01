@@ -116,4 +116,4 @@ Ask the project reviewer to assess the data/evaluation protocol before model dev
 
 ## Immediate next work
 
-The machine inventory is recorded. Pin the ESCI dataset revision, audit its schema and locale/product joins, and establish split integrity. Use those findings to prepare a reproducible evaluation protocol before building a BM25 baseline. Model-training and serving capacity remain unmeasured.
+The machine inventory and [full ESCI data audit](esci-data-audit.md) are complete. The next increment is a reproducible evaluation split and overlap policy. A bounded BM25 ranking result follows that preparation. Model-training and serving capacity remain unmeasured.
