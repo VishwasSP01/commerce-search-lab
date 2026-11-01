@@ -37,6 +37,19 @@ uv run --locked python scripts/prepare_esci_splits.py
 
 Generated datasets remain under the ignored `data/processed/` directory. The [aggregate split report](reports/esci-split-report.json) records counts, checks, provenance, and artifact hashes. The next increment is the BM25 candidate-ranking baseline.
 
+## Continuous integration
+
+The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs the locked dependencies and runs the regression tests on Ubuntu with Python 3.12. Superseded runs are cancelled, and each job has a five-minute timeout.
+
+The tests use small fabricated fixtures. CI does not download ESCI, generate benchmark datasets, or train models; the full-data audit and split reproduction remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+
+To run the same commands locally:
+
+```sh
+uv sync --locked
+uv run --locked --no-sync python -m unittest discover -s tests -v
+```
+
 ## Sources to audit
 
 - [Amazon ESCI dataset and baseline code](https://github.com/amazon-science/esci-data)
