@@ -1,0 +1,65 @@
+{
+  "first_report_sha256": "1cc571641ec2c93f35124ac3ce21a3ae350b2ff41b4994fd387e0da2352e7a24",
+  "repeat_report_sha256": "cb538f91bc7eec7763591fe8787ae23adf8b0d0d72ecdb482088d9e6b9ac5e3f",
+  "repeat_command": "uv run --locked --no-sync python scripts/run_rrf.py --output-dir data/processed/catalog-rrf-v1-repeat --report data/processed/catalog-rrf-v1-repeat-report.json",
+  "checks": {
+    "all_four_artifact_hashes_equal": true,
+    "both_runs_artifact_bytes_verified": true,
+    "every_non_execution_report_field_equal": true,
+    "all_input_artifacts_unchanged_after_both_runs": true,
+    "same_predeclared_decision": true
+  },
+  "equal_report_fields": [
+    "config",
+    "official_test_read",
+    "partition",
+    "catalog_scope",
+    "overall_query_weighted",
+    "by_locale",
+    "locale_macro_mean",
+    "recovery_and_union_diagnostic",
+    "fixed_vocabulary_gap_cohort",
+    "decision",
+    "checks",
+    "provenance",
+    "artifacts",
+    "limits"
+  ],
+  "artifacts": [
+    {
+      "name": "results.tsv",
+      "bytes": 14640460,
+      "sha256": "af836e07a98f1af00fc637f2ae4e3b6e59490a21758e7198942a6b1318f7f303"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1335507,
+      "sha256": "75ed72d0575dac4a604f250984d7858be6e39e4f93b9442e00ffa8f178f57d4a"
+    },
+    {
+      "name": "recovery-per-query.json",
+      "bytes": 1552914,
+      "sha256": "811d8681fefbca1f063b51195955735699ffa8bfd457482dd3f9e949ccabb434"
+    },
+    {
+      "name": "vocabulary-gap-cohort.json",
+      "bytes": 63128,
+      "sha256": "6fd3e7b41f34ac2f9d65a6f6f77973f90d05ecb08dd287fc9d1be6c9d7639034"
+    }
+  ],
+  "execution_first": {
+    "input_verification_seconds": 1.3593646250010352,
+    "fusion_only_seconds": 0.9942217919997347,
+    "main_wall_seconds": 10.180253291000554,
+    "max_process_rss_bytes": 299630592,
+    "note": "Cached-list offline fusion. Main wall includes input verification, fusion, metrics/bootstrap and diagnostics; excludes import startup and final serialization/artifact hashing. RSS covers input/evaluation state. Neither end-to-end hybrid latency nor serving memory/QPS."
+  },
+  "execution_repeat": {
+    "input_verification_seconds": 1.3720054999976128,
+    "fusion_only_seconds": 0.9890458330010006,
+    "main_wall_seconds": 10.200569707998511,
+    "max_process_rss_bytes": 299565056,
+    "note": "Cached-list offline fusion. Main wall includes input verification, fusion, metrics/bootstrap and diagnostics; excludes import startup and final serialization/artifact hashing. RSS covers input/evaluation state. Neither end-to-end hybrid latency nor serving memory/QPS."
+  },
+  "limits": "Fresh offline fusion/evaluation runs on the same machine and fixed saved inputs. This does not repeat upstream retrieval or measure serving capacity. Public aggregate report and first/repeat run manifests are bound by their hashes; bulky artifacts remain ignored."
+}
