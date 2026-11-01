@@ -8,6 +8,8 @@ A Java 21 / Lucene 10.6.0 title index containing **1,814,924 real locale-product
 
 BM25 requires no supervised training. Collection statistics come from the full catalog's locale-specific title fields. At evaluation time, scoring is restricted to each validation query's judged candidate list. All candidates remain in the ranking, including zero lexical matches; missing indexed candidates are errors.
 
+The fixed parameters are **`k1=1.2` and `b=0.75`**, with Lucene's default overlap discounting enabled. No parameter tuning was performed; these values are also recorded in the versioned configuration and aggregate report.
+
 This is an offline candidate-ranking baseline. A full-catalog search evaluation, API, embeddings, neural fine-tuning and streaming ingestion are later increments.
 
 ## Results
