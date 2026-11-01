@@ -1,0 +1,13 @@
+{
+  "version": "esci-ranking-v1",
+  "subset": "small_version = 1",
+  "locales": ["es", "jp", "us"],
+  "protected_queries": "all official test queries, including outside the ranking subset",
+  "normalization": "Unicode NFKC, casefold, collapse Unicode whitespace, within locale",
+  "validation_fraction": "0.10",
+  "validation_rounding": "floor of eligible normalized groups per locale, clamped to [1, groups - 1]",
+  "seed": "commerce-search-lab/esci-ranking/v1",
+  "selection": "ascending SHA-256 of JSON [seed, locale, normalized query]; normalized query breaks ties",
+  "test_policy": "preserve all original ranking test rows and original columns unchanged",
+  "exclusion_policy": "exclude complete training query groups matching a protected locale-query ID or locale-normalized query"
+}

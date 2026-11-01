@@ -116,4 +116,4 @@ Ask the project reviewer to assess the data/evaluation protocol before model dev
 
 ## Immediate next work
 
-The machine inventory and [full ESCI data audit](esci-data-audit.md) are complete. The next increment is a reproducible evaluation split and overlap policy. A bounded BM25 ranking result follows that preparation. Model-training and serving capacity remain unmeasured.
+The machine inventory, full pinned-file ESCI audit, and [evaluation split preparation](evaluation-splits.md) are complete. The official ranking test set is preserved; overlapping ranking training groups are excluded and validation groups are fixed. The next increment is a minimal BM25 candidate-ranking baseline. Model-training and serving capacity remain unmeasured.

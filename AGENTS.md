@@ -26,4 +26,4 @@
 
 ## Immediate milestone
 
-The ESCI data audit is complete; read `docs/esci-data-audit.md` and its machine-readable evidence. The next increment is the evaluation split and overlap policy, including training exclusions and grouped validation. Retrieval implementation follows that step.
+The ESCI audit and ranking splits are complete. Read `docs/esci-data-audit.md`, `docs/evaluation-splits.md`, and the aggregate reports. The next increment is a minimal BM25 candidate-ranking baseline with declared locale analysis, ESCI gains, and NDCG@10. Use the prepared training/validation artifacts for development. Preserve the official test holdout; raw larger-split training data is not safe to use directly.

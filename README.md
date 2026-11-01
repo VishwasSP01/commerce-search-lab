@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the full audit of the pinned ESCI files is complete. No search implementation, training run, relevance result, or deployment exists yet.
+**Status:** the ESCI data audit and reproducible ranking splits are complete. No search implementation, training run, relevance result, or deployment exists yet.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -27,7 +27,15 @@ uv run --locked python -m unittest discover -s tests -v
 uv run --locked python scripts/audit_esci.py
 ```
 
-The next increment is the evaluation split and overlap policy. The BM25 baseline follows that step.
+## Completed step: evaluation splits
+
+The [split policy and results](docs/evaluation-splits.md) define training (30,423 queries), validation (3,379), and the preserved official test set (14,496). Two overlapping training queries are excluded. All three languages are represented, and the prepared partitions have no overlap under the declared query-ID and normalization checks.
+
+```sh
+uv run --locked python scripts/prepare_esci_splits.py
+```
+
+Generated datasets remain under the ignored `data/processed/` directory. The [aggregate split report](reports/esci-split-report.json) records counts, checks, provenance, and artifact hashes. The next increment is the BM25 candidate-ranking baseline.
 
 ## Sources to audit
 
