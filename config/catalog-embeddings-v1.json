@@ -1,0 +1,17 @@
+{
+  "version": "catalog-embeddings-v1",
+  "encoding_policy": "config/embedding-pilot-v1.json",
+  "encoding_policy_sha256": "a3664199dc825b668408adf2bfaa3a7f1008e97f104d1ed87b5641eaa18f66cd",
+  "model_source": "config/multilingual-e5-small-source.json",
+  "corpus": "all 1,814,924 pinned ESCI locale-product titles; metadata only",
+  "order": "locale es, jp, us; ascending product_id within each locale",
+  "shard_rows": 4096,
+  "shard_boundaries": "never mix locales; final shard of each locale may be shorter",
+  "encoding": "unchanged pilot encoder, model revision, NFKC, passage prefix, float32, eager attention, batch size 32, max_length 128, masked mean and L2 normalization; 4 CPU threads; MPS if available, otherwise explicit CPU; unsupported-operator fallback disabled",
+  "storage": "one little-endian row-major float32 payload, row-aligned locale/product-ID JSONL and atomic checkpoint manifest per shard; one writer lock for the export",
+  "resume": "verify contract, source data, identities, payload checksums and norms; skip committed shards; reject corrupt commits and changed contracts; replace only uncommitted orphans",
+  "validation": "exact per-locale counts and strict key ordering; shape, finite values, unit norm within 1e-5; compare all 3,072 pilot identities to their reference vectors with max absolute difference <=1e-5 and minimum cosine >=0.99999",
+  "restart_experiment": "controlled stop after two committed shards, then resume without re-encoding those 8,192 titles; preserve session measurements and completed replay artifacts",
+  "measurement": "record per-locale encode time, main wall time across actual sessions, load/warmup/validation/checkpoint work, kernel-reported process max RSS, observed MPS allocations, truncation and actual disk bytes; do not sum overlapping unified-memory readings",
+  "scope": "embedding export only; no dense index, retrieval-quality evaluation, fusion, training, query/judgment partition access or official test exposure"
+}

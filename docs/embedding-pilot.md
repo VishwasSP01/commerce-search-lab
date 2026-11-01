@@ -4,6 +4,8 @@
 
 The [settings](../config/embedding-pilot-v1.json), [model source manifest](../config/multilingual-e5-small-source.json) and [decision](decisions/0004-embedding-pilot.md) were committed in `4578109` before encoding. The [main report](../reports/embedding-pilot-v1.json) records measurements, versions, hashes and limitations. Bulk samples, weights, vectors and checkpoints remain ignored under `data/` and `models/`.
 
+Subsequent work completed the [full-catalog export](full-catalog-embeddings.md). The estimates and scope below describe this earlier pilot; use the full-export report for actual catalog measurements.
+
 ## Fixed workload and model
 
 - Select **1,024 titles per locale**, 3,072 total, by ascending SHA-256 of `seed + TAB + locale + TAB + product_id`, then ID. The seed and ordering are fixed. Selection uses the verified product metadata only; no query or judgment partition is opened.

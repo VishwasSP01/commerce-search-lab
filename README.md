@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, candidate-ranking BM25 baseline, error analysis, title-plus-bullet ablation, full-catalog BM25 retrieval baseline and multilingual embedding feasibility pilot are complete. Title-only remains the measured retrieval baseline. Dense retrieval, training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, candidate-ranking BM25, error analysis, bullet ablation, catalog BM25, embedding pilot and full-catalog title embedding export are complete. Title-only BM25 remains the measured retrieval baseline. Dense retrieval, training and deployment are future work.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -94,11 +94,23 @@ uv run --locked --no-sync python scripts/run_catalog_bm25.py
 
 The pinned multilingual E5 model encoded **3,072 real titles** on the existing Mac's MPS GPU. A forced worker termination followed by restart preserved 512 completed titles, and all resumed vectors matched the clean run exactly. The sample produced 384-dimensional normalized float32 vectors; two Japanese titles were truncated at the declared 128-token limit.
 
-The [pilot report](docs/embedding-pilot.md) records throughput, measured process memory, observed GPU allocations, checkpoint integrity and limitations. The locale-weighted estimate is roughly **41–45 minutes of encode-stage work** for the full catalog across two short observations; a full-catalog encode has not been run. Raw full-catalog vectors would occupy **2.596 GiB**, before metadata and ANN overhead. No relevance gain is claimed.
+The [pilot report](docs/embedding-pilot.md) records throughput, measured process memory, observed GPU allocations, checkpoint integrity and limitations. It estimated roughly **41–45 minutes of encode-stage work** and **2.596 GiB** of raw vectors before metadata/ANN overhead. The subsequent full-catalog export below replaces that planning estimate with measured results. No relevance gain is claimed.
 
 ```sh
 uv sync --locked --project experiments/embedding-pilot
 uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/pilot.py
+```
+
+## Completed step: full-catalog embeddings
+
+All **1,814,924 locale-product titles** now have verified 384-dimensional float32 embeddings and row-aligned IDs. The export ran on the existing Mac's MPS GPU in **37.5 minutes of recorded session wall time**, with **1.61 GiB maximum process RSS**. The saved bundle is **2.668 GiB**, including **2.596 GiB** of raw vectors; ANN overhead remains unmeasured.
+
+The run preserved 8,192 completed titles across a controlled stop/restart, matched all 3,072 pilot references within tolerance, and passed a full replay without changing any of its 1,336 artifact hashes or re-encoding a shard. **789 titles** exceeded the fixed 128-token limit. These are export/integrity measurements, not a relevance gain.
+
+Read the [results and reproduction instructions](docs/full-catalog-embeddings.md), [aggregate report](reports/catalog-embeddings-v1.json), and [restart/replay evidence](reports/catalog-embeddings-v1-verification.json). The official test set remains untouched; all bulk data and weights stay ignored.
+
+```sh
+uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/export_catalog.py
 ```
 
 ## Continuous integration

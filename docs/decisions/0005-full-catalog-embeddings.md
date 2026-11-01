@@ -1,0 +1,19 @@
+# Decision 0005: stream and checkpoint the complete title embedding export
+
+Status: predeclared before the full run.
+
+The multilingual pilot demonstrated MPS compatibility and process-restart safety. Export every pinned ESCI locale-product title using the same model files, encoder source, lockfile and inference settings. This increment measures actual full-catalog work; it does not claim retrieval quality or build a search index.
+
+Keep NFKC, `passage: `, 384-dimensional float32 output, eager attention, masked mean pooling, L2 normalization, batch size 32, max length 128 and four CPU threads. No precision reduction, model/sequence-length tuning or unreported CPU fallback. Record truncation on the entire catalog. Never read query/judgment partitions.
+
+Stream metadata in locale order es/jp/us and ascending product ID; keep one bounded chunk in application memory. Make checkpoints **4,096 rows** rather than the pilot's 256, keeping locales separate and permitting a shorter final shard. This operational change reduces file/manifest overhead without changing inference batch size. Each shard has a row-aligned locale/product-ID JSONL, float32 payload and independent manifest. Reuse the pilot's unchanged atomic/checksummed checkpoint implementation on each shard; avoid holding every title in memory or rewriting a global growing shard list on every commit.
+
+Hold one OS writer lock for the export. Bind all shards to verified source/model files, fixed encoding settings, code and runtime/backend. Write the ID map before the payload's manifest commit, include its hash in metadata and verify both against regenerated identities on restart. Count and check strict locale-product order across shard boundaries. A committed payload is never silently replaced; an orphan not committed in a manifest may be recomputed. A completed replay verifies existing outputs without replacing measured sessions or the final manifest. This protects process restarts, not disk power loss or multi-host exactly-once semantics.
+
+Before a long run, test stream boundaries, corrupt or reordered ID maps, stale contracts, short final shards, and resume/no-op behavior using small fixtures and the real encoder interface. The actual full run will stop cleanly after two shards and resume, recording preserved hashes and rows. Prior forced-SIGKILL evidence remains the pilot's separate test. Do not call the controlled full-export stop a forced crash.
+
+Validate every vector for correct byte count, finite values and unit norm within 1e-5. Require exact per-locale/catalog counts. Compare each of the 3,072 pilot identities with its full-export vector (maximum absolute difference <=1e-5, minimum cosine >=0.99999); ordering/batch padding can differ, so byte equality is not required. Verify all committed output on a final replay and keep artifact hashes unchanged. A failed check prevents the final completion manifest/report.
+
+Record per-locale encoding durations and truncation, observed norm range, reference agreement, actual payload/ID/manifest bytes, model load/warmup and main wall time across sessions. Include kernel process max RSS and observed MPS tensor/driver allocations with their existing unified-memory caveats. Wall time includes verification, preprocessing, persistence and the deliberate restart's repeated setup, but excludes time between invocations and pre-main imports unless separately measured. Distinguish this full-run observation from the pilot's compute-only estimate. Keep all bulk output ignored; commit compact evidence, code and instructions.
+
+Completion requires the entire export, validated counts/identity/numerics, demonstrated restart and no-op replay, measured resource evidence, passing meaningful tests and a reviewable PR. Dense retrieval and fusion are subsequent increments; the official test holdout remains reserved.
