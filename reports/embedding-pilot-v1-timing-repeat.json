@@ -1,0 +1,112 @@
+{
+  "experiment": "embedding-pilot-v1",
+  "context": "The second complete run follows a completed-worker replay guard fix; encoding code, settings, model files and sampled identities are unchanged. Both observations are published to expose short-run timing variability.",
+  "first_report_sha256": "41079f5b58d696eee5133c3f08c0c50161074e029024b41c76dfdcdf9ec24aca",
+  "final_report_sha256": "e07e165f35d6671313d512bebf7d18ca5b0079512fd684191379609599141ead",
+  "sample_sha256": "0913c550369692db985ced62b8e2b27489e4f9b11ec1d1f983a94bd50f863466",
+  "encoder_source_sha256": "d6a6634f73eedf0ee1e467fe7d72fd6b60450b7fe37f9e93225aa780954e1ce5",
+  "all_clean_payload_hashes_equal_across_runs": true,
+  "observations": [
+    {
+      "by_locale": {
+        "es": {
+          "titles": 1024,
+          "encode_seconds": 1.9673129619986867,
+          "titles_per_second": 520.5069146495481,
+          "truncated_titles": 0,
+          "untruncated_tokens_min": 6,
+          "untruncated_tokens_max": 101,
+          "untruncated_tokens_mean": 39.359375,
+          "raw_vector_bytes": 1572864
+        },
+        "jp": {
+          "titles": 1024,
+          "encode_seconds": 2.1264578309819626,
+          "titles_per_second": 481.55198992454694,
+          "truncated_titles": 2,
+          "untruncated_tokens_min": 7,
+          "untruncated_tokens_max": 138,
+          "untruncated_tokens_mean": 42.818359375,
+          "raw_vector_bytes": 1572864
+        },
+        "us": {
+          "titles": 1024,
+          "encode_seconds": 1.266359546003514,
+          "titles_per_second": 808.6171129136484,
+          "truncated_titles": 0,
+          "untruncated_tokens_min": 5,
+          "untruncated_tokens_max": 105,
+          "untruncated_tokens_mean": 34.8681640625,
+          "raw_vector_bytes": 1572864
+        }
+      },
+      "process_max_rss_bytes": 1022345216,
+      "model_warmup_seconds": 1.590094125996984,
+      "subprocess_wall_seconds": 10.114161999998032,
+      "preparation": {
+        "download_or_verify_seconds": 41.352809542000614,
+        "uncached_model_file_bytes_before_download": 493292184
+      },
+      "projection": {
+        "point_seconds": 2707.251948948936,
+        "observed_shard_rate_bounds_seconds": [
+          2341.6033178391917,
+          3189.0714352972636
+        ],
+        "raw_full_catalog_vector_bytes": 2787723264,
+        "note": "sum locale catalog counts times measured locale seconds per title; rough compute-stage planning estimate, excluding download, model load, warmup, index construction and thermal drift; min/max observed shard rates are descriptive bounds, not a confidence interval"
+      }
+    },
+    {
+      "by_locale": {
+        "es": {
+          "titles": 1024,
+          "encode_seconds": 1.3394806620017334,
+          "titles_per_second": 764.4753888941734,
+          "truncated_titles": 0,
+          "untruncated_tokens_min": 6,
+          "untruncated_tokens_max": 101,
+          "untruncated_tokens_mean": 39.359375,
+          "raw_vector_bytes": 1572864
+        },
+        "jp": {
+          "titles": 1024,
+          "encode_seconds": 1.9582593349950912,
+          "titles_per_second": 522.9133760276786,
+          "truncated_titles": 2,
+          "untruncated_tokens_min": 7,
+          "untruncated_tokens_max": 138,
+          "untruncated_tokens_mean": 42.818359375,
+          "raw_vector_bytes": 1572864
+        },
+        "us": {
+          "titles": 1024,
+          "encode_seconds": 1.250883746000909,
+          "titles_per_second": 818.6212374041479,
+          "truncated_titles": 0,
+          "untruncated_tokens_min": 5,
+          "untruncated_tokens_max": 105,
+          "untruncated_tokens_mean": 34.8681640625,
+          "raw_vector_bytes": 1572864
+        }
+      },
+      "process_max_rss_bytes": 1022787584,
+      "model_warmup_seconds": 0.22220170800210326,
+      "subprocess_wall_seconds": 7.132201958000223,
+      "preparation": {
+        "download_or_verify_seconds": 0.3053703330006101,
+        "uncached_model_file_bytes_before_download": 0
+      },
+      "projection": {
+        "point_seconds": 2473.766762091819,
+        "observed_shard_rate_bounds_seconds": [
+          2299.0095863806805,
+          2673.7203254323367
+        ],
+        "raw_full_catalog_vector_bytes": 2787723264,
+        "note": "sum locale catalog counts times measured locale seconds per title; rough compute-stage planning estimate, excluding download, model load, warmup, index construction and thermal drift; min/max observed shard rates are descriptive bounds, not a confidence interval"
+      }
+    }
+  ],
+  "limits": "Two short sequential observations, not a sustained throughput benchmark or confidence interval. First detailed report remains under ignored data/ at its recorded source revision."
+}

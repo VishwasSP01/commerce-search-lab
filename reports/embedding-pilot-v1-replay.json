@@ -1,0 +1,23 @@
+{
+  "experiment": "embedding-pilot-v1",
+  "check": "completed-worker replay preserves all measured artifacts",
+  "command": "uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/pilot.py worker --output-dir data/processed/embedding-pilot-v1 --run-name clean",
+  "all_14_hashes_unchanged": true,
+  "artifacts": {
+    "clean/checkpoint.json": "2527aacb387a10858bffef65e3e9b91532b74b7db6a7791585a7f55ad6918e13",
+    "clean/session.json": "d6028262848ca7edeefbaf190363de28615ae56b006fb47fbbaec2376dd643c5",
+    "clean/shard-00000.f32": "26001fdb2796afcc8206460077a3776223414a401b47fc6c80c9da51462a7718",
+    "clean/shard-00001.f32": "0880a477198304c7c41a71d46a2a26264737cffcfe2cb81c29d63726d44c343a",
+    "clean/shard-00002.f32": "250ae4be59e1546d26bf561a47bfdc03e055e3af9196020599da848547714a51",
+    "clean/shard-00003.f32": "f6a258ef9166a210e12443a3a11732cf5ac62d74228ce87d11eaaec08107dda5",
+    "clean/shard-00004.f32": "12cdb700f6ef13a7d40edb41cf49fe0af0ac44a8a52997d97a9e62287909dff5",
+    "clean/shard-00005.f32": "b334cb219c548c04dfb7c3a2bdadc735cc927d94cad25a3d65ae0a6a09264a5b",
+    "clean/shard-00006.f32": "de073b2246aabb6e02bc6f18a537938107fd9924eb981b742098365e59b4d849",
+    "clean/shard-00007.f32": "3f9c001b6c87251559456ff1d0e3a3bd9eebed8a98e774af0f9505b72a82deb9",
+    "clean/shard-00008.f32": "4d53aee47a1282add4f306f11e21d489aff32750b8bebb7b15d545816e3ddda8",
+    "clean/shard-00009.f32": "cae2d0f99efd89854bece6913bf4cf46af0bd9970c462d476080b6e70a08d9d5",
+    "clean/shard-00010.f32": "77ea880eeaea21a89161997e46cf982fc891bc27d5910d44b2ef9000670bcfa0",
+    "clean/shard-00011.f32": "f77d9fa3bfba5bf4b3b342594850d4530cc9eab882e9198ea462c2b957d604c2"
+  },
+  "main_report_sha256": "e07e165f35d6671313d512bebf7d18ca5b0079512fd684191379609599141ead"
+}

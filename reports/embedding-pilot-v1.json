@@ -1,0 +1,315 @@
+{
+  "config": {
+    "version": "embedding-pilot-v1",
+    "model_source": "config/multilingual-e5-small-source.json",
+    "sample_per_locale": 1024,
+    "sample_seed": "commerce-embedding-pilot-v1",
+    "sample_order": "per locale, ascending sha256(seed + TAB + product_locale + TAB + product_id), then product_id; concatenate es, jp, us",
+    "input": "pinned ESCI product titles only; no query or judgment partitions opened",
+    "normalization": "Unicode NFKC",
+    "document_prefix": "passage: ",
+    "query_prefix": "query: ",
+    "embedding_dimensions": 384,
+    "dtype": "float32",
+    "max_length": 128,
+    "batch_size": 32,
+    "checkpoint_rows": 256,
+    "cpu_threads": 4,
+    "device": "MPS if available, otherwise explicit CPU; no unsupported-operator MPS-to-CPU fallback",
+    "pooling": "attention-mask-aware mean of last_hidden_state, then L2 normalization; eval and inference modes; eager attention",
+    "warmup": "one full batch per locale before timing that locale, including after restart",
+    "memory": "kernel-reported process maximum RSS including load/warmup; separate maximum MPS allocator/driver observations after forward calls, not true GPU peaks and not additive to RSS",
+    "recovery": "kill a worker at the boundary after two committed shards, restart, verify completed shard hashes unchanged and compare all resumed vectors to a clean full pilot",
+    "numeric_tolerance": {
+      "unit_norm_absolute": 1e-05,
+      "repeat_max_absolute_difference": 1e-05,
+      "repeat_min_cosine": 0.99999
+    },
+    "projection": "sum locale catalog counts times measured locale seconds per title; rough compute-stage planning estimate, excluding download, model load, warmup, index construction and thermal drift; min/max observed shard rates are descriptive bounds, not a confidence interval",
+    "completion": "all locales finish with finite unit vectors; resume preserves committed work and meets numerical tolerance; report throughput, truncation, RSS, observed MPS memory, storage and projection honestly",
+    "scope": "compatibility and resource feasibility only; no dense index, retrieval quality, fine-tuning, fusion or official test exposure"
+  },
+  "official_test_read": false,
+  "relevance_evaluated": false,
+  "sample": {
+    "policy_sha256": "a3664199dc825b668408adf2bfaa3a7f1008e97f104d1ed87b5641eaa18f66cd",
+    "products_input": {
+      "name": "shopping_queries_dataset_products.parquet",
+      "bytes": 1108857465,
+      "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+    },
+    "catalog": [
+      {
+        "locale": "es",
+        "products": 260011
+      },
+      {
+        "locale": "jp",
+        "products": 339059
+      },
+      {
+        "locale": "us",
+        "products": 1215854
+      }
+    ],
+    "sample_rows": 3072,
+    "sample_sha256": "0913c550369692db985ced62b8e2b27489e4f9b11ec1d1f983a94bd50f863466"
+  },
+  "model_source": {
+    "repository": "https://huggingface.co/intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "license": "MIT (model card metadata)",
+    "files": [
+      {
+        "name": "README.md",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/README.md",
+        "bytes": 497538,
+        "git_blob_sha1": "e56327af55e9742caf76bff9ba83b6904cd2003d"
+      },
+      {
+        "name": "config.json",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json",
+        "bytes": 655,
+        "git_blob_sha1": "60a2a84020f1d74cc53ea9e8c4e91cf4af6c2b68"
+      },
+      {
+        "name": "model.safetensors",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/model.safetensors",
+        "bytes": 470641600,
+        "sha256": "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477"
+      },
+      {
+        "name": "sentencepiece.bpe.model",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/sentencepiece.bpe.model",
+        "bytes": 5069051,
+        "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+      },
+      {
+        "name": "special_tokens_map.json",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/special_tokens_map.json",
+        "bytes": 167,
+        "git_blob_sha1": "e0b1d18ecd0ae4ff1d47bd297d910c0cf83e504b"
+      },
+      {
+        "name": "tokenizer.json",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer.json",
+        "bytes": 17082730,
+        "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+      },
+      {
+        "name": "tokenizer_config.json",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json",
+        "bytes": 443,
+        "git_blob_sha1": "059214673d9d6d2ee319411e2ffec8c024b816d5"
+      }
+    ]
+  },
+  "model_files": [
+    {
+      "name": "README.md",
+      "bytes": 497538,
+      "sha256": "0038de97aee16258cecbad7ffda4b4febd6953e747a00e0ddbc8e6ed241e9c1c"
+    },
+    {
+      "name": "config.json",
+      "bytes": 655,
+      "sha256": "69137736cab8b8903a07fe8afaafdda25aac55415a12a55d1bffa9f581abf959"
+    },
+    {
+      "name": "model.safetensors",
+      "bytes": 470641600,
+      "sha256": "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477"
+    },
+    {
+      "name": "sentencepiece.bpe.model",
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+    },
+    {
+      "name": "special_tokens_map.json",
+      "bytes": 167,
+      "sha256": "d05497f1da52c5e09554c0cd874037a083e1dc1b9cfd48034d1c717f1afc07a7"
+    },
+    {
+      "name": "tokenizer.json",
+      "bytes": 17082730,
+      "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+    },
+    {
+      "name": "tokenizer_config.json",
+      "bytes": 443,
+      "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b"
+    }
+  ],
+  "preparation": {
+    "download_or_verify_seconds": 0.3053703330006101,
+    "uncached_model_file_bytes_before_download": 0
+  },
+  "by_locale": {
+    "es": {
+      "titles": 1024,
+      "encode_seconds": 1.3394806620017334,
+      "titles_per_second": 764.4753888941734,
+      "truncated_titles": 0,
+      "untruncated_tokens_min": 6,
+      "untruncated_tokens_max": 101,
+      "untruncated_tokens_mean": 39.359375,
+      "raw_vector_bytes": 1572864
+    },
+    "jp": {
+      "titles": 1024,
+      "encode_seconds": 1.9582593349950912,
+      "titles_per_second": 522.9133760276786,
+      "truncated_titles": 2,
+      "untruncated_tokens_min": 7,
+      "untruncated_tokens_max": 138,
+      "untruncated_tokens_mean": 42.818359375,
+      "raw_vector_bytes": 1572864
+    },
+    "us": {
+      "titles": 1024,
+      "encode_seconds": 1.250883746000909,
+      "titles_per_second": 818.6212374041479,
+      "truncated_titles": 0,
+      "untruncated_tokens_min": 5,
+      "untruncated_tokens_max": 105,
+      "untruncated_tokens_mean": 34.8681640625,
+      "raw_vector_bytes": 1572864
+    }
+  },
+  "clean_session": {
+    "runtime": {
+      "python": "3.12.16",
+      "torch": "2.9.1",
+      "transformers": "4.57.1",
+      "numpy": "2.3.4",
+      "duckdb": "2.0.0",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "device": "mps",
+      "mps_built": true,
+      "mps_available": true
+    },
+    "initial_committed_shards": 0,
+    "new_committed_shards": 12,
+    "model_load_seconds": 0.5470154579998052,
+    "warmup_seconds": 0.22220170800210326,
+    "worker_main_wall_seconds": 5.484348582998791,
+    "process_max_rss_bytes": 1022787584,
+    "observed_mps_tensor_bytes_after_forward": 489322496,
+    "observed_mps_driver_bytes_after_forward": 1126924288,
+    "memory_note": "Kernel max RSS is worker-process memory; MPS observations are not true GPU peaks, not total host peak, and not additive to RSS on unified memory."
+  },
+  "resume_session": {
+    "runtime": {
+      "python": "3.12.16",
+      "torch": "2.9.1",
+      "transformers": "4.57.1",
+      "numpy": "2.3.4",
+      "duckdb": "2.0.0",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "device": "mps",
+      "mps_built": true,
+      "mps_available": true
+    },
+    "initial_committed_shards": 2,
+    "new_committed_shards": 10,
+    "model_load_seconds": 0.39578795800116495,
+    "warmup_seconds": 0.20440954199875705,
+    "worker_main_wall_seconds": 4.688556749999407,
+    "process_max_rss_bytes": 1003782144,
+    "observed_mps_tensor_bytes_after_forward": 485178368,
+    "observed_mps_driver_bytes_after_forward": 1126924288,
+    "memory_note": "Kernel max RSS is worker-process memory; MPS observations are not true GPU peaks, not total host peak, and not additive to RSS on unified memory."
+  },
+  "worker_processes": {
+    "clean": {
+      "exit_code": 0,
+      "forced_sigkill": false,
+      "subprocess_wall_seconds": 7.132201958000223
+    },
+    "interrupted": {
+      "exit_code": -9,
+      "forced_sigkill": true,
+      "subprocess_wall_seconds": 2.6371687080027186
+    },
+    "resumed": {
+      "exit_code": 0,
+      "forced_sigkill": false,
+      "subprocess_wall_seconds": 6.32668679100243
+    }
+  },
+  "recovery_checks": {
+    "committed_shards_preserved": 2,
+    "committed_titles_preserved": 512,
+    "completed_shards_after_restart": 12,
+    "all_3072_vectors_compared": true,
+    "max_absolute_difference": 0.0,
+    "minimum_cosine": 0.9999999999999998,
+    "all_payload_hashes_equal": true
+  },
+  "full_catalog_compute_projection": {
+    "point_seconds": 2473.766762091819,
+    "observed_shard_rate_bounds_seconds": [
+      2299.0095863806805,
+      2673.7203254323367
+    ],
+    "raw_full_catalog_vector_bytes": 2787723264,
+    "note": "sum locale catalog counts times measured locale seconds per title; rough compute-stage planning estimate, excluding download, model load, warmup, index construction and thermal drift; min/max observed shard rates are descriptive bounds, not a confidence interval"
+  },
+  "source_sha256": {
+    "config/embedding-pilot-v1.json": "a3664199dc825b668408adf2bfaa3a7f1008e97f104d1ed87b5641eaa18f66cd",
+    "config/multilingual-e5-small-source.json": "b59b2545e6f114b2c8c7bd7801e661a8fc2ecc8aeabfa8ae1687ce898860c848",
+    "docs/decisions/0004-embedding-pilot.md": "70af25e41fc8f814d5b52cd6f565b9ae5e3476380e6ab0fa8d3c2c53f290b3a6",
+    "experiments/embedding-pilot/pyproject.toml": "415deb37a4369e089c96ff5fc226beff9cfeb372136f1e2b5798a65b8aecc2de",
+    "experiments/embedding-pilot/uv.lock": "e1dc6e812a9f51942e2bdb2462a856b02ce04a20f6b5800895093057f576230f",
+    "experiments/embedding-pilot/encoder.py": "d6a6634f73eedf0ee1e467fe7d72fd6b60450b7fe37f9e93225aa780954e1ce5",
+    "experiments/embedding-pilot/pilot.py": "caa69fdaec9a225ec8b90090b9e9d5851b391b1d0c5df89b0e0cb19f7093b49a",
+    "scripts/embedding_checkpoint.py": "7f3f11e32e12fff280ae379666c4d2bba5c19a8b046a7abf09bd72b8098e6de4",
+    "scripts/download_esci.py": "12c4f62664c241cdcd7ea6ba95b427787e592aca2a856bc5d9ca49d0eaf19b74",
+    "tests/test_embedding_checkpoint.py": "e1571fcc4146fae6e20151dfd981bc5a840aca01335603b3a8319cec7d749c26",
+    "experiments/embedding-pilot/tests/test_encoder.py": "ddbb6e8f5808d795f3b8d7b190672f8e85d8e6d572492c2cc59c62825cba874a"
+  },
+  "frozen_source_sha256": {
+    "config/bm25-title-v1.json": "ecefec5d2c6b6ca381ae2164f504eaf92b50af523f0283e1cad46cc5dfa694bc",
+    "pom.xml": "b8c210abdc395565fbb0b73cb92b3437048e6e6f32714a3a576eab171adc04ab",
+    "scripts/run_bm25.py": "2943265e91fe3bac1ccd87e06d0a3b81b57385de56c535e1ee7834bd1bd0e6c3",
+    "scripts/ranking_metrics.py": "bc5ba836fd2c631958d5bffccffb4545bedcdcbf25bc00d216714540070726d0",
+    "scripts/audit_esci.py": "425d6d4669046f028b57bd36cc54e88c8fd3d9a8eb56403d246957944e277eed",
+    "scripts/prepare_esci_splits.py": "92f70acfc7eac243fd2b54c59eb38ee643ad811d09b9034796e95f28b15599c3",
+    "src/main/java/lab/commerce/search/Bm25Cli.java": "3dfa8b384ace68bda85af4b36cf7106f09158efbf33f6ab8b1841a0970a3f781",
+    "uv.lock": "290dac5f55f5976d52787fb70326944194d1fe22e91531f9943d222ffe449d35"
+  },
+  "artifacts": [
+    {
+      "name": "sample.jsonl",
+      "bytes": 807506,
+      "sha256": "0913c550369692db985ced62b8e2b27489e4f9b11ec1d1f983a94bd50f863466"
+    },
+    {
+      "name": "sample-manifest.json",
+      "bytes": 590,
+      "sha256": "e8f036be0984de8d061f5578b52fce10607462fceb54dae1171bf562f1d82da9"
+    },
+    {
+      "name": "clean/checkpoint.json",
+      "bytes": 15597,
+      "sha256": "2527aacb387a10858bffef65e3e9b91532b74b7db6a7791585a7f55ad6918e13"
+    },
+    {
+      "name": "clean/session.json",
+      "bytes": 776,
+      "sha256": "d6028262848ca7edeefbaf190363de28615ae56b006fb47fbbaec2376dd643c5"
+    },
+    {
+      "name": "resumed/checkpoint.json",
+      "bytes": 15592,
+      "sha256": "4761cfc0c3ac9dc7e04d1e8b8f20a69e0a914c5ffab1496ce7faa40635cf57bd"
+    },
+    {
+      "name": "resumed/session.json",
+      "bytes": 777,
+      "sha256": "6f999b5662719ce49055ca0902aea2bbec77b41d874fd8016b29d447fef6c111"
+    }
+  ],
+  "limits": "Small equal-locale sample; compute projection is locale-weighted and excludes startup/download/indexing. No full-catalog embedding, ANN overhead, retrieval gain, fine-tuning or serving capacity measured. Restart was SIGKILL at a committed-shard boundary, not a power-loss or mid-kernel recovery guarantee."
+}

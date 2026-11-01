@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, candidate-ranking BM25 baseline, error analysis, title-plus-bullet ablation and full-catalog BM25 retrieval baseline are complete. Title-only remains the baseline. Neural training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, candidate-ranking BM25 baseline, error analysis, title-plus-bullet ablation, full-catalog BM25 retrieval baseline and multilingual embedding feasibility pilot are complete. Title-only remains the measured retrieval baseline. Dense retrieval, training and deployment are future work.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -90,11 +90,22 @@ Recall measures retrieval of **known** Exact products; unknown relevance remains
 uv run --locked --no-sync python scripts/run_catalog_bm25.py
 ```
 
+## Completed step: multilingual embedding pilot
+
+The pinned multilingual E5 model encoded **3,072 real titles** on the existing Mac's MPS GPU. A forced worker termination followed by restart preserved 512 completed titles, and all resumed vectors matched the clean run exactly. The sample produced 384-dimensional normalized float32 vectors; two Japanese titles were truncated at the declared 128-token limit.
+
+The [pilot report](docs/embedding-pilot.md) records throughput, measured process memory, observed GPU allocations, checkpoint integrity and limitations. The locale-weighted estimate is roughly **41–45 minutes of encode-stage work** for the full catalog across two short observations; a full-catalog encode has not been run. Raw full-catalog vectors would occupy **2.596 GiB**, before metadata and ANN overhead. No relevance gain is claimed.
+
+```sh
+uv sync --locked --project experiments/embedding-pilot
+uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/pilot.py
+```
+
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled, and each job has a five-minute timeout.
 
-The tests use small fabricated fixtures. CI does not download ESCI, generate benchmark datasets, or train models; the full-data audit and split reproduction remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, without downloading pretrained weights. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
 To run the same commands locally:
 
