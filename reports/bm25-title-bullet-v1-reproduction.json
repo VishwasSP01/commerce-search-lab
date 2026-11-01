@@ -1,0 +1,82 @@
+{
+  "experiment": "bm25-title-bullet-v1",
+  "independent_auxiliary_index_builds": 2,
+  "repeat_command": "uv run --locked --no-sync python scripts/run_title_bullet.py --output-dir data/processed/bm25-title-bullet-v1-repeat --report data/processed/bm25-title-bullet-v1-repeat-report.json",
+  "first_report_sha256": "ce9cf4ef839700f0ffe0c9d5b597b95b8601b3184896e7487b26f4d9a4a70b72",
+  "repeat_report_sha256": "44a9a6680d447b4692ec5c074e3d2c5f83471980206238550c7bb212c96f92c2",
+  "compared_report_keys": [
+    "config",
+    "partition",
+    "official_test_read",
+    "catalog",
+    "unique_validation_candidate_bullet_coverage",
+    "overall_query_weighted",
+    "metrics_by_locale",
+    "locale_macro_mean",
+    "development_cohorts",
+    "largest_gains",
+    "largest_regressions",
+    "adoption_rule_passed",
+    "checks",
+    "artifacts"
+  ],
+  "all_compared_values_equal": true,
+  "artifact_checks": [
+    {
+      "name": "bullets.tsv",
+      "bytes": 1411469264,
+      "sha256_both_runs": "b9486891f93f2c3ffc01e6fa8ea700a5f603e774b6f90541c54150e253cefc07"
+    },
+    {
+      "name": "queries.tsv",
+      "bytes": 1001792,
+      "sha256_both_runs": "0a84dd8cb13b7cebedb6133de5b8c21efc3478ac71066823bac6625912e4ff63"
+    },
+    {
+      "name": "baseline-per-query.csv",
+      "bytes": 432526,
+      "sha256_both_runs": "e35eb663800a4bb9618189ff72a66e7560e54f7eeb701b61ac345d6b0f9bf883"
+    },
+    {
+      "name": "title-rescored.tsv",
+      "bytes": 2385932,
+      "sha256_both_runs": "1d55c04fb320314c280a67cc51e5000c18f743e68372e66690c33318f7d860f4"
+    },
+    {
+      "name": "bullet-scores.tsv",
+      "bytes": 2294231,
+      "sha256_both_runs": "2a8e0eaf80f4a56db14e47f86ab91491e3f5ead361f1bdee40f514876dfccc50"
+    },
+    {
+      "name": "scores.tsv",
+      "bytes": 2541021,
+      "sha256_both_runs": "83e6a16e5f73fd6d6031f691489bd4fc9c890519883611f4ccce2df273b52060"
+    },
+    {
+      "name": "per-query.csv",
+      "bytes": 470547,
+      "sha256_both_runs": "e6dc376078a333333a2f6144624ecb026d196f4c8a6264f02e0479f4c5f1c68b"
+    }
+  ],
+  "timings_seconds": [
+    {
+      "export_and_validation_read_seconds": 7.829475750000711,
+      "title_rescoring_batch_seconds": 1.6452382919997035,
+      "bullet_index_build_seconds": 41.535012959000596,
+      "bullet_scoring_batch_seconds": 1.4349525830002676,
+      "combine_score_files_seconds": 0.15285370900164708
+    },
+    {
+      "export_and_validation_read_seconds": 7.961535541999183,
+      "title_rescoring_batch_seconds": 1.7085358750009618,
+      "bullet_index_build_seconds": 41.76254337499995,
+      "bullet_scoring_batch_seconds": 1.2694969580006727,
+      "combine_score_files_seconds": 0.16273941700274008
+    }
+  ],
+  "not_compared": [
+    "execution timing",
+    "internal Lucene file identity"
+  ],
+  "scope": "Same frozen title index rescored twice; two independently exported and built bullet indexes. No official test read. Repeat artifacts remain in ignored data/."
+}
