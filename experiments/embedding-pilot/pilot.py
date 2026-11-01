@@ -112,6 +112,9 @@ def worker(directory: Path, run_name: str, pause_after: int) -> None:
     started = time.perf_counter()
     with Checkpoint(run_dir, contract, chunks) as checkpoint:
         initial = len(checkpoint.shards)
+        if initial == len(chunks) and (run_dir / "session.json").is_file():
+            print(f"Run {run_name} is already complete; preserving its measured session", flush=True)
+            return
         load_started = time.perf_counter()
         encoder = E5Encoder(MODEL_DIR, policy, device)
         load_seconds = time.perf_counter() - load_started
