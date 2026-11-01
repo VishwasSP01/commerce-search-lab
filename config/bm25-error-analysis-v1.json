@@ -1,0 +1,13 @@
+{
+  "version": "bm25-error-analysis-v1",
+  "partition": "validation",
+  "comparison_tolerance": 1e-12,
+  "metadata_fields": ["title", "description", "bullet_point", "brand", "color"],
+  "diagnostic_relevance_labels": ["E", "S"],
+  "samples_per_locale_per_cohort": 3,
+  "zero_sample_order": "ascending SHA-256 of JSON [sample_seed, locale, query_id]",
+  "loss_sample_order": "ascending NDCG difference, then query_id within locale",
+  "sample_seed": "bm25-errors-v1",
+  "query_length_buckets": ["0", "1", "2", "3-4", "5+"],
+  "notes": "Token overlap flags are diagnostic opportunities, not causal labels or measured improvements. Metadata-field flags overlap. No ranker change, test-set access, new relevance labels, or scoring experiment."
+}
