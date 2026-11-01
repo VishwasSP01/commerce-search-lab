@@ -8,6 +8,8 @@ A Java 21 / Lucene 10.6.0 title index containing **1,814,924 real locale-product
 
 BM25 requires no supervised training. Collection statistics come from the full catalog's locale-specific title fields. At evaluation time, scoring is restricted to each validation query's judged candidate list. All candidates remain in the ranking, including zero lexical matches; missing indexed candidates are errors.
 
+The fixed parameters are **`k1=1.2` and `b=0.75`**, with Lucene's default overlap discounting enabled. No parameter tuning was performed; these values are also recorded in the versioned configuration and aggregate report.
+
 This is an offline candidate-ranking baseline. A full-catalog search evaluation, API, embeddings, neural fine-tuning and streaming ingestion are later increments.
 
 ## Results
@@ -80,4 +82,4 @@ A second independent full-catalog build was run with this command. Reproduction 
 - CI builds Java first and requires the packaged jar integration test; a missing artifact fails CI instead of being silently skipped. Without a built jar, a Python-only local run skips that one integration test.
 - CI uses small fabricated fixtures. Full ESCI indexing and evaluation run locally; raw data, indexes, build output and per-query artifacts remain outside Git.
 
-The next increment is to review errors and define full-catalog retrieval evaluation using judged-result coverage and explicit unjudged-result limits. The official test holdout stays reserved.
+Subsequent work completed [error analysis](bm25-error-analysis.md), an unsuccessful [bullet ablation](bm25-title-bullet.md), and a separate [full-catalog retrieval baseline](full-catalog-bm25.md) under explicit incomplete-judgment rules. The official test holdout stays reserved.
