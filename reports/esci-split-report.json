@@ -1,0 +1,248 @@
+{
+  "policy": {
+    "version": "esci-ranking-v1",
+    "subset": "small_version = 1",
+    "locales": [
+      "es",
+      "jp",
+      "us"
+    ],
+    "protected_queries": "all official test queries, including outside the ranking subset",
+    "normalization": "Unicode NFKC, casefold, collapse Unicode whitespace, within locale",
+    "validation_fraction": "0.10",
+    "validation_rounding": "floor of eligible normalized groups per locale, clamped to [1, groups - 1]",
+    "seed": "commerce-search-lab/esci-ranking/v1",
+    "selection": "ascending SHA-256 of JSON [seed, locale, normalized query]; normalized query breaks ties",
+    "test_policy": "preserve all original ranking test rows and original columns unchanged",
+    "exclusion_policy": "exclude complete training query groups matching a protected locale-query ID or locale-normalized query"
+  },
+  "original_ranking_counts": [
+    {
+      "product_locale": "es",
+      "split": "test",
+      "judgments": 65883,
+      "queries": 2417
+    },
+    {
+      "product_locale": "es",
+      "split": "train",
+      "judgments": 152891,
+      "queries": 5632
+    },
+    {
+      "product_locale": "jp",
+      "split": "test",
+      "judgments": 88789,
+      "queries": 3123
+    },
+    {
+      "product_locale": "jp",
+      "split": "train",
+      "judgments": 209094,
+      "queries": 7284
+    },
+    {
+      "product_locale": "us",
+      "split": "test",
+      "judgments": 181701,
+      "queries": 8956
+    },
+    {
+      "product_locale": "us",
+      "split": "train",
+      "judgments": 419653,
+      "queries": 20888
+    }
+  ],
+  "counts": [
+    {
+      "product_locale": "es",
+      "evaluation_split": "test",
+      "judgments": 65883,
+      "queries": 2417
+    },
+    {
+      "product_locale": "es",
+      "evaluation_split": "train",
+      "judgments": 137773,
+      "queries": 5069
+    },
+    {
+      "product_locale": "es",
+      "evaluation_split": "validation",
+      "judgments": 15118,
+      "queries": 563
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "excluded",
+      "judgments": 32,
+      "queries": 2
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "test",
+      "judgments": 88789,
+      "queries": 3123
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "train",
+      "judgments": 187820,
+      "queries": 6554
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "validation",
+      "judgments": 21242,
+      "queries": 728
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "test",
+      "judgments": 181701,
+      "queries": 8956
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "train",
+      "judgments": 378079,
+      "queries": 18800
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "validation",
+      "judgments": 41574,
+      "queries": 2088
+    }
+  ],
+  "normalized_groups": [
+    {
+      "product_locale": "es",
+      "evaluation_split": "test",
+      "groups": 2417
+    },
+    {
+      "product_locale": "es",
+      "evaluation_split": "train",
+      "groups": 5069
+    },
+    {
+      "product_locale": "es",
+      "evaluation_split": "validation",
+      "groups": 563
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "excluded",
+      "groups": 2
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "test",
+      "groups": 3122
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "train",
+      "groups": 6552
+    },
+    {
+      "product_locale": "jp",
+      "evaluation_split": "validation",
+      "groups": 728
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "test",
+      "groups": 8956
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "train",
+      "groups": 18800
+    },
+    {
+      "product_locale": "us",
+      "evaluation_split": "validation",
+      "groups": 2088
+    }
+  ],
+  "exclusions": [
+    {
+      "product_locale": "jp",
+      "exclusion_reason": "heldout_normalized_text",
+      "queries": 2
+    }
+  ],
+  "protected_test_query_keys": 30969,
+  "checks": {
+    "wrong_partition_rows_train": 0,
+    "wrong_partition_rows_validation": 0,
+    "wrong_partition_rows_test": 0,
+    "wrong_partition_rows_excluded": 0,
+    "missing_ranking_rows": 0,
+    "extra_or_changed_ranking_rows": 0,
+    "missing_test_rows": 0,
+    "extra_or_changed_test_rows": 0,
+    "wrong_original_split_rows": 0,
+    "query_groups_split_across_partitions": 0,
+    "train_validation_ids_overlap": 0,
+    "train_validation_normalized_overlap": 0,
+    "train_test_ids_overlap": 0,
+    "train_test_normalized_overlap": 0,
+    "validation_test_ids_overlap": 0,
+    "validation_test_normalized_overlap": 0,
+    "train_excluded_ids_overlap": 0,
+    "train_excluded_normalized_overlap": 0,
+    "validation_excluded_ids_overlap": 0,
+    "validation_excluded_normalized_overlap": 0,
+    "train_full_test_ids_overlap": 0,
+    "train_full_test_normalized_overlap": 0,
+    "validation_full_test_ids_overlap": 0,
+    "validation_full_test_normalized_overlap": 0
+  },
+  "files": [
+    {
+      "name": "excluded.parquet",
+      "bytes": 2941,
+      "sha256": "fa3206bf6377103131938a259ed6b31f00866ee53e4642da58187d71666a7f36"
+    },
+    {
+      "name": "query-assignments.csv",
+      "bytes": 4198357,
+      "sha256": "1a4442fed1a3f7ea43f1304ef4213d889ef7ede29e2b50e1d926a0729abe78e7"
+    },
+    {
+      "name": "test.parquet",
+      "bytes": 3086529,
+      "sha256": "5c16733ba48323667a67b0bcf969e17cec1976eaaa49f575fef57db0343feb8c"
+    },
+    {
+      "name": "train.parquet",
+      "bytes": 6389479,
+      "sha256": "59f3ecc34fde74172bb731e1a7ddc50b3a183bdcb58955ef19c4fb54ee6be526"
+    },
+    {
+      "name": "validation.parquet",
+      "bytes": 742502,
+      "sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36"
+    }
+  ],
+  "provenance": {
+    "repository": "https://github.com/amazon-science/esci-data",
+    "revision": "7916cdf6ab75a462e77f20ab40428a10923998d5",
+    "input": {
+      "name": "shopping_queries_dataset_examples.parquet",
+      "bytes": 51286808,
+      "sha256": "4a735b693b4a424a6fc67f5be6e4c811495c488bbf66d02a602d308b2744263a"
+    },
+    "python": "3.12.16",
+    "duckdb": "2.0.0",
+    "unicode_version": "15.0.0",
+    "split_script_sha256": "92f70acfc7eac243fd2b54c59eb38ee643ad811d09b9034796e95f28b15599c3",
+    "normalization_module_sha256": "425d6d4669046f028b57bd36cc54e88c8fd3d9a8eb56403d246957944e277eed",
+    "policy_sha256": "eae3ea040d211f3a7bf32a63b64dc418159af84dc0689a323891680c5009fa9c",
+    "dependency_lock_sha256": "290dac5f55f5976d52787fb70326944194d1fe22e91531f9943d222ffe449d35"
+  }
+}

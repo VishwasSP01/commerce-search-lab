@@ -1,0 +1,823 @@
+{
+  "schemas": {
+    "examples": [
+      {
+        "column_name": "example_id",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "query",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "query_id",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_id",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_locale",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "esci_label",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "small_version",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "large_version",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "split",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "__index_level_0__",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ],
+    "products_raw": [
+      {
+        "column_name": "product_id",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_title",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_description",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_bullet_point",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_brand",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_color",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "product_locale",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ],
+    "sources": [
+      {
+        "column_name": "query_id",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "source",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ]
+  },
+  "sizes": {
+    "example_rows": 2621288,
+    "distinct_query_ids": 130652,
+    "product_rows": 1814924,
+    "source_rows": 130652
+  },
+  "subsets": {
+    "all": {
+      "totals": {
+        "rows": 2621288,
+        "distinct_query_ids": 130652,
+        "locale_query_keys": 130652,
+        "locale_product_keys": 1814883
+      },
+      "by_locale_split": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "rows": 93347,
+          "queries": 3844
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "rows": 263063,
+          "queries": 11336
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "rows": 118907,
+          "queries": 4667
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "rows": 327146,
+          "queries": 13460
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "rows": 425762,
+          "queries": 22458
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "rows": 1393063,
+          "queries": 74888
+        }
+      ],
+      "labels": [
+        {
+          "product_locale": "es",
+          "esci_label": "C",
+          "rows": 20503
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "E",
+          "rows": 202066
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "I",
+          "rows": 44782
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "S",
+          "rows": 89059
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "C",
+          "rows": 15100
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "E",
+          "rows": 258534
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "I",
+          "rows": 56478
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "S",
+          "rows": 115941
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "C",
+          "rows": 40049
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "E",
+          "rows": 1247558
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "I",
+          "rows": 161905
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "S",
+          "rows": 369313
+        }
+      ],
+      "train_test_overlap": {
+        "ids": 1,
+        "exact": 1,
+        "normalized": 4,
+        "by_locale": {
+          "es": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 0
+          },
+          "jp": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 3
+          },
+          "us": {
+            "ids": 1,
+            "exact": 1,
+            "normalized": 1
+          }
+        }
+      },
+      "candidate_depth": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 61,
+          "median": 16.0,
+          "mean": 24.28381893860562
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 77,
+          "median": 16.0,
+          "mean": 23.205980945659846
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 86,
+          "median": 16.0,
+          "mean": 25.478251553460467
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 96,
+          "median": 16.0,
+          "mean": 24.305052005943537
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 126,
+          "median": 16.0,
+          "mean": 18.958144091192448
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "minimum": 3,
+          "maximum": 198,
+          "median": 16.0,
+          "mean": 18.60195224869138
+        }
+      ]
+    },
+    "ranking": {
+      "totals": {
+        "rows": 1118011,
+        "distinct_query_ids": 48300,
+        "locale_query_keys": 48300,
+        "locale_product_keys": 883716
+      },
+      "by_locale_split": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "rows": 65883,
+          "queries": 2417
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "rows": 152891,
+          "queries": 5632
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "rows": 88789,
+          "queries": 3123
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "rows": 209094,
+          "queries": 7284
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "rows": 181701,
+          "queries": 8956
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "rows": 419653,
+          "queries": 20888
+        }
+      ],
+      "labels": [
+        {
+          "product_locale": "es",
+          "esci_label": "C",
+          "rows": 17390
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "E",
+          "rows": 90205
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "I",
+          "rows": 37921
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "S",
+          "rows": 73258
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "C",
+          "rows": 13003
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "E",
+          "rows": 137767
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "I",
+          "rows": 48058
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "S",
+          "rows": 99055
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "C",
+          "rows": 27189
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "E",
+          "rows": 261527
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "I",
+          "rows": 101447
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "S",
+          "rows": 211191
+        }
+      ],
+      "train_test_overlap": {
+        "ids": 0,
+        "exact": 0,
+        "normalized": 2,
+        "by_locale": {
+          "es": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 0
+          },
+          "jp": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 2
+          },
+          "us": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 0
+          }
+        }
+      },
+      "candidate_depth": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 61,
+          "median": 23.0,
+          "mean": 27.258171286719072
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 77,
+          "median": 21.0,
+          "mean": 27.146839488636363
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 86,
+          "median": 31.0,
+          "mean": 28.43067563240474
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 96,
+          "median": 35.0,
+          "mean": 28.705930807248766
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 95,
+          "median": 16.0,
+          "mean": 20.288186690486825
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 188,
+          "median": 16.0,
+          "mean": 20.09062619685944
+        }
+      ]
+    },
+    "large": {
+      "totals": {
+        "rows": 2621288,
+        "distinct_query_ids": 130652,
+        "locale_query_keys": 130652,
+        "locale_product_keys": 1814883
+      },
+      "by_locale_split": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "rows": 93347,
+          "queries": 3844
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "rows": 263063,
+          "queries": 11336
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "rows": 118907,
+          "queries": 4667
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "rows": 327146,
+          "queries": 13460
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "rows": 425762,
+          "queries": 22458
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "rows": 1393063,
+          "queries": 74888
+        }
+      ],
+      "labels": [
+        {
+          "product_locale": "es",
+          "esci_label": "C",
+          "rows": 20503
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "E",
+          "rows": 202066
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "I",
+          "rows": 44782
+        },
+        {
+          "product_locale": "es",
+          "esci_label": "S",
+          "rows": 89059
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "C",
+          "rows": 15100
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "E",
+          "rows": 258534
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "I",
+          "rows": 56478
+        },
+        {
+          "product_locale": "jp",
+          "esci_label": "S",
+          "rows": 115941
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "C",
+          "rows": 40049
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "E",
+          "rows": 1247558
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "I",
+          "rows": 161905
+        },
+        {
+          "product_locale": "us",
+          "esci_label": "S",
+          "rows": 369313
+        }
+      ],
+      "train_test_overlap": {
+        "ids": 1,
+        "exact": 1,
+        "normalized": 4,
+        "by_locale": {
+          "es": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 0
+          },
+          "jp": {
+            "ids": 0,
+            "exact": 0,
+            "normalized": 3
+          },
+          "us": {
+            "ids": 1,
+            "exact": 1,
+            "normalized": 1
+          }
+        }
+      },
+      "candidate_depth": [
+        {
+          "product_locale": "es",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 61,
+          "median": 16.0,
+          "mean": 24.28381893860562
+        },
+        {
+          "product_locale": "es",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 77,
+          "median": 16.0,
+          "mean": 23.205980945659846
+        },
+        {
+          "product_locale": "jp",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 86,
+          "median": 16.0,
+          "mean": 25.478251553460467
+        },
+        {
+          "product_locale": "jp",
+          "split": "train",
+          "minimum": 8,
+          "maximum": 96,
+          "median": 16.0,
+          "mean": 24.305052005943537
+        },
+        {
+          "product_locale": "us",
+          "split": "test",
+          "minimum": 8,
+          "maximum": 126,
+          "median": 16.0,
+          "mean": 18.958144091192448
+        },
+        {
+          "product_locale": "us",
+          "split": "train",
+          "minimum": 3,
+          "maximum": 198,
+          "median": 16.0,
+          "mean": 18.60195224869138
+        }
+      ]
+    }
+  },
+  "products_by_locale": [
+    {
+      "product_locale": "es",
+      "rows": 260011,
+      "distinct_product_ids": 260011,
+      "missing_product_title": 0,
+      "missing_product_description": 118370,
+      "missing_product_bullet_point": 36977,
+      "missing_product_brand": 12020,
+      "missing_product_color": 100088
+    },
+    {
+      "product_locale": "jp",
+      "rows": 339059,
+      "distinct_product_ids": 339059,
+      "missing_product_title": 0,
+      "missing_product_description": 189640,
+      "missing_product_bullet_point": 88367,
+      "missing_product_brand": 58401,
+      "missing_product_color": 184828
+    },
+    {
+      "product_locale": "us",
+      "rows": 1215854,
+      "distinct_product_ids": 1215854,
+      "missing_product_title": 0,
+      "missing_product_description": 569795,
+      "missing_product_bullet_point": 178776,
+      "missing_product_brand": 72335,
+      "missing_product_color": 406104
+    }
+  ],
+  "integrity": {
+    "duplicate_example_ids": 0,
+    "duplicate_product_keys": 0,
+    "duplicate_query_product_keys": 0,
+    "conflicting_pair_labels": 0,
+    "query_ids_with_multiple_texts": 0,
+    "query_ids_used_in_multiple_locales": 0,
+    "product_ids_used_in_multiple_locales": 11567,
+    "unmatched_example_rows": 0,
+    "unmatched_product_keys": 0,
+    "unreferenced_product_keys": 41,
+    "duplicate_source_query_ids": 0,
+    "unmatched_source_rows": 0,
+    "invalid_label_rows": 0,
+    "invalid_split_rows": 0,
+    "invalid_locale_rows": 0,
+    "invalid_version_rows": 0,
+    "small_outside_large_rows": 0,
+    "null_example_identity_rows": 0,
+    "null_product_identity_rows": 0,
+    "empty_query_rows": 0
+  },
+  "sources": [
+    {
+      "source": "behavioral",
+      "rows": 3780
+    },
+    {
+      "source": "negations",
+      "rows": 6964
+    },
+    {
+      "source": "nlqec",
+      "rows": 169
+    },
+    {
+      "source": "other",
+      "rows": 113656
+    },
+    {
+      "source": "parse_pattern",
+      "rows": 6083
+    }
+  ],
+  "identity_policy": {
+    "product_key": [
+      "product_locale",
+      "product_id"
+    ],
+    "query_key": [
+      "product_locale",
+      "query_id"
+    ],
+    "normalization": "Unicode NFKC, casefold, collapse Unicode whitespace, evaluated within locale",
+    "unicode_version": "15.0.0"
+  },
+  "provenance": {
+    "repository": "https://github.com/amazon-science/esci-data",
+    "revision": "7916cdf6ab75a462e77f20ab40428a10923998d5",
+    "files": [
+      {
+        "name": "shopping_queries_dataset_examples.parquet",
+        "bytes": 51286808,
+        "sha256": "4a735b693b4a424a6fc67f5be6e4c811495c488bbf66d02a602d308b2744263a"
+      },
+      {
+        "name": "shopping_queries_dataset_products.parquet",
+        "bytes": 1108857465,
+        "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+      },
+      {
+        "name": "shopping_queries_dataset_sources.csv",
+        "bytes": 1682802,
+        "sha256": "a5fed8ecc016443de40bf3c63098f0e3f23bbe4daa4236f1c38b8c3184778c50"
+      }
+    ],
+    "python": "3.12.16",
+    "duckdb": "2.0.0",
+    "audit_script_sha256": "425d6d4669046f028b57bd36cc54e88c8fd3d9a8eb56403d246957944e277eed",
+    "coverage": "Full pinned files; no sampling; no raw product/query text in report"
+  }
+}

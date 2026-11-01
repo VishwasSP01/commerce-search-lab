@@ -1,0 +1,29 @@
+# Local credentials and machine files
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Java build output
+target/
+build/
+.gradle/
+
+# Local datasets, model weights and generated experiment output
+/data/
+/models/
+/artifacts/
+/runs/
+
+# Local editor state
+.idea/
+*.iml
