@@ -1,0 +1,286 @@
+{
+  "config": {
+    "version": "catalog-bm25-title-v1",
+    "baseline": "bm25-title-v1",
+    "partition": "validation",
+    "corpus": "all 1,814,924 pinned ESCI locale-product records; each query searches its own locale",
+    "document_text": "product_title only",
+    "k1": 1.2,
+    "b": 0.75,
+    "retrieval_cutoff": 100,
+    "coverage_cutoff": 10,
+    "query": "unchanged locale analyzers, NFKC and literal QueryBuilder SHOULD query; only locale filter, no candidate or judgment filter",
+    "ranking": "descending Lucene float32 BM25 score, then ascending product_id using sorted doc values, including cutoff ties",
+    "empty_results": "return no products for empty analysis or no lexical matches; never pad with nonmatching products",
+    "primary_metric": "mean known_exact_recall_at_100: retrieved judged Exact products / all judged Exact products for the query",
+    "zero_exact_policy": "per-query recall is null and excluded from recall mean/CI; report the excluded count; retain these queries for other metrics",
+    "secondary_metric": "judgment_coverage_at_10: judged products / min(10, returned products); empty lists score 0 by explicit convention",
+    "coverage_safeguard": "also report returned-at-10 counts, mean slot-fill fraction, empty and short-result counts; coverage is not precision",
+    "unjudged_policy": "unknown relevance; never relabel as Irrelevant; do not publish full-catalog NDCG as a headline or drop unjudged results before computing ranks",
+    "aggregation": "query-weighted overall and per locale; secondary equal-locale macro mean",
+    "confidence": {
+      "resamples": 2000,
+      "seed": 20261101,
+      "method": "percentile bootstrap of locale-normalized query groups, retaining member query IDs; exclude undefined recall observations only"
+    },
+    "hypothesis": "establish measured title-BM25 known-Exact retrieval and judgment coverage for later dense/fusion comparisons; no gain or minimum performance is assumed",
+    "tuning": "none; one fixed baseline; official test never opened; no model, spell, entity or bullet changes",
+    "parity": "new index adds locale and product-ID sorting fields; require exact frozen judged-candidate score artifact before retrieval measurement",
+    "repeat": "two independent full-catalog builds must reproduce query input, parity scores, retrieval/status and per-query metrics, aggregate metrics and confidence intervals"
+  },
+  "partition": "validation",
+  "official_test_read": false,
+  "catalog": [
+    {
+      "product_locale": "es",
+      "products": 260011,
+      "unique_ids": 260011,
+      "null_rows": 0
+    },
+    {
+      "product_locale": "jp",
+      "products": 339059,
+      "unique_ids": 339059,
+      "null_rows": 0
+    },
+    {
+      "product_locale": "us",
+      "products": 1215854,
+      "unique_ids": 1215854,
+      "null_rows": 0
+    }
+  ],
+  "overall_query_weighted": {
+    "queries": 3379,
+    "normalized_query_groups": 3379,
+    "known_exact_recall_at_100": {
+      "mean": 0.5028993427898031,
+      "ci95": [
+        0.49073264864860894,
+        0.5150464129576836
+      ],
+      "defined_queries": 3379,
+      "normalized_query_groups": 3379
+    },
+    "judgment_coverage_at_10": {
+      "mean": 0.32911657905738995,
+      "ci95": [
+        0.31855949679862083,
+        0.33927519177741133
+      ],
+      "defined_queries": 3379,
+      "normalized_query_groups": 3379
+    },
+    "queries_without_known_exact": 0,
+    "known_exact_products": 34232,
+    "retrieved_known_exact_at_100": 16307,
+    "queries_with_a_known_exact_hit_at_100": 2809,
+    "zero_result_queries": 26,
+    "zero_analyzed_term_queries": 1,
+    "queries_with_fewer_than_10_results": 79,
+    "queries_with_fewer_than_100_results": 180,
+    "mean_returned_at_10": 9.837821840781297,
+    "mean_top_10_slot_fill": 0.9837821840781296,
+    "returned_at_100": 324567,
+    "judged_at_10_count": 10910
+  },
+  "metrics_by_locale": {
+    "es": {
+      "queries": 563,
+      "normalized_query_groups": 563,
+      "known_exact_recall_at_100": {
+        "mean": 0.5807686390237166,
+        "ci95": [
+          0.5523712160327799,
+          0.6074487549407538
+        ],
+        "defined_queries": 563,
+        "normalized_query_groups": 563
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.4245707519242155,
+        "ci95": [
+          0.3990519538188277,
+          0.4516044997039668
+        ],
+        "defined_queries": 563,
+        "normalized_query_groups": 563
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 6384,
+      "retrieved_known_exact_at_100": 3507,
+      "queries_with_a_known_exact_hit_at_100": 514,
+      "zero_result_queries": 3,
+      "zero_analyzed_term_queries": 1,
+      "queries_with_fewer_than_10_results": 10,
+      "queries_with_fewer_than_100_results": 39,
+      "mean_returned_at_10": 9.88632326820604,
+      "mean_top_10_slot_fill": 0.988632326820604,
+      "returned_at_100": 53717,
+      "judged_at_10_count": 2365
+    },
+    "jp": {
+      "queries": 728,
+      "normalized_query_groups": 728,
+      "known_exact_recall_at_100": {
+        "mean": 0.5377128326738196,
+        "ci95": [
+          0.5125753150045209,
+          0.5635803218016223
+        ],
+        "defined_queries": 728,
+        "normalized_query_groups": 728
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.4360560570381999,
+        "ci95": [
+          0.41137444400837264,
+          0.46196121958398745
+        ],
+        "defined_queries": 728,
+        "normalized_query_groups": 728
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 9784,
+      "retrieved_known_exact_at_100": 4970,
+      "queries_with_a_known_exact_hit_at_100": 639,
+      "zero_result_queries": 8,
+      "zero_analyzed_term_queries": 0,
+      "queries_with_fewer_than_10_results": 32,
+      "queries_with_fewer_than_100_results": 85,
+      "mean_returned_at_10": 9.721153846153847,
+      "mean_top_10_slot_fill": 0.9721153846153847,
+      "returned_at_100": 66627,
+      "judged_at_10_count": 3086
+    },
+    "us": {
+      "queries": 2088,
+      "normalized_query_groups": 2088,
+      "known_exact_recall_at_100": {
+        "mean": 0.46976493933422014,
+        "ci95": [
+          0.4546034063471871,
+          0.4854168740982039
+        ],
+        "defined_queries": 2088,
+        "normalized_query_groups": 2088
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.26609328437633034,
+        "ci95": [
+          0.2545364383780332,
+          0.27760017560664113
+        ],
+        "defined_queries": 2088,
+        "normalized_query_groups": 2088
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 18064,
+      "retrieved_known_exact_at_100": 7830,
+      "queries_with_a_known_exact_hit_at_100": 1656,
+      "zero_result_queries": 15,
+      "zero_analyzed_term_queries": 0,
+      "queries_with_fewer_than_10_results": 37,
+      "queries_with_fewer_than_100_results": 56,
+      "mean_returned_at_10": 9.865421455938698,
+      "mean_top_10_slot_fill": 0.9865421455938698,
+      "returned_at_100": 204223,
+      "judged_at_10_count": 5459
+    }
+  },
+  "locale_macro_mean": {
+    "known_exact_recall_at_100": 0.5294154703439188,
+    "judgment_coverage_at_10": 0.3755733644462486
+  },
+  "checks": {
+    "frozen_candidate_scores_exact": true,
+    "frozen_per_query_metrics_exact": true,
+    "all_returned_products_in_locale_catalog": true,
+    "query_coverage_exact": true,
+    "score_id_order_and_cutoffs_valid": true
+  },
+  "execution": {
+    "index_build_seconds": 12.731282541000837,
+    "candidate_parity_batch_seconds": 1.1670847089990275,
+    "catalog_retrieval_batch_seconds": 3.5794664999993984,
+    "index_bytes": 115630862,
+    "java_heap_limit": "4 GiB",
+    "duckdb_memory_setting": "4 GB",
+    "note": "Single local batches including JVM startup; reuse verified title export. Timings exclude hashing, Maven, Python evaluation and bootstrap. Not API latency, QPS, concurrent capacity or peak memory."
+  },
+  "provenance": {
+    "baseline_report_sha256": "fcddf9d536212474fac149b5032e93e55196d2c35b4d495e50a32d1231a08848",
+    "products_input": {
+      "name": "shopping_queries_dataset_products.parquet",
+      "bytes": 1108857465,
+      "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+    },
+    "validation_input": {
+      "name": "validation.parquet",
+      "bytes": 742502,
+      "sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36"
+    },
+    "reused_title_export": {
+      "name": "products.tsv",
+      "bytes": 303680512,
+      "sha256": "4f03c4961243f3c193d8a981bffc146869ded43841defca38452ebae5d61518b"
+    },
+    "source_sha256": {
+      "config/catalog-bm25-title-v1.json": "64c9d70b20656d7c28b7e5a767f94ac64da30949f760537f4d7c08b1d96fc0c1",
+      "docs/decisions/0003-full-catalog-evaluation.md": "8168aee89a18cae3ccead32ade0b01a5b3b54b9f14012a007cf805ff672669cd",
+      "scripts/catalog_metrics.py": "e98400532e0e6a2d36daa5e5caa41d2ab6b7f3c40fb4534e0f165f404ff7bbc7",
+      "scripts/run_catalog_bm25.py": "dcbc45cc64dca49c11d24f4850dd15734ff46642bd933097f6b07ebfb0194a71",
+      "scripts/download_esci.py": "12c4f62664c241cdcd7ea6ba95b427787e592aca2a856bc5d9ca49d0eaf19b74",
+      "src/main/java/lab/commerce/search/CatalogCli.java": "463d9619d5307bfdaccef0f7459654d769651d9eb65166274c6b1f80f7e603f1",
+      "src/test/java/lab/commerce/search/CatalogCliTest.java": "d7f437aadf34ccc201b6c83153972eca16ab6891038bebe1f1755188af3a35ea",
+      "tests/test_catalog_retrieval.py": "ed53e0a3ad0b8bbd6f6930dff7a80d9f15d2e0c8c7c9a861fcda62b1ed3cd023"
+    },
+    "frozen_source_sha256": {
+      "config/bm25-title-v1.json": "ecefec5d2c6b6ca381ae2164f504eaf92b50af523f0283e1cad46cc5dfa694bc",
+      "pom.xml": "b8c210abdc395565fbb0b73cb92b3437048e6e6f32714a3a576eab171adc04ab",
+      "scripts/run_bm25.py": "2943265e91fe3bac1ccd87e06d0a3b81b57385de56c535e1ee7834bd1bd0e6c3",
+      "scripts/ranking_metrics.py": "bc5ba836fd2c631958d5bffccffb4545bedcdcbf25bc00d216714540070726d0",
+      "scripts/audit_esci.py": "425d6d4669046f028b57bd36cc54e88c8fd3d9a8eb56403d246957944e277eed",
+      "scripts/prepare_esci_splits.py": "92f70acfc7eac243fd2b54c59eb38ee643ad811d09b9034796e95f28b15599c3",
+      "src/main/java/lab/commerce/search/Bm25Cli.java": "3dfa8b384ace68bda85af4b36cf7106f09158efbf33f6ab8b1841a0970a3f781",
+      "uv.lock": "290dac5f55f5976d52787fb70326944194d1fe22e91531f9943d222ffe449d35"
+    },
+    "jar_sha256": "7968bf330a45c9faff9b88e6ddd9b53637791c2fe17af21e6cb80ba2b9ad873b",
+    "python": "3.12.16",
+    "duckdb": "2.0.0",
+    "java": "openjdk version \"21.0.11\" 2026-04-21 LTS\nOpenJDK Runtime Environment Microsoft-13877178 (build 21.0.11+10-LTS)\nOpenJDK 64-Bit Server VM Microsoft-13877178 (build 21.0.11+10-LTS, mixed mode, sharing)"
+  },
+  "artifacts": [
+    {
+      "name": "queries.tsv",
+      "bytes": 144518,
+      "sha256": "843c9f7224dd489580c9df4e50a3d1c0fb31b00b4bcff3b900019d7c32092968"
+    },
+    {
+      "name": "baseline-per-query.csv",
+      "bytes": 432526,
+      "sha256": "e35eb663800a4bb9618189ff72a66e7560e54f7eeb701b61ac345d6b0f9bf883"
+    },
+    {
+      "name": "candidate-parity.tsv",
+      "bytes": 2385932,
+      "sha256": "1d55c04fb320314c280a67cc51e5000c18f743e68372e66690c33318f7d860f4"
+    },
+    {
+      "name": "results.tsv",
+      "bytes": 10565683,
+      "sha256": "6c9d0384d8f08cf2c31fc652218094eb3d17a949b7c6468d0ec1d12c2b24bc53"
+    },
+    {
+      "name": "query-status.tsv",
+      "bytes": 51097,
+      "sha256": "e659fd44c20e8ea2d90c658d0cb5179730a1512f331c9655cabb61d99e453d7d"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1419273,
+      "sha256": "6347b9d29aa3822c3e1240270e6097489aa3e381a32a56f7ae1166589fd2987e"
+    }
+  ],
+  "limits": "Known positives and incomplete judgments only; no exhaustive relevance, cross-language retrieval, held-out final test, online effect or gain over dense/hybrid claim. Coverage is not precision. The candidate-ranking NDCG values are a separate evaluation track."
+}

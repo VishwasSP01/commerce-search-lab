@@ -1,0 +1,68 @@
+{
+  "experiment": "catalog-bm25-title-v1",
+  "independent_catalog_builds": 2,
+  "repeat_command": "uv run --locked --no-sync python scripts/run_catalog_bm25.py --output-dir data/processed/catalog-bm25-title-v1-repeat --report data/processed/catalog-bm25-title-v1-repeat-report.json",
+  "first_report_sha256": "1c741278e78256d91f122d261d35c1a510ed88d7574306cc4c676beeef85bcbf",
+  "repeat_report_sha256": "446eff1a34eb86fe42bf2703ba817df97bb9d7d92a8fbe8d439fa802a42a70f9",
+  "compared_report_keys": [
+    "config",
+    "partition",
+    "official_test_read",
+    "catalog",
+    "overall_query_weighted",
+    "metrics_by_locale",
+    "locale_macro_mean",
+    "checks",
+    "artifacts"
+  ],
+  "all_compared_values_equal": true,
+  "artifact_checks": [
+    {
+      "name": "queries.tsv",
+      "bytes": 144518,
+      "sha256_both_runs": "843c9f7224dd489580c9df4e50a3d1c0fb31b00b4bcff3b900019d7c32092968"
+    },
+    {
+      "name": "baseline-per-query.csv",
+      "bytes": 432526,
+      "sha256_both_runs": "e35eb663800a4bb9618189ff72a66e7560e54f7eeb701b61ac345d6b0f9bf883"
+    },
+    {
+      "name": "candidate-parity.tsv",
+      "bytes": 2385932,
+      "sha256_both_runs": "1d55c04fb320314c280a67cc51e5000c18f743e68372e66690c33318f7d860f4"
+    },
+    {
+      "name": "results.tsv",
+      "bytes": 10565683,
+      "sha256_both_runs": "6c9d0384d8f08cf2c31fc652218094eb3d17a949b7c6468d0ec1d12c2b24bc53"
+    },
+    {
+      "name": "query-status.tsv",
+      "bytes": 51097,
+      "sha256_both_runs": "e659fd44c20e8ea2d90c658d0cb5179730a1512f331c9655cabb61d99e453d7d"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1419273,
+      "sha256_both_runs": "6347b9d29aa3822c3e1240270e6097489aa3e381a32a56f7ae1166589fd2987e"
+    }
+  ],
+  "timings_seconds": [
+    {
+      "index_build_seconds": 12.731282541000837,
+      "candidate_parity_batch_seconds": 1.1670847089990275,
+      "catalog_retrieval_batch_seconds": 3.5794664999993984
+    },
+    {
+      "index_build_seconds": 13.458811833002983,
+      "candidate_parity_batch_seconds": 1.1687707919991226,
+      "catalog_retrieval_batch_seconds": 3.611792042000161
+    }
+  ],
+  "not_compared": [
+    "execution timing",
+    "internal Lucene file identity"
+  ],
+  "scope": "Two independent index builds from the same hash-verified title export; frozen candidate parity and all full-catalog retrieval outputs reproduce. No official test read. Repeat artifacts remain under ignored data/."
+}

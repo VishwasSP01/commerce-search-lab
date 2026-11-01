@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, Java/Lucene BM25 baseline, error analysis and one controlled title-plus-bullet ablation are complete. The ablation did not improve overall validation ranking, so title-only remains the baseline. Neural training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, candidate-ranking BM25 baseline, error analysis, title-plus-bullet ablation and full-catalog BM25 retrieval baseline are complete. Title-only remains the baseline. Neural training and deployment are future work.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -73,6 +73,21 @@ The [experiment write-up](docs/bm25-title-bullet.md) documents improvements, reg
 
 ```sh
 uv run --locked --no-sync python scripts/run_title_bullet.py
+```
+
+## Completed step: full-catalog retrieval baseline
+
+Title BM25 now searches the entire product catalog within each query's locale, without judged-candidate filtering. The three locale corpora total **1,814,924 products**.
+
+| Validation retrieval | English | Spanish | Japanese | Overall, query-weighted |
+| --- | ---: | ---: | ---: | ---: |
+| Known-Exact Recall@100 | 46.98% | 58.08% | 53.77% | **50.29%** |
+| Judgment coverage among returned top ten | 26.61% | 42.46% | 43.61% | **32.91%** |
+
+Recall measures retrieval of **known** Exact products; unknown relevance remains unknown. Coverage is not precision. The [results and protocol](docs/full-catalog-bm25.md) explain denominators, confidence intervals, empty/short lists, locale scope and limitations. The [aggregate report](reports/catalog-bm25-title-v1.json) and [independent-repeat verification](reports/catalog-bm25-title-v1-reproduction.json) record reproducible evidence. This is separate from candidate-ranking NDCG; the official test remains reserved.
+
+```sh
+uv run --locked --no-sync python scripts/run_catalog_bm25.py
 ```
 
 ## Continuous integration
