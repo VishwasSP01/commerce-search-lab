@@ -1,0 +1,632 @@
+{
+  "policy": {
+    "version": "bm25-error-analysis-v1",
+    "partition": "validation",
+    "comparison_tolerance": 1e-12,
+    "metadata_fields": [
+      "title",
+      "description",
+      "bullet_point",
+      "brand",
+      "color"
+    ],
+    "diagnostic_relevance_labels": [
+      "E",
+      "S"
+    ],
+    "samples_per_locale_per_cohort": 3,
+    "zero_sample_order": "ascending SHA-256 of JSON [sample_seed, locale, query_id]",
+    "loss_sample_order": "ascending NDCG difference, then query_id within locale",
+    "sample_seed": "bm25-errors-v1",
+    "query_length_buckets": [
+      "0",
+      "1",
+      "2",
+      "3-4",
+      "5+"
+    ],
+    "notes": "Token overlap flags are diagnostic opportunities, not causal labels or measured improvements. Metadata-field flags overlap. No ranker change, test-set access, new relevance labels, or scoring experiment."
+  },
+  "partition": "validation",
+  "ranker_changed": false,
+  "official_test_read": false,
+  "overall": {
+    "queries": 3379,
+    "judgments": 77934,
+    "outcomes": {
+      "loss": 977,
+      "tie": 132,
+      "win": 2270
+    },
+    "zero_score_queries": 79,
+    "zero_kinds": {
+      "empty_query_analysis": 1,
+      "no_title_token_overlap": 78
+    },
+    "zero_with_es_candidate": 79,
+    "zero_with_any_es_extra_overlap": 18,
+    "zero_with_es_full_coverage_in_one_extra_field": 12,
+    "nonempty_zero_without_es_extra_overlap": 60,
+    "loss_top1_labels": {
+      "C": 114,
+      "E": 352,
+      "I": 140,
+      "S": 371
+    },
+    "losses_with_es_candidate": 977,
+    "losses_no_positive_es": 22,
+    "losses_any_zero_es": 516,
+    "losses_top_score_tied": 71,
+    "extra_field_flags": {
+      "description": {
+        "zero_with_es_overlap": 9,
+        "zero_with_irrelevant_overlap": 4,
+        "zero_with_es_and_no_irrelevant_overlap": 8,
+        "zero_with_es_full_query_coverage": 8,
+        "loss_with_es_new_tokens": 583,
+        "loss_with_irrelevant_new_tokens": 182,
+        "loss_with_es_without_title_overlap": 188
+      },
+      "bullet_point": {
+        "zero_with_es_overlap": 8,
+        "zero_with_irrelevant_overlap": 4,
+        "zero_with_es_and_no_irrelevant_overlap": 6,
+        "zero_with_es_full_query_coverage": 2,
+        "loss_with_es_new_tokens": 715,
+        "loss_with_irrelevant_new_tokens": 238,
+        "loss_with_es_without_title_overlap": 295
+      },
+      "brand": {
+        "zero_with_es_overlap": 5,
+        "zero_with_irrelevant_overlap": 2,
+        "zero_with_es_and_no_irrelevant_overlap": 3,
+        "zero_with_es_full_query_coverage": 5,
+        "loss_with_es_new_tokens": 68,
+        "loss_with_irrelevant_new_tokens": 12,
+        "loss_with_es_without_title_overlap": 29
+      },
+      "color": {
+        "zero_with_es_overlap": 0,
+        "zero_with_irrelevant_overlap": 0,
+        "zero_with_es_and_no_irrelevant_overlap": 0,
+        "zero_with_es_full_query_coverage": 0,
+        "loss_with_es_new_tokens": 39,
+        "loss_with_irrelevant_new_tokens": 5,
+        "loss_with_es_without_title_overlap": 6
+      }
+    },
+    "term_count_slices": [
+      {
+        "analyzed_terms": "0",
+        "queries": 1,
+        "bm25_mean": 0.25621329931149006,
+        "delta_mean": 0.0,
+        "losses": 0,
+        "zero_scores": 1
+      },
+      {
+        "analyzed_terms": "1",
+        "queries": 166,
+        "bm25_mean": 0.7031320008207032,
+        "delta_mean": 0.10020392727809445,
+        "losses": 39,
+        "zero_scores": 30
+      },
+      {
+        "analyzed_terms": "2",
+        "queries": 743,
+        "bm25_mean": 0.6891166891626122,
+        "delta_mean": 0.12100781770987819,
+        "losses": 226,
+        "zero_scores": 26
+      },
+      {
+        "analyzed_terms": "3-4",
+        "queries": 1905,
+        "bm25_mean": 0.7066730555646706,
+        "delta_mean": 0.1401888475112703,
+        "losses": 554,
+        "zero_scores": 18
+      },
+      {
+        "analyzed_terms": "5+",
+        "queries": 564,
+        "bm25_mean": 0.6718600395043816,
+        "delta_mean": 0.14777391933487713,
+        "losses": 158,
+        "zero_scores": 4
+      }
+    ]
+  },
+  "by_locale": {
+    "es": {
+      "queries": 563,
+      "judgments": 15118,
+      "outcomes": {
+        "loss": 171,
+        "tie": 14,
+        "win": 378
+      },
+      "zero_score_queries": 4,
+      "zero_kinds": {
+        "empty_query_analysis": 1,
+        "no_title_token_overlap": 3
+      },
+      "zero_with_es_candidate": 4,
+      "zero_with_any_es_extra_overlap": 2,
+      "zero_with_es_full_coverage_in_one_extra_field": 2,
+      "nonempty_zero_without_es_extra_overlap": 1,
+      "loss_top1_labels": {
+        "C": 35,
+        "E": 61,
+        "I": 16,
+        "S": 59
+      },
+      "losses_with_es_candidate": 171,
+      "losses_no_positive_es": 3,
+      "losses_any_zero_es": 111,
+      "losses_top_score_tied": 13,
+      "extra_field_flags": {
+        "description": {
+          "zero_with_es_overlap": 1,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 1,
+          "zero_with_es_full_query_coverage": 1,
+          "loss_with_es_new_tokens": 98,
+          "loss_with_irrelevant_new_tokens": 40,
+          "loss_with_es_without_title_overlap": 41
+        },
+        "bullet_point": {
+          "zero_with_es_overlap": 1,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 1,
+          "zero_with_es_full_query_coverage": 1,
+          "loss_with_es_new_tokens": 120,
+          "loss_with_irrelevant_new_tokens": 49,
+          "loss_with_es_without_title_overlap": 62
+        },
+        "brand": {
+          "zero_with_es_overlap": 2,
+          "zero_with_irrelevant_overlap": 1,
+          "zero_with_es_and_no_irrelevant_overlap": 1,
+          "zero_with_es_full_query_coverage": 2,
+          "loss_with_es_new_tokens": 8,
+          "loss_with_irrelevant_new_tokens": 0,
+          "loss_with_es_without_title_overlap": 5
+        },
+        "color": {
+          "zero_with_es_overlap": 0,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 0,
+          "zero_with_es_full_query_coverage": 0,
+          "loss_with_es_new_tokens": 9,
+          "loss_with_irrelevant_new_tokens": 0,
+          "loss_with_es_without_title_overlap": 2
+        }
+      },
+      "term_count_slices": [
+        {
+          "analyzed_terms": "0",
+          "queries": 1,
+          "bm25_mean": 0.25621329931149006,
+          "delta_mean": 0.0,
+          "losses": 0,
+          "zero_scores": 1
+        },
+        {
+          "analyzed_terms": "1",
+          "queries": 21,
+          "bm25_mean": 0.5928817400295007,
+          "delta_mean": 0.026088460917748788,
+          "losses": 10,
+          "zero_scores": 1
+        },
+        {
+          "analyzed_terms": "2",
+          "queries": 166,
+          "bm25_mean": 0.6897806554677584,
+          "delta_mean": 0.1271395603829406,
+          "losses": 52,
+          "zero_scores": 2
+        },
+        {
+          "analyzed_terms": "3-4",
+          "queries": 340,
+          "bm25_mean": 0.6884605988871249,
+          "delta_mean": 0.13015737485830234,
+          "losses": 101,
+          "zero_scores": 0
+        },
+        {
+          "analyzed_terms": "5+",
+          "queries": 35,
+          "bm25_mean": 0.6573175004871292,
+          "delta_mean": 0.1731005496716622,
+          "losses": 8,
+          "zero_scores": 0
+        }
+      ]
+    },
+    "jp": {
+      "queries": 728,
+      "judgments": 21242,
+      "outcomes": {
+        "loss": 185,
+        "tie": 40,
+        "win": 503
+      },
+      "zero_score_queries": 29,
+      "zero_kinds": {
+        "no_title_token_overlap": 29
+      },
+      "zero_with_es_candidate": 29,
+      "zero_with_any_es_extra_overlap": 4,
+      "zero_with_es_full_coverage_in_one_extra_field": 2,
+      "nonempty_zero_without_es_extra_overlap": 25,
+      "loss_top1_labels": {
+        "C": 20,
+        "E": 77,
+        "I": 17,
+        "S": 71
+      },
+      "losses_with_es_candidate": 185,
+      "losses_no_positive_es": 4,
+      "losses_any_zero_es": 133,
+      "losses_top_score_tied": 19,
+      "extra_field_flags": {
+        "description": {
+          "zero_with_es_overlap": 1,
+          "zero_with_irrelevant_overlap": 2,
+          "zero_with_es_and_no_irrelevant_overlap": 1,
+          "zero_with_es_full_query_coverage": 1,
+          "loss_with_es_new_tokens": 103,
+          "loss_with_irrelevant_new_tokens": 22,
+          "loss_with_es_without_title_overlap": 54
+        },
+        "bullet_point": {
+          "zero_with_es_overlap": 2,
+          "zero_with_irrelevant_overlap": 2,
+          "zero_with_es_and_no_irrelevant_overlap": 1,
+          "zero_with_es_full_query_coverage": 0,
+          "loss_with_es_new_tokens": 110,
+          "loss_with_irrelevant_new_tokens": 36,
+          "loss_with_es_without_title_overlap": 63
+        },
+        "brand": {
+          "zero_with_es_overlap": 1,
+          "zero_with_irrelevant_overlap": 1,
+          "zero_with_es_and_no_irrelevant_overlap": 0,
+          "zero_with_es_full_query_coverage": 1,
+          "loss_with_es_new_tokens": 12,
+          "loss_with_irrelevant_new_tokens": 3,
+          "loss_with_es_without_title_overlap": 8
+        },
+        "color": {
+          "zero_with_es_overlap": 0,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 0,
+          "zero_with_es_full_query_coverage": 0,
+          "loss_with_es_new_tokens": 3,
+          "loss_with_irrelevant_new_tokens": 0,
+          "loss_with_es_without_title_overlap": 0
+        }
+      },
+      "term_count_slices": [
+        {
+          "analyzed_terms": "1",
+          "queries": 76,
+          "bm25_mean": 0.7201686227774257,
+          "delta_mean": 0.09690133007070463,
+          "losses": 20,
+          "zero_scores": 10
+        },
+        {
+          "analyzed_terms": "2",
+          "queries": 200,
+          "bm25_mean": 0.6984810154722986,
+          "delta_mean": 0.10531633098982475,
+          "losses": 61,
+          "zero_scores": 8
+        },
+        {
+          "analyzed_terms": "3-4",
+          "queries": 357,
+          "bm25_mean": 0.7358974204295149,
+          "delta_mean": 0.1545069133818083,
+          "losses": 82,
+          "zero_scores": 10
+        },
+        {
+          "analyzed_terms": "5+",
+          "queries": 95,
+          "bm25_mean": 0.6585221903065765,
+          "delta_mean": 0.1821958735439143,
+          "losses": 22,
+          "zero_scores": 1
+        }
+      ]
+    },
+    "us": {
+      "queries": 2088,
+      "judgments": 41574,
+      "outcomes": {
+        "loss": 621,
+        "tie": 78,
+        "win": 1389
+      },
+      "zero_score_queries": 46,
+      "zero_kinds": {
+        "no_title_token_overlap": 46
+      },
+      "zero_with_es_candidate": 46,
+      "zero_with_any_es_extra_overlap": 12,
+      "zero_with_es_full_coverage_in_one_extra_field": 8,
+      "nonempty_zero_without_es_extra_overlap": 34,
+      "loss_top1_labels": {
+        "C": 59,
+        "E": 214,
+        "I": 107,
+        "S": 241
+      },
+      "losses_with_es_candidate": 621,
+      "losses_no_positive_es": 15,
+      "losses_any_zero_es": 272,
+      "losses_top_score_tied": 39,
+      "extra_field_flags": {
+        "description": {
+          "zero_with_es_overlap": 7,
+          "zero_with_irrelevant_overlap": 2,
+          "zero_with_es_and_no_irrelevant_overlap": 6,
+          "zero_with_es_full_query_coverage": 6,
+          "loss_with_es_new_tokens": 382,
+          "loss_with_irrelevant_new_tokens": 120,
+          "loss_with_es_without_title_overlap": 93
+        },
+        "bullet_point": {
+          "zero_with_es_overlap": 5,
+          "zero_with_irrelevant_overlap": 2,
+          "zero_with_es_and_no_irrelevant_overlap": 4,
+          "zero_with_es_full_query_coverage": 1,
+          "loss_with_es_new_tokens": 485,
+          "loss_with_irrelevant_new_tokens": 153,
+          "loss_with_es_without_title_overlap": 170
+        },
+        "brand": {
+          "zero_with_es_overlap": 2,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 2,
+          "zero_with_es_full_query_coverage": 2,
+          "loss_with_es_new_tokens": 48,
+          "loss_with_irrelevant_new_tokens": 9,
+          "loss_with_es_without_title_overlap": 16
+        },
+        "color": {
+          "zero_with_es_overlap": 0,
+          "zero_with_irrelevant_overlap": 0,
+          "zero_with_es_and_no_irrelevant_overlap": 0,
+          "zero_with_es_full_query_coverage": 0,
+          "loss_with_es_new_tokens": 27,
+          "loss_with_irrelevant_new_tokens": 5,
+          "loss_with_es_without_title_overlap": 4
+        }
+      },
+      "term_count_slices": [
+        {
+          "analyzed_terms": "1",
+          "queries": 69,
+          "bm25_mean": 0.7179214531091718,
+          "delta_mean": 0.12639845164517977,
+          "losses": 9,
+          "zero_scores": 19
+        },
+        {
+          "analyzed_terms": "2",
+          "queries": 377,
+          "bm25_mean": 0.6838565202804067,
+          "delta_mean": 0.12663229532335915,
+          "losses": 113,
+          "zero_scores": 16
+        },
+        {
+          "analyzed_terms": "3-4",
+          "queries": 1208,
+          "bm25_mean": 0.7031624073971343,
+          "delta_mean": 0.1387808600826503,
+          "losses": 371,
+          "zero_scores": 8
+        },
+        {
+          "analyzed_terms": "5+",
+          "queries": 434,
+          "bm25_mean": 0.6759524001942325,
+          "delta_mean": 0.1381966895845407,
+          "losses": 128,
+          "zero_scores": 3
+        }
+      ]
+    }
+  },
+  "sample_manifest": [
+    {
+      "locale": "es",
+      "query_id": 53177,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.6153756402142814
+    },
+    {
+      "locale": "es",
+      "query_id": 74049,
+      "sample_reason": "empty_query_analysis",
+      "outcome": "tie",
+      "zero_kind": "empty_query_analysis",
+      "delta": 0.0
+    },
+    {
+      "locale": "es",
+      "query_id": 80686,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "es",
+      "query_id": 88001,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.7422956098250812
+    },
+    {
+      "locale": "es",
+      "query_id": 90272,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.6156299991508124
+    },
+    {
+      "locale": "es",
+      "query_id": 90530,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "jp",
+      "query_id": 116965,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.5867436316733559
+    },
+    {
+      "locale": "jp",
+      "query_id": 117722,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.623948189630352
+    },
+    {
+      "locale": "jp",
+      "query_id": 118722,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.671105900440203
+    },
+    {
+      "locale": "jp",
+      "query_id": 121731,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "jp",
+      "query_id": 122506,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "jp",
+      "query_id": 122568,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "us",
+      "query_id": 19940,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "us",
+      "query_id": 22559,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "us",
+      "query_id": 44274,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.8665180076952319
+    },
+    {
+      "locale": "us",
+      "query_id": 56559,
+      "sample_reason": "zero_hash_sample",
+      "outcome": "tie",
+      "zero_kind": "no_title_token_overlap",
+      "delta": 0.0
+    },
+    {
+      "locale": "us",
+      "query_id": 58526,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.6974695255017396
+    },
+    {
+      "locale": "us",
+      "query_id": 59709,
+      "sample_reason": "largest_loss",
+      "outcome": "loss",
+      "zero_kind": null,
+      "delta": -0.6625346143836587
+    }
+  ],
+  "distinct_texts_analyzed": 222029,
+  "unique_candidate_products": 75682,
+  "provenance": {
+    "baseline_report_sha256": "fcddf9d536212474fac149b5032e93e55196d2c35b4d495e50a32d1231a08848",
+    "policy_sha256": "add46982cc421006d643507c437d487cc7c4a84dbd7feb5362e5a9af9ad95d52",
+    "analysis_script_sha256": "f32c330e9ce3a2cb805f44ef9e348a758e1c2024074c2ad4bd1773e385c2aef2",
+    "java_bridge_sha256": "494b2ab921ef6b0a68ddf8d1a6c73ab258ab6b78e6b40acac7742ee12a77afe8",
+    "jar_sha256": "71624111fc443167952391c90fe0591cdb8f46125152d8c3b9d055a411ef642c",
+    "input_validation_sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36",
+    "input_products_sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265",
+    "python": "3.12.16",
+    "duckdb": "2.0.0",
+    "java": "openjdk version \"21.0.11\" 2026-04-21 LTS\nOpenJDK Runtime Environment Microsoft-13877178 (build 21.0.11+10-LTS)\nOpenJDK 64-Bit Server VM Microsoft-13877178 (build 21.0.11+10-LTS, mixed mode, sharing)"
+  },
+  "artifacts": [
+    {
+      "name": "texts.tsv",
+      "bytes": 117207417,
+      "sha256": "febeaab188f2d79d575e308b2d5c6db20b7f9ba3e1da8edb00975abb66a787eb"
+    },
+    {
+      "name": "tokens.tsv",
+      "bytes": 98458382,
+      "sha256": "d98c8d837f4f31129abfb107442908803a893934b872f46822d10f420decacf8"
+    },
+    {
+      "name": "per-query-diagnostics.json",
+      "bytes": 4961331,
+      "sha256": "3b5e99fb48aa5337e4183e2181a3d80e3a379d2b61e1cffe741d607e74ac5667"
+    },
+    {
+      "name": "case-samples.json",
+      "bytes": 147058,
+      "sha256": "5437cee2755ae8f8ecb9b0546c76dccbefd16dbf5207e576b8b030356cc4c2fd"
+    }
+  ],
+  "limits": "Metadata token overlaps are overlapping diagnostic flags, not causal categories or measured gains. E/S defines diagnostic relevance only; original ESCI gains and rankings remain unchanged. Samples are purpose-specific, not prevalence estimates."
+}
