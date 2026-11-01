@@ -26,4 +26,4 @@
 
 ## Immediate milestone
 
-The ESCI audit, ranking splits and first BM25 title baseline are complete. Read `docs/bm25-baseline.md`, its design decision and aggregate evidence. The next increment is error analysis and a defined full-catalog retrieval evaluation with explicit incomplete-judgment limits. Keep later API/streaming/neural work separate. Preserve the official test holdout; raw larger-split training data is not safe to use directly. CI must run both Java and Python tests and require the packaged integration test.
+The ESCI audit, splits, first BM25 baseline and validation error analysis are complete. Read `docs/bm25-error-analysis.md` and its aggregate report. The recommended next increment is one predeclared title-plus-bullet ablation against the frozen title-only baseline; no improvement has been implemented yet. Keep spelling/entity/neural changes and later API/streaming work separate. Define an incomplete-judgment protocol before full-catalog quality claims. Preserve the official test holdout. CI must run Java/Python tests and require packaged and diagnostic bridge integration checks.

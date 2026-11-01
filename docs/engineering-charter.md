@@ -116,4 +116,4 @@ Ask the project reviewer to assess the data/evaluation protocol before model dev
 
 ## Immediate next work
 
-The machine inventory, full ESCI audit, [evaluation splits](evaluation-splits.md), and [first BM25 baseline](bm25-baseline.md) are complete. Validation candidate-ranking quality and local batch indexing are measured. Next, investigate errors and define full-catalog retrieval evaluation before adding serving or neural components. The official ranking test set remains reserved. Model-training and serving capacity remain unmeasured.
+The machine inventory, ESCI audit, evaluation splits, first BM25 baseline and [validation error analysis](bm25-error-analysis.md) are complete. The next proposed experiment is a controlled title-plus-bullet ablation, with no gain assumed in advance. Full-catalog retrieval still needs an incomplete-judgment protocol. Serving, streaming and neural work remain later increments; the official test set stays reserved.

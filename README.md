@@ -55,6 +55,16 @@ With Java 21 and the earlier data preparation complete:
 uv run --locked python scripts/run_bm25.py
 ```
 
+## Completed step: validation error analysis
+
+The [error analysis](docs/bm25-error-analysis.md) reproduces the baseline outcomes and distinguishes 78 title-vocabulary gaps from one empty-analysis query. Of 977 losses against the control, 352 still rank an Exact product first and 371 rank a Substitute first. Metadata and 18 inspected cases suggest hypotheses, not proven fixes.
+
+The [aggregate diagnostic report](reports/bm25-error-analysis-v1.json) and [qualitative case notes](docs/bm25-case-review.csv) support a separate, controlled title-plus-bullet experiment. The ranker and official test holdout remain unchanged.
+
+```sh
+uv run --locked --no-sync python scripts/analyze_bm25_errors.py
+```
+
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled, and each job has a five-minute timeout.
