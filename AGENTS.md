@@ -26,4 +26,4 @@
 
 ## Immediate milestone
 
-The ESCI audit and ranking splits are complete. Read `docs/esci-data-audit.md`, `docs/evaluation-splits.md`, and the aggregate reports. The next increment is a minimal BM25 candidate-ranking baseline with declared locale analysis, ESCI gains, and NDCG@10. Use the prepared training/validation artifacts for development. Preserve the official test holdout; raw larger-split training data is not safe to use directly.
+The ESCI audit, ranking splits and first BM25 title baseline are complete. Read `docs/bm25-baseline.md`, its design decision and aggregate evidence. The next increment is error analysis and a defined full-catalog retrieval evaluation with explicit incomplete-judgment limits. Keep later API/streaming/neural work separate. Preserve the official test holdout; raw larger-split training data is not safe to use directly. CI must run both Java and Python tests and require the packaged integration test.

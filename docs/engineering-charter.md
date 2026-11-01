@@ -116,4 +116,4 @@ Ask the project reviewer to assess the data/evaluation protocol before model dev
 
 ## Immediate next work
 
-The machine inventory, full pinned-file ESCI audit, and [evaluation split preparation](evaluation-splits.md) are complete. The official ranking test set is preserved; overlapping ranking training groups are excluded and validation groups are fixed. The next increment is a minimal BM25 candidate-ranking baseline. Model-training and serving capacity remain unmeasured.
+The machine inventory, full ESCI audit, [evaluation splits](evaluation-splits.md), and [first BM25 baseline](bm25-baseline.md) are complete. Validation candidate-ranking quality and local batch indexing are measured. Next, investigate errors and define full-catalog retrieval evaluation before adding serving or neural components. The official ranking test set remains reserved. Model-training and serving capacity remain unmeasured.
