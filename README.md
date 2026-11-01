@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, candidate-ranking BM25, error analysis, bullet ablation, catalog BM25, embedding export and exhaustive dense retrieval comparison are complete. Dense does not demonstrate an overall gain; title-only BM25 remains the baseline. Fusion, training and deployment are future work.
+**Status:** the ESCI audit, ranking splits, BM25 experiments, embedding export, exhaustive dense retrieval and fixed RRF fusion comparison are complete. RRF improves validation known-Exact Recall@100 from **50.29% to 55.27%**, with gains in all three locales, and is nominated as the next offline development reference. ANN, training and serving remain future work; the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -128,6 +128,26 @@ The first run takes **39.71 seconds** of main wall time, including query encodin
 
 ```sh
 uv run --locked --no-sync --project experiments/embedding-pilot python experiments/embedding-pilot/run_dense.py
+```
+
+## Completed step: hybrid retrieval with RRF
+
+One predeclared configuration combines the two saved top-100 lists using equal-weight reciprocal rank fusion, rank constant 60, final cutoff 100. No new retrieval, encoding, training or parameter sweep is involved.
+
+| Validation known-Exact Recall@100 | English | Spanish | Japanese | Overall, query-weighted |
+| --- | ---: | ---: | ---: | ---: |
+| Title BM25 | 46.98% | 58.08% | 53.77% | **50.29%** |
+| Exhaustive dense | 48.47% | 47.94% | 53.53% | **49.48%** |
+| RRF | **52.54%** | **60.60%** | **58.98%** | **55.27%** |
+
+RRF gains **+4.98 percentage points** over BM25, paired 95% interval **[+4.32, +5.59] pp**, and **+5.80 pp** over dense. It passes the predeclared offline nomination rule. **441 queries still regress versus BM25.** Judgment coverage@10 is 33.63% overall, while Spanish coverage decreases; coverage is not precision.
+
+RRF recovers at least one known Exact product for **19 of the original 78 vocabulary-gap queries**; 59 still have none. Two fresh fusion runs reproduce all four artifact hashes and every metric/interval/decision, preserving the source lists. This is incomplete-label validation evidence, not a final-test, exhaustive-relevance or production claim.
+
+Read the [results, regressions, recovery analysis and reproduction instructions](docs/full-catalog-rrf.md), [predeclared protocol](docs/decisions/0007-rrf-hybrid-retrieval.md), [aggregate report](reports/catalog-rrf-v1.json) and [repeat verification](reports/catalog-rrf-v1-reproduction.json).
+
+```sh
+uv run --locked --no-sync python scripts/run_rrf.py
 ```
 
 ## Continuous integration
