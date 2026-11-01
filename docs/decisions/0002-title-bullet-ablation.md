@@ -1,0 +1,15 @@
+# Decision 0002: one title-plus-bullet validation ablation
+
+Status: predeclared before the first experiment run.
+
+The title-only error analysis found bullet evidence worth testing, alongside irrelevant-product matches. It did not establish a relevance improvement. Run exactly one configuration: **title BM25 + 0.25 × bullet BM25**. The weight is a conservative first choice, not a fitted parameter; different field score scales mean it cannot guarantee that title matches dominate.
+
+Reuse the frozen Java ranker in two independent indexes. Preserve the existing title scores and index. Export all pinned locale-product keys with bullet text, mapping null to empty text, and build the auxiliary index with precisely the same analyzer and BM25 parameters. The ranker's internal `title_<locale>` field names in the auxiliary index hold **bullet text**. Each field has its own full-catalog term and length statistics. This is a weighted sum of BM25 scores, **not BM25F**. Two indexes keep the experiment auditable without changing the frozen scorer; they are an offline experiment implementation, not a serving architecture decision.
+
+Combine serialized Lucene float32 scores using Python float64 arithmetic, retain every judged candidate including zero scores, and sort by descending score then ascending product ID. Reuse the original validation queries, gains, NDCG@10, grouping and 2,000-resample paired bootstrap with seed 20261101. Verify the baseline's source and artifact hashes, reproduce its per-query metrics and rerun its scorer against the existing title index to require exact score-file equality. Compare against title BM25, not against the weaker ID-order control.
+
+Publish all-query and per-locale NDCG and paired uncertainty, win/tie/loss counts, and descriptive effects on the previously identified 79 zero-score queries and 977 baseline losses. These cohorts were discovered on validation data; they are development diagnostics. Publish the ten largest gains and ten largest regressions without copying source text into Git. Report missing bullet coverage, full-catalog document counts, both index sizes and single-machine batch timing, clearly distinguishing reused title work from incremental bullet work. Keep the official test set unread and unscored.
+
+Recommend this variant as the next development baseline only if the overall paired 95% delta interval is entirely positive and no locale mean decreases. Otherwise retain title-only. Do not change the weight after seeing results. Even a passing result is validation evidence selected after error analysis, not a final test or causal online result.
+
+Completion means meaningful integration/invariant tests pass, an independent repeat reproduces scores and metrics, aggregate evidence and limitations are written down, and focused commits are pushed for PR review. Do not add other retrieval methods, model training, APIs, infrastructure, or an incomplete-judgment protocol in this increment; full-catalog quality claims still require that later protocol.

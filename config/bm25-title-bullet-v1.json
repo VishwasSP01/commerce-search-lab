@@ -1,0 +1,20 @@
+{
+  "version": "bm25-title-bullet-v1",
+  "baseline": "bm25-title-v1",
+  "evaluation_partition": "validation",
+  "score": "title_bm25 + bullet_weight * bullet_bm25; Python float64 sum of serialized Lucene float32 scores",
+  "bullet_weight": 0.25,
+  "document_text": "product_bullet_point only in an independent auxiliary BM25 index; null becomes empty text",
+  "engine": "unchanged frozen Bm25Cli with the same locale analyzers, normalization, k1=1.2 and b=0.75",
+  "statistics": "independent full-catalog field statistics; one locale-product document in each index; not BM25F",
+  "candidate_scope": "same judged validation candidates as the frozen title baseline",
+  "tie_break": "descending combined score, then ascending product_id",
+  "confidence": {"resamples": 2000, "seed": 20261101, "method": "paired percentile bootstrap of locale-normalized query groups"},
+  "outcome_tolerance": 1e-12,
+  "hypothesis": "adding low-weight bullet evidence improves mean validation NDCG@10 over title-only BM25",
+  "weight_rationale": "single conservative auxiliary weight chosen before measurement; score scales differ by field so title dominance is not guaranteed",
+  "adoption_rule": "recommend for the next development baseline only if overall paired delta CI95 is entirely above zero and no locale mean decreases; otherwise retain title-only",
+  "diagnostics": ["all validation queries", "each locale", "baseline all-zero-score queries", "baseline losses against product-ID order", "ten largest gains and ten largest regressions by NDCG delta with identity tie-break"],
+  "tuning": "one configuration and one hypothesis; no sweep, post-result weight changes, spelling, entity, neural, or test-set experiments",
+  "cost_protocol": "report existing title index bytes plus new bullet index bytes; incremental bullet export/index/score time; combined-score time; rerun frozen title scorer and verify exact score artifact; no API or load claims"
+}
