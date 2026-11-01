@@ -1,0 +1,20 @@
+{
+  "version": "catalog-rrf-v1",
+  "partition": "validation",
+  "rank_constant": 60,
+  "source_window": 100,
+  "retrieval_cutoff": 100,
+  "coverage_cutoff": 10,
+  "sources": ["catalog-bm25-title-v1", "catalog-dense-exact-v1"],
+  "weights": [1, 1],
+  "scoring": "sum 1/(60 + source rank), ranks start at 1, absent products contribute zero; exact rational accumulation/order, serialized binary64 score; ascending product_id for equal rational scores",
+  "confidence": {"resamples": 2000, "seed": 20261101},
+  "comparison": "same incomplete-judgment metrics; paired RRF-minus-reference intervals against BM25 and dense on identical locale-normalized query groups; query-weighted overall/per locale plus equal-locale means",
+  "cohort": "exactly 78 original bm25-error-analysis-v1 cases with zero_kind=no_title_token_overlap; this describes judged-candidate titles, not the entire catalog",
+  "recovery": "report known-Exact additions/losses relative to BM25, net query recall wins/regressions, and BM25-zero-known-Exact to RRF-positive queries; no lexical-overlap or nonzero-score rescue claim",
+  "union_diagnostic": "known-Exact coverage in source top-100 union, up to 200 products; candidate opportunity upper bound, not Recall@100 of a served ranking",
+  "decision": "nominate RRF as the next offline development reference only if overall recall paired lower CI >0 against both sources and no locale mean recall regresses versus BM25; otherwise retain BM25. This is not a test-set release or serving adoption",
+  "hypothesis": "complementary lexical and dense candidates may help; no gain is assumed, no weight/constant/depth sweep",
+  "repeat": "two fresh fusion runs must reproduce ranked results, per-query/cohort/union diagnostics, all metrics/intervals and decision; preserve original source artifacts",
+  "scope": "offline fusion only; no re-encoding, new retrieval, ANN, tuning, training, API, LLM judgment or official test access"
+}
