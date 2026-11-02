@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, BM25 experiments, embedding export, exhaustive dense retrieval and fixed RRF fusion comparison are complete. RRF improves validation known-Exact Recall@100 from **50.29% to 55.27%**, with gains in all three locales, and is nominated as the next offline development reference. ANN, training and serving remain future work; the official test stays reserved.
+**Status:** the ESCI audit, ranking splits, BM25 experiments, embedding export, exhaustive dense retrieval, RRF fusion and float32 ANN benchmark are complete. Exact-dense RRF remains the offline development reference at **55.27%** validation known-Exact Recall@100. HNSW is faster but none of the three tested depths meets the declared quality budget. Int8, training and serving remain future work; the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -150,11 +150,31 @@ Read the [results, regressions, recovery analysis and reproduction instructions]
 uv run --locked --no-sync python scripts/run_rrf.py
 ```
 
+## Completed step: ANN cost and quality
+
+One Faiss float32 HNSW graph per locale indexes all **1,814,924 saved vectors**, with fixed M=16 and efConstruction=100. Three search depths are compared with a matched exhaustive Faiss control using the same saved validation query vectors and singleton CPU searches.
+
+| Method | Exact-neighbor agreement@100 | Hybrid known-Exact Recall@100 | Warm native p95, ms |
+| --- | ---: | ---: | ---: |
+| Faiss Flat control | Reference | **55.27%** | 25.268 |
+| HNSW, efSearch 128 | 76.88% | 54.69% | 0.330 |
+| HNSW, efSearch 256 | 85.39% | 54.90% | 0.571 |
+| HNSW, efSearch 512 | **90.91%** | **55.07%** | **1.085** |
+
+**No ANN setting is nominated:** depth 512 misses the >=95% overall and >=90% per-locale neighbor-agreement budgets, despite passing the separate hybrid-recall loss budget. Neighbor agreement and human-label recall are different metrics. Keep the exact RRF reference. The graph files occupy **2.840 GiB**, versus **2.596 GiB** for Flat; the largest one-locale query-worker RSS is 2.093 GiB for HNSW versus 1.934 GiB for Flat. These warm serial native timings exclude encoding/API/concurrency and are not serving capacity.
+
+The [results, limits and reproduction instructions](docs/ann-cost-quality.md), [predeclared protocol](docs/decisions/0008-ann-cost-quality.md), [aggregate report](reports/catalog-ann-v1.json) and [fresh-process replay evidence](reports/catalog-ann-v1-reproduction.json) preserve the losing configurations and matched-control comparison. Both runs reproduce every ranked/metric artifact and decision on the same frozen graphs, with distinct timing observations. The official test remains reserved; bulk indexes and timings stay ignored.
+
+```sh
+uv sync --locked --project experiments/ann-benchmark
+uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/benchmark.py
+```
+
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled, and each job has a five-minute timeout.
 
-The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. A third CPU job checks native ANN persistence/reload, ties, locale identities and quality budgets in its own locked environment. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
 To run the same commands locally:
 
