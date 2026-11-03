@@ -1,0 +1,172 @@
+{
+  "first_report_sha256": "b5aa6bc039fb2cd21d50f081a4c1ed06cc51fa992ac9fd72a1323467a52981f6",
+  "repeat_report_sha256": "240c5261e5a45ecb14f2c66e37329f80251e2f4cb9fbc13cb03da43bf20733d9",
+  "repeat_command": "uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/benchmark.py --output-dir data/processed/catalog-ann-v1-repeat --report data/processed/catalog-ann-v1-repeat-report.json --indices-dir data/processed/catalog-ann-v1/indices",
+  "checks": {
+    "all_twelve_aggregate_artifact_hashes_equal": true,
+    "all_twelve_worker_rankings_equal_after_reload": true,
+    "all_three_pass_rankings_identical_in_each_worker": true,
+    "all_metrics_intervals_and_selection_equal": true,
+    "native_timing_summaries_recomputed_from_raw_samples": true,
+    "index_artifacts_unchanged": true,
+    "all_source_bindings_unchanged": true
+  },
+  "equal_report_fields": [
+    "config",
+    "partition",
+    "official_test_read",
+    "contract",
+    "metrics",
+    "agreement",
+    "selection",
+    "selection_inputs",
+    "builds",
+    "artifacts",
+    "checks",
+    "limits"
+  ],
+  "artifacts": [
+    {
+      "name": "flat/dense.tsv",
+      "bytes": 14183305,
+      "sha256": "6bd116bbbc0705bcd7f0263c1be1901dec96c29a7c3cc29867fa2331ff40a2ef"
+    },
+    {
+      "name": "flat/hybrid.tsv",
+      "bytes": 14640463,
+      "sha256": "1837d8da3dccc932f7b567fdbe9f94d127bd73ed3f5e99e7cd0f23fc66364bd5"
+    },
+    {
+      "name": "flat/per-query.json",
+      "bytes": 2846590,
+      "sha256": "8e66f027b24265a4265450eb8eac39ee664e92b08a68293190ac91f1b5210a2d"
+    },
+    {
+      "name": "hnsw-128/dense.tsv",
+      "bytes": 14183232,
+      "sha256": "b4d72add3a1251268a237c7972bdd520a5580dfdf1ca7450e4223c654a61ec16"
+    },
+    {
+      "name": "hnsw-128/hybrid.tsv",
+      "bytes": 14635064,
+      "sha256": "5cec5b66faa876ddc9f475724caa3283305c4ff873a09f8106c7c59ecb5f6138"
+    },
+    {
+      "name": "hnsw-128/per-query.json",
+      "bytes": 2844183,
+      "sha256": "5e4573e34db8cff2d6860dddf8c191ea64738f95e3105592b537e5c4551910ee"
+    },
+    {
+      "name": "hnsw-256/dense.tsv",
+      "bytes": 14183126,
+      "sha256": "1dd2a446d2e4148fdf94b920e9d387182f5754e4c0faa3b6a36e9596118ecb2a"
+    },
+    {
+      "name": "hnsw-256/hybrid.tsv",
+      "bytes": 14637965,
+      "sha256": "55c7b17f2ccf753e75c3504a308660296d0d2502b8a6ed74819691ddcbc7d9ee"
+    },
+    {
+      "name": "hnsw-256/per-query.json",
+      "bytes": 2845299,
+      "sha256": "940232619b3009d512acbd8ca02fde4811c2048ecec744ecb9d91f2e6abcf4b7"
+    },
+    {
+      "name": "hnsw-512/dense.tsv",
+      "bytes": 14183083,
+      "sha256": "c6adc52973d53962dc694751db8dd5d688e2fdef4e51d5a2bddf0dd10c38fe58"
+    },
+    {
+      "name": "hnsw-512/hybrid.tsv",
+      "bytes": 14638837,
+      "sha256": "969ffdcb130e9cc2d652402dbc4a989a3f7fb42c82b41339528ff854f57a464b"
+    },
+    {
+      "name": "hnsw-512/per-query.json",
+      "bytes": 2845891,
+      "sha256": "d9918952e6acc052fc654336a3510709af673915a09ad71e2f25487a579e2b12"
+    }
+  ],
+  "worker_evidence_trees": [
+    {
+      "files": 36,
+      "sha256": "9362e2635c66bb942f84689683b239768eafa395f6e3ab7f4a45a6794a692316"
+    },
+    {
+      "files": 36,
+      "sha256": "2d1edd5e7178fa8e85a13ff4df0acf7e8888474ced237bf8c91a61579ab57fb9"
+    }
+  ],
+  "hardware": {
+    "cpu": "Apple M5 Pro",
+    "physical_cores": 15,
+    "logical_cores": 15,
+    "memory_bytes": 25769803776,
+    "source": "sysctl -n machdep.cpu.brand_string hw.memsize hw.physicalcpu hw.logicalcpu"
+  },
+  "main_wall_seconds": {
+    "first_with_build": 395.09378170799755,
+    "repeat_reusing_graphs": 269.28949841600115
+  },
+  "pooled_native_latency_first": {
+    "flat": {
+      "samples": 10137,
+      "sum_seconds": 183.495562087,
+      "p50_ms": 24.4885,
+      "p95_ms": 25.2683498,
+      "p99_ms": 49.23247188
+    },
+    "hnsw-128": {
+      "samples": 10137,
+      "sum_seconds": 2.458473966,
+      "p50_ms": 0.2375,
+      "p95_ms": 0.33025,
+      "p99_ms": 0.3913317599999997
+    },
+    "hnsw-256": {
+      "samples": 10137,
+      "sum_seconds": 4.401573725,
+      "p50_ms": 0.430708,
+      "p95_ms": 0.5707247999999999,
+      "p99_ms": 0.64026112
+    },
+    "hnsw-512": {
+      "samples": 10137,
+      "sum_seconds": 8.587363443000001,
+      "p50_ms": 0.845542,
+      "p95_ms": 1.0848834,
+      "p99_ms": 1.1759479999999998
+    }
+  },
+  "pooled_native_latency_repeat": {
+    "flat": {
+      "samples": 10137,
+      "sum_seconds": 180.076367006,
+      "p50_ms": 24.12625,
+      "p95_ms": 24.92135,
+      "p99_ms": 48.49805852
+    },
+    "hnsw-128": {
+      "samples": 10137,
+      "sum_seconds": 2.4464591220000003,
+      "p50_ms": 0.2365,
+      "p95_ms": 0.328666,
+      "p99_ms": 0.38843287999999976
+    },
+    "hnsw-256": {
+      "samples": 10137,
+      "sum_seconds": 4.391603969,
+      "p50_ms": 0.43,
+      "p95_ms": 0.5716751999999999,
+      "p99_ms": 0.6391001199999992
+    },
+    "hnsw-512": {
+      "samples": 10137,
+      "sum_seconds": 8.589893067,
+      "p50_ms": 0.846792,
+      "p95_ms": 1.0834582,
+      "p99_ms": 1.16863312
+    }
+  },
+  "limits": "Same frozen graphs, fresh worker processes and same machine. Six timed passes per method across two runs. Raw timing/session/result trees intentionally differ because measurements vary; neighbor and per-query metric hashes match. This does not repeat multithreaded graph construction or measure API capacity."
+}
