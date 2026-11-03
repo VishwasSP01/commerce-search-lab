@@ -1,0 +1,112 @@
+{
+  "first_report_sha256": "25fac7a2df5af66fce35f8d17fb8bdd601beb23f11d04f57810385d8badb282d",
+  "repeat_report_sha256": "96b1d41e4408a072f6e6600c9a507f42f782087323793241e447b717d23ae8e6",
+  "repeat_command": "uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/run_depth_1024.py --output-dir data/processed/ann-depth-1024-v1-repeat --report data/processed/ann-depth-1024-v1-repeat-report.json --reverse-order",
+  "checks": {
+    "all_seven_aggregate_artifact_hashes_equal": true,
+    "all_six_worker_rankings_equal": true,
+    "all_metrics_intervals_transitions_and_selection_equal": true,
+    "all_raw_timing_summaries_recomputed": true,
+    "worker_order_reversed_as_declared": true,
+    "original_results_and_indexes_unchanged": true,
+    "new_source_bindings_unchanged": true
+  },
+  "equal_report_fields": [
+    "config",
+    "partition",
+    "official_test_read",
+    "agreement",
+    "metrics",
+    "neighbor_transitions",
+    "selection",
+    "selection_inputs",
+    "checks",
+    "index_builds",
+    "artifacts",
+    "limits"
+  ],
+  "artifacts": [
+    {
+      "name": "hnsw-512/dense.tsv",
+      "bytes": 14183083,
+      "sha256": "c6adc52973d53962dc694751db8dd5d688e2fdef4e51d5a2bddf0dd10c38fe58"
+    },
+    {
+      "name": "hnsw-512/hybrid.tsv",
+      "bytes": 14638837,
+      "sha256": "969ffdcb130e9cc2d652402dbc4a989a3f7fb42c82b41339528ff854f57a464b"
+    },
+    {
+      "name": "hnsw-512/per-query.json",
+      "bytes": 2845891,
+      "sha256": "d9918952e6acc052fc654336a3510709af673915a09ad71e2f25487a579e2b12"
+    },
+    {
+      "name": "hnsw-1024/dense.tsv",
+      "bytes": 14183039,
+      "sha256": "b70f09f64f5e6795ee852b44ac83be5574b9bddfab936d6d5877ee13f5fe5321"
+    },
+    {
+      "name": "hnsw-1024/hybrid.tsv",
+      "bytes": 14639495,
+      "sha256": "11b79b9dfd1160ba06e7f0605bfd1ebf4b06e9ab688d5de4b3db2b2cf66287a9"
+    },
+    {
+      "name": "hnsw-1024/per-query.json",
+      "bytes": 2846422,
+      "sha256": "1fa5a6fe0382be73b7f799ce7942b8e0f60c1e919938945ebbf6face3e3ecfba"
+    },
+    {
+      "name": "transitions.json",
+      "bytes": 604792,
+      "sha256": "5933c6ad5e5a654e273b9b8befb9fb32283f844401cf6843dbc644dad5864287"
+    }
+  ],
+  "worker_evidence_trees": [
+    {
+      "files": 18,
+      "sha256": "362f7b363811dd7149ebc4654c78e567894d5357f27dad54fe8f29c7724bfd71"
+    },
+    {
+      "files": 18,
+      "sha256": "dedb1acb49cf9ca57f40e4d83046e6ed3c1fbff23290d5c42165940b509a6c0c"
+    }
+  ],
+  "main_wall_seconds": {
+    "first": 71.6759254589997,
+    "reversed_replay": 71.61120791699796
+  },
+  "pooled_native_latency_first": {
+    "hnsw-512": {
+      "samples": 10137,
+      "sum_seconds": 9.252435777999999,
+      "p50_ms": 0.902416,
+      "p95_ms": 1.1951003999999998,
+      "p99_ms": 1.3718181199999995
+    },
+    "hnsw-1024": {
+      "samples": 10137,
+      "sum_seconds": 19.742694608,
+      "p50_ms": 1.9305,
+      "p95_ms": 2.4529246,
+      "p99_ms": 2.7600681199999992
+    }
+  },
+  "pooled_native_latency_repeat": {
+    "hnsw-512": {
+      "samples": 10137,
+      "sum_seconds": 8.794724056,
+      "p50_ms": 0.867541,
+      "p95_ms": 1.1012335999999996,
+      "p99_ms": 1.2115279999999997
+    },
+    "hnsw-1024": {
+      "samples": 10137,
+      "sum_seconds": 19.107701885999997,
+      "p50_ms": 1.876458,
+      "p95_ms": 2.3399335999999997,
+      "p99_ms": 2.595830119999997
+    }
+  },
+  "limits": "Same frozen graphs and query vectors, six identical timed ranked outputs per query/method across fresh-process runs. Worker execution order reverses; raw timing/session evidence varies. No graph rebuild, Flat retiming, API test or final-test exposure."
+}
