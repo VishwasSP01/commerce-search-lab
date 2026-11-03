@@ -1,0 +1,63 @@
+{
+  "first_report_sha256": "d978ac1888941dbb1297fb69f7141720e78e01db4fc5e7231b9b164e815720bb",
+  "repeat_report_sha256": "e6a6967d502b1e1fa2b5fb00bc683b26c8ec7ab053a1bdee518589fa41d8c429",
+  "repeat_command": "uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/analyze_misses.py --output-dir data/processed/ann-miss-analysis-v1-repeat --report data/processed/ann-miss-analysis-v1-repeat-report.json",
+  "checks": {
+    "all_three_detailed_artifact_hashes_equal": true,
+    "every_non_execution_report_field_equal": true,
+    "both_runs_artifact_bytes_verified": true,
+    "all_input_result_and_index_artifacts_unchanged": true,
+    "all_new_source_bindings_unchanged": true
+  },
+  "equal_report_fields": [
+    "config",
+    "partition",
+    "official_test_read",
+    "overall",
+    "by_locale",
+    "case_manifest",
+    "prior_nomination_unchanged",
+    "checks",
+    "provenance",
+    "artifacts",
+    "limits"
+  ],
+  "artifacts": [
+    {
+      "name": "per-query.json",
+      "bytes": 2760980,
+      "sha256": "f391a29ac08480cae8be6ac1bee2402dfc2f9a1abfa3b53e2180d427470dfa46"
+    },
+    {
+      "name": "pairs.json",
+      "bytes": 11231704,
+      "sha256": "63faf83228628799cd28148b90c38bb19bae7d1253e2c38cf5d823bf6780bad1"
+    },
+    {
+      "name": "cases.json",
+      "bytes": 13312,
+      "sha256": "e9fefe7e1140cc06cdd9c7f4aa046a1e9ab7acdea7b658c28c0cf3f7a0361ad7"
+    }
+  ],
+  "execution_first": {
+    "main_wall_seconds": 15.038256333995378,
+    "max_process_rss_bytes": 3002384384,
+    "note": "One Flat locale index and at most 200 reconstructed vectors per query; aggregate pair records retained. Main wall includes verification, reconstruction, diagnostic scoring, cases and output, excluding imports/final report construction. This is not retrieval latency or serving memory."
+  },
+  "execution_repeat": {
+    "main_wall_seconds": 14.396437916999275,
+    "max_process_rss_bytes": 3429662720,
+    "note": "One Flat locale index and at most 200 reconstructed vectors per query; aggregate pair records retained. Main wall includes verification, reconstruction, diagnostic scoring, cases and output, excluding imports/final report construction. This is not retrieval latency or serving memory."
+  },
+  "limits": "Fresh diagnostic runs on the same frozen lists/vectors/indexes, not new ANN searches or graph builds. Labels remain incomplete; numerical equivalence is diagnostic and does not change the prior selection rule.",
+  "independent_numeric_check": {
+    "seed": 20261103,
+    "dimensions": 384,
+    "random_vector_rows": 200,
+    "scores_compared": 100,
+    "reference": "math.fsum of float32 coordinates converted to Python floats",
+    "max_absolute_error": 6.938893903907228e-17,
+    "absolute_tolerance": 1e-14,
+    "recipe": "default_rng(seed); normal((200,384)).astype(little-endian float32), L2-normalize rows; next normal(384).astype(float32), L2-normalize query; diagnose first 100 IDs vs last 100; compare missing_score64 for all 100 missing vectors with math.fsum coordinate products. Synthetic numeric fixture only, not real-data relevance."
+  }
+}

@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, BM25 experiments, embedding export, exhaustive dense retrieval, RRF fusion and float32 ANN benchmark are complete. Exact-dense RRF remains the offline development reference at **55.27%** validation known-Exact Recall@100. HNSW is faster but none of the three tested depths meets the declared quality budget. Int8, training and serving remain future work; the official test stays reserved.
+**Status:** the ESCI audit, ranking splits, retrieval experiments, RRF fusion, float32 ANN benchmark and ANN miss diagnosis are complete. Exact-dense RRF remains the offline development reference at **55.27%** validation known-Exact Recall@100. None of the three tested ANN depths meets the declared budget; 99.82% of diagnosed replacements involve a higher-score omitted neighbor. Int8, training and serving remain future work; the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -168,6 +168,18 @@ The [results, limits and reproduction instructions](docs/ann-cost-quality.md), [
 ```sh
 uv sync --locked --project experiments/ann-benchmark
 uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/benchmark.py
+```
+
+## Completed step: ANN miss diagnosis
+
+On all 3,379 validation queries, the saved depth-512 lists omit **30,705** exact top-100 members. Deterministic matching classifies **30,650 (99.82%)** as strict higher-score omissions and **55** as identical-vector replacements. Crediting equivalent replacements changes agreement only from **90.913% to 90.929%**; the original adoption decision remains unchanged.
+
+The dense lists lose **596** known-Exact query-product pairs and add **189**; the hybrid lists lose **103** and add **81**. All known-Exact dense losses fall in the strict-score-loss category. Japanese has 7,478 strict-score-loss pairs and 210 lost known-Exact dense pairs. This is a diagnosis of the fixed approximation, not evidence of a language-model cause. Unknown relevance stays unknown.
+
+Both fresh diagnostic runs reproduce all detailed artifact hashes, aggregates and case membership without another nearest-neighbor search or index change. Read the [diagnosis and representative cases](docs/ann-miss-analysis.md), [predeclared protocol](docs/decisions/0009-ann-miss-analysis.md), [aggregate report](reports/ann-miss-analysis-v1.json) and [repeat verification](reports/ann-miss-analysis-v1-reproduction.json). The next proposed experiment is one separately predeclared depth-1024 point on the same frozen graphs; no improvement is assumed.
+
+```sh
+uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/analyze_misses.py
 ```
 
 ## Continuous integration

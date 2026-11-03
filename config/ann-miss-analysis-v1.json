@@ -1,0 +1,17 @@
+{
+  "version": "ann-miss-analysis-v1",
+  "partition": "validation",
+  "primary_method": "hnsw-512",
+  "reference": "flat",
+  "cutoff": 100,
+  "score_equivalence_absolute": 1e-10,
+  "score_calculation": "float64 dot product of saved float32 query/product vectors, np.einsum with optimize=False; no renormalization, encoding or full-catalog float64 search",
+  "pairing": "missing exact members versus ANN-only members; match identical float32 vector bytes first with ID ties, then maximum-cardinality score-equivalent pairs by ascending float64 score/ID and two-pointer matching, then pair remaining members by descending score/ascending ID",
+  "categories": ["identical_vector", "score_equivalent", "strict_score_loss", "float64_order_reversal"],
+  "adjusted_agreement": "strict overlap plus identical-vector and score-equivalent pair credits, divided by 100; diagnostic only, never substitute it into the prior adoption rule",
+  "depth_context": "count primary missing members also absent from saved hnsw-128 and hnsw-256 lists; no new search depth or graph construction",
+  "labels": "preserve human E/S/C/I and unknown; count new/lost known Exact products separately in dense and hybrid lists, by locale and category",
+  "cases": "up to one largest strict-score-loss count, one greatest negative hybrid recall delta, and one largest identical-vector count per locale; require a positive count/negative delta; break ties by query_id; merge overlapping cases, include at most two pairs per case",
+  "repeat": "fresh diagnostic runs must reproduce all per-query, pair and case artifacts plus aggregates; sources, saved results and index bytes must remain unchanged",
+  "scope": "diagnostic only; no ANN parameter changes, new retrieval, training, encoding, new labels, int8, serving or official test access"
+}
