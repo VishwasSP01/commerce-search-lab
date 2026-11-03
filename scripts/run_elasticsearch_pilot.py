@@ -16,7 +16,7 @@ from download_esci import ROOT, verify_file
 from embedding_checkpoint import atomic_json
 from es_pilot import (ANALYZERS, EDGES, LOCALES, LocalElasticsearch, bulk_payload, canonical_tokens,
                       compare_rankings, index_definition, java_tokens, normalized, owned_index,
-                      parse_search, validate_bulk)
+                      parse_search, validate_bulk, wait_for_basic_license)
 from es_pilot import search_body
 from prepare_esci_splits import file_digest
 from run_bm25 import JAR, encode, validation_groups
@@ -45,9 +45,7 @@ def backend(client, policy):
     if (root['cluster_name'] != 'commerce-search-lab-pilot' or version['number'] != policy['elasticsearch_version']
             or version['lucene_version'] != policy['elasticsearch_lucene_version']):
         raise ValueError('Unexpected cluster/backend/Lucene version')
-    license = client.request('GET', '/_license')['license']
-    if license['type'] != 'basic' or license['status'] != 'active':
-        raise ValueError('Pilot requires active free Basic license, not trial/cloud')
+    license = wait_for_basic_license(client)
     nodes = client.request('GET', '/_nodes/plugins')['nodes']
     if len(nodes) != 1:
         raise ValueError('Pilot requires exactly one node')

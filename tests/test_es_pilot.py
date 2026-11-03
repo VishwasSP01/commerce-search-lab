@@ -5,10 +5,11 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from es_pilot import (LocalElasticsearch, bulk_payload, canonical_tokens, compare_rankings, index_definition,
-                      java_tokens, owned_index, parse_search, search_body, validate_bulk)
+                      java_tokens, owned_index, parse_search, search_body, validate_bulk, wait_for_basic_license)
 from run_elasticsearch_pilot import sample_queries
 from run_bm25 import JAR
 
@@ -17,6 +18,27 @@ POLICY = {'k1': 1.2, 'b': .75, 'raw_score_factor': 2.2, 'score_absolute_toleranc
 
 
 class ElasticsearchProtocolTests(unittest.TestCase):
+    def test_license_readiness_retries_startup_404_without_any_write(self):
+        client = Mock()
+        license = {'type': 'basic', 'status': 'active'}
+        client.request.side_effect = [None, {'license': license}]
+        with patch('es_pilot.time.sleep') as sleep:
+            self.assertEqual(wait_for_basic_license(client), license)
+        self.assertEqual(client.request.call_count, 2)
+        client.request.assert_called_with('GET', '/_license', missing=True)
+        sleep.assert_called_once_with(1)
+
+    def test_license_readiness_is_bounded_and_rejects_wrong_license_immediately(self):
+        client = Mock()
+        client.request.return_value = None
+        with patch('es_pilot.time.monotonic', side_effect=[0, 121]), patch('es_pilot.time.sleep') as sleep:
+            with self.assertRaises(TimeoutError):
+                wait_for_basic_license(client)
+            sleep.assert_not_called()
+        client.request.return_value = {'license': {'type': 'trial', 'status': 'active'}}
+        with self.assertRaises(ValueError):
+            wait_for_basic_license(client)
+
     def test_endpoint_and_index_scope_reject_remote_credentials_and_wildcards(self):
         LocalElasticsearch()
         for endpoint in ['http://example.com:19200', 'http://user:pass@localhost:19200',

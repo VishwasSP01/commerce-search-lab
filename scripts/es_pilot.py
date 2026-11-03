@@ -69,6 +69,21 @@ class LocalElasticsearch:
                 time.sleep(1)
 
 
+def wait_for_basic_license(client, seconds=120):
+    # The license API can briefly return 404 while startup cluster state forms.
+    started = time.monotonic()
+    while True:
+        response = client.request('GET', '/_license', missing=True)
+        if response is not None:
+            license = response['license']
+            if license['type'] != 'basic' or license['status'] != 'active':
+                raise ValueError('Pilot requires active free Basic license, not trial/cloud')
+            return license
+        if time.monotonic() - started >= seconds:
+            raise TimeoutError('Elasticsearch license readiness deadline exceeded')
+        time.sleep(1)
+
+
 def index_definition(policy):
     analyzers = {'csl_us': {'type': 'english'}, 'csl_es': {'type': 'spanish'},
                  'csl_jp': {'type': 'custom', 'char_filter': [], 'tokenizer': 'csl_jp_tokenizer',
