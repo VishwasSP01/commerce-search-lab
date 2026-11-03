@@ -18,7 +18,7 @@
   "raw_score_factor": 2.2,
   "score_absolute_tolerance": 1e-6,
   "score_relative_tolerance": 1e-5,
-  "layout": "one primary shard, zero replicas, locale-specific title fields; keyword locale/product_id; NFKC inputs; english/spanish analyzers and custom Japanese chain matching frozen JapaneseAnalyzer",
+  "layout": "one primary shard, zero replicas, locale-specific title fields; keyword locale/product_id; NFKC inputs; english/spanish analyzers and custom Japanese SEARCH chain with discard_compound_token=true, verified against frozen analyzer bytecode; client NFKC handles width before tokenization",
   "query": "literal match OR, auto_generate_synonyms_phrase_query=false, zero_terms_query=none, locale filter only, descending score/ascending product_id; no candidate/label filter or fuzzy query",
   "parity": "target identical ordered product IDs/counts for every sampled query, matching analyzer term/position/position-length/offset probes, and normalized Elasticsearch score /2.2 within fixed tolerance; publish any mismatch without rewriting frozen baseline",
   "resources": "local single-node Basic license, Docker container 3 GiB and 2 CPUs, fixed 1 GiB heap, port bound to 127.0.0.1:19200; no cloud, trial, ML or telemetry stack",

@@ -97,3 +97,41 @@ jobs:
 
       - name: Verify native graph persistence, ties, locale identities and quality budgets
         run: uv run --locked --no-sync --project experiments/ann-benchmark python -m unittest discover -s experiments/ann-benchmark/tests -v
+
+  elasticsearch-fixtures:
+    name: Elasticsearch parity (CPU, native fixtures)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.12"
+          enable-cache: false
+
+      - name: Set up Java 21
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install frozen dependencies and package the reference
+        run: |
+          uv sync --locked
+          ./mvnw --batch-mode --no-transfer-progress -DskipTests package
+
+      - name: Build and start pinned local backend
+        run: docker compose -f infra/elasticsearch/compose.yml up -d --build
+
+      - name: Verify synthetic multilingual parity on real Elasticsearch
+        run: uv run --locked --no-sync python scripts/elasticsearch_fixture.py
+
+      - name: Stop and remove only this fixture stack
+        if: always()
+        run: docker compose -f infra/elasticsearch/compose.yml down -v
