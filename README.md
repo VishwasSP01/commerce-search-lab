@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the ESCI audit, ranking splits, retrieval experiments, RRF fusion, float32 ANN benchmark and ANN miss diagnosis are complete. Exact-dense RRF remains the offline development reference at **55.27%** validation known-Exact Recall@100. None of the three tested ANN depths meets the declared budget; 99.82% of diagnosed replacements involve a higher-score omitted neighbor. Int8, training and serving remain future work; the official test stays reserved.
+**Status:** the offline retrieval foundation, RRF fusion, ANN benchmark/diagnosis and separate depth-1024 experiment are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100. The new depth improves agreement to **94.74%**, still below its unchanged 95% overall budget; no ANN setting is nominated. Serving integration is next; int8 and training remain future work, and the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -180,6 +180,20 @@ Both fresh diagnostic runs reproduce all detailed artifact hashes, aggregates an
 
 ```sh
 uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/analyze_misses.py
+```
+
+## Completed step: one fixed depth-1024 experiment
+
+The same graphs and saved query vectors are tested at **efSearch=1024**, with a fresh depth-512 timing control. Strict neighbor agreement improves **90.91% → 94.74%** and hybrid known-Exact Recall@100 changes **55.07% → 55.13%**. The hybrid change versus 512 is **+0.063 pp**, paired 95% interval **[−0.033, +0.169] pp**, so the higher mean is not a demonstrated hybrid gain.
+
+Depth 1024 recovers **12,948** previously missing exact neighbors, leaves **17,757** still missing and introduces **29** newly missing members. Its native warm p95 is **2.453 ms**, versus **1.195 ms** for the contemporaneous 512 control. These timings exclude encoding/API/concurrency; serialized indexes remain unchanged.
+
+**The 95% overall agreement check still fails**, although every locale and relevance-loss budget passes. No new candidate is nominated and the stopping rule is honored: no further depth or construction change in this experiment. Exact RRF stays the quality reference. Two fresh-process runs reverse worker order while reproducing rankings, metrics and the decision; the original 512 artifacts remain byte-identical.
+
+Read the [outcome, limits and reproduction instructions](docs/ann-depth-1024.md), [predeclared protocol](docs/decisions/0010-ann-depth-1024.md), [aggregate report](reports/ann-depth-1024-v1.json) and [reverse-order replay evidence](reports/ann-depth-1024-v1-reproduction.json).
+
+```sh
+uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/run_depth_1024.py
 ```
 
 ## Continuous integration
