@@ -1,0 +1,311 @@
+{
+  "config": {
+    "version": "elasticsearch-pilot-v1",
+    "elasticsearch_version": "9.5.6",
+    "elasticsearch_lucene_version": "10.5.2",
+    "reference_lucene_version": "10.6.0",
+    "base_image": "docker.elastic.co/elasticsearch/elasticsearch:9.5.6@sha256:79b4f1de4c15e6eca824723086a51e5934406d614d410cc11be77748cafac537",
+    "kuromoji_url": "https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-9.5.6.zip",
+    "kuromoji_sha256": "e4dc376879c017ad571f70c170b40fc7ae60883a9da14e6e8972e9403c10e633",
+    "products_per_locale": 10000,
+    "queries_per_locale": 100,
+    "analysis_titles_per_locale": 30,
+    "sample_seed": "commerce-elasticsearch-pilot-v1",
+    "sampling": "products independently by sha256(seed TAB locale TAB product_id); validation queries by sha256(seed TAB locale TAB query_id); ascending product_id/query_id output; no label/candidate-dependent selection",
+    "cutoff": 100,
+    "k1": 1.2,
+    "b": 0.75,
+    "discount_overlaps": true,
+    "raw_score_factor": 2.2,
+    "score_absolute_tolerance": 1e-06,
+    "score_relative_tolerance": 1e-05,
+    "layout": "one primary shard, zero replicas, locale-specific title fields; keyword locale/product_id; NFKC inputs; english/spanish analyzers and custom Japanese SEARCH chain with discard_compound_token=true, verified against frozen analyzer bytecode; client NFKC handles width before tokenization",
+    "query": "literal match OR, auto_generate_synonyms_phrase_query=false, zero_terms_query=none, locale filter only, descending score/ascending product_id; no candidate/label filter or fuzzy query",
+    "parity": "target identical ordered product IDs/counts for every sampled query, matching analyzer term/position/position-length/offset probes, and normalized Elasticsearch score /2.2 within fixed tolerance; publish any mismatch without rewriting frozen baseline",
+    "resources": "local single-node Basic license, Docker container 3 GiB and 2 CPUs, fixed 1 GiB heap, port bound to 127.0.0.1:19200; no cloud, trial, ML or telemetry stack",
+    "repeat": "fresh Elasticsearch and Lucene indexes on the same sample; compare sampled inputs, analyzer/reference/retrieval/parity artifact hashes and decisions; measurements and index identities may differ",
+    "scope": "bounded lexical serving/parity feasibility only, not full-catalog metrics, API capacity, hybrid deployment, training, streaming or official test exposure"
+  },
+  "official_test_read": false,
+  "partition": "validation",
+  "summary": {
+    "products": 30000,
+    "queries": 300,
+    "analyzer_probes": 399,
+    "analyzer_mismatches": 0,
+    "ordered_id_mismatch_queries": 0,
+    "normalized_score_mismatch_queries": 0,
+    "max_normalized_absolute_score_error": 4.0000000041118255e-06,
+    "zero_result_queries_reference": 10,
+    "zero_result_queries_es": 10,
+    "passed_bounded_parity": true,
+    "by_locale": {
+      "es": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      },
+      "jp": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      },
+      "us": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      }
+    }
+  },
+  "health": {
+    "cluster_name": "commerce-search-lab-pilot",
+    "status": "green",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 1,
+    "active_shards": 1,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 0,
+    "unassigned_primary_shards": 0,
+    "delayed_unassigned_shards": 0,
+    "number_of_pending_tasks": 0,
+    "number_of_in_flight_fetch": 0,
+    "task_max_waiting_in_queue_millis": 0,
+    "active_shards_percent_as_number": 100.0
+  },
+  "execution": {
+    "reference_build_and_batch_seconds": 1.7124022920033894,
+    "es_load_refresh_merge_seconds": 1.542927000002237,
+    "es_http_retrieval_batch_seconds": 0.6730527920008171,
+    "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
+  },
+  "analysis_mismatches": [],
+  "retrieval_mismatches": [],
+  "server": {
+    "version": {
+      "number": "9.5.6",
+      "build_flavor": "default",
+      "build_type": "docker",
+      "build_hash": "fd1e8011342a0988e432b999cea4bf884ca120ed",
+      "build_date": "2026-10-28T22:37:54.387301573Z",
+      "build_snapshot": false,
+      "lucene_version": "10.5.2",
+      "minimum_wire_compatibility_version": "8.19.0",
+      "minimum_index_compatibility_version": "8.0.0"
+    },
+    "license": {
+      "type": "basic",
+      "status": "active"
+    },
+    "plugins": [
+      {
+        "name": "analysis-kuromoji",
+        "version": "9.5.6"
+      }
+    ]
+  },
+  "index_name": "csl-pilot-es-v1-a",
+  "observed_index_stats": {
+    "docs": {
+      "count": 30000,
+      "deleted": 0,
+      "total_size_in_bytes": 6295723
+    },
+    "store": {
+      "size_in_bytes": 6296104,
+      "total_data_set_size_in_bytes": 6296104,
+      "reserved_in_bytes": 0
+    }
+  },
+  "observed_node_memory": {
+    "nodes": {
+      "wlHusn0DS5-81dYkT9R7xQ": {
+        "process": {
+          "mem": {
+            "total_virtual_in_bytes": 8929427456
+          }
+        },
+        "jvm": {
+          "mem": {
+            "heap_used_in_bytes": 269399040,
+            "heap_used_percent": 25,
+            "heap_committed_in_bytes": 1073741824,
+            "heap_max_in_bytes": 1073741824,
+            "non_heap_used_in_bytes": 254957608,
+            "non_heap_committed_in_bytes": 262012928,
+            "pools": {
+              "CodeHeap 'non-nmethods'": {
+                "used_in_bytes": 2452096,
+                "max_in_bytes": 5828608,
+                "peak_used_in_bytes": 2592576,
+                "peak_max_in_bytes": 5828608
+              },
+              "Metaspace": {
+                "used_in_bytes": 178306928,
+                "max_in_bytes": 0,
+                "peak_used_in_bytes": 178306928,
+                "peak_max_in_bytes": 0
+              },
+              "CodeHeap 'profiled nmethods'": {
+                "used_in_bytes": 27422400,
+                "max_in_bytes": 122916864,
+                "peak_used_in_bytes": 27422400,
+                "peak_max_in_bytes": 122916864
+              },
+              "Compressed Class Space": {
+                "used_in_bytes": 39202552,
+                "max_in_bytes": 1073741824,
+                "peak_used_in_bytes": 39202552,
+                "peak_max_in_bytes": 1073741824
+              },
+              "young": {
+                "used_in_bytes": 159383552,
+                "max_in_bytes": 0,
+                "peak_used_in_bytes": 624951296,
+                "peak_max_in_bytes": 0
+              },
+              "old": {
+                "used_in_bytes": 70169600,
+                "max_in_bytes": 1073741824,
+                "peak_used_in_bytes": 70169600,
+                "peak_max_in_bytes": 1073741824
+              },
+              "survivor": {
+                "used_in_bytes": 39845888,
+                "max_in_bytes": 0,
+                "peak_used_in_bytes": 58720256,
+                "peak_max_in_bytes": 0
+              },
+              "CodeHeap 'non-profiled nmethods'": {
+                "used_in_bytes": 7573632,
+                "max_in_bytes": 122916864,
+                "peak_used_in_bytes": 7573632,
+                "peak_max_in_bytes": 122916864
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "container_before": {
+    "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+    "memory_limit": 3221225472,
+    "nano_cpus": 2000000000,
+    "owner": "commerce-search-lab-pilot",
+    "ports": {
+      "9200/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "19200"
+        }
+      ]
+    },
+    "observed_cgroup_memory_current_bytes": 1479311360,
+    "container_lifetime_cgroup_memory_peak_bytes": 1479311360,
+    "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+  },
+  "container_after": {
+    "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+    "memory_limit": 3221225472,
+    "nano_cpus": 2000000000,
+    "owner": "commerce-search-lab-pilot",
+    "ports": {
+      "9200/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "19200"
+        }
+      ]
+    },
+    "observed_cgroup_memory_current_bytes": 1510395904,
+    "container_lifetime_cgroup_memory_peak_bytes": 1510395904,
+    "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+  },
+  "provenance": {
+    "baseline_report_sha256": "fcddf9d536212474fac149b5032e93e55196d2c35b4d495e50a32d1231a08848",
+    "jar_sha256": "7968bf330a45c9faff9b88e6ddd9b53637791c2fe17af21e6cb80ba2b9ad873b",
+    "products_input": {
+      "name": "shopping_queries_dataset_products.parquet",
+      "bytes": 1108857465,
+      "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+    },
+    "validation_input": {
+      "name": "validation.parquet",
+      "bytes": 742502,
+      "sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36"
+    },
+    "source_sha256": {
+      "config/elasticsearch-pilot-v1.json": "4925215c5557100c45e082e9cd6d6e7ab220dda4e327bc08ab16bb512a020a7c",
+      "docs/decisions/0011-elasticsearch-parity-pilot.md": "a2361acfc04209a2d4c445b13ce1d185b48b72864bb320cee293f7b8c545fc12",
+      "infra/elasticsearch/Dockerfile": "eed5380c2586569a42dceb0d72bfde58ecf84f6882650893c8bdcc07167db9ed",
+      "infra/elasticsearch/compose.yml": "e02fc57ce7ce86fcf60c9519de0f3379d2d452e3d58b792dff676a25dd7d804e",
+      "scripts/es_pilot.py": "5729511baf80f173d45befb8195785bdbc475e786b5f3afa75fa3b59307741f1",
+      "scripts/run_elasticsearch_pilot.py": "59745d35fb954cb6392ba63b78da6957d1e6d302bd3cc6a0039edba5d2cad479",
+      "scripts/elasticsearch_fixture.py": "dff2a461c9787fe60fa15fb06c87d1dd4049500cc63b158ecd8345609e32cb5d",
+      "tools/java/lab/commerce/search/AnalyzerParity.java": "3b25c966d69703fcbae1b00a69e48daa9864ca585fa3dd291c3d62993e729ec1",
+      "tests/test_es_pilot.py": "6b1d5cc501ca55b25e3236a09d75555f4849e2626833a69b24783b53341d3492"
+    },
+    "frozen_source_sha256": {
+      "config/bm25-title-v1.json": "ecefec5d2c6b6ca381ae2164f504eaf92b50af523f0283e1cad46cc5dfa694bc",
+      "pom.xml": "b8c210abdc395565fbb0b73cb92b3437048e6e6f32714a3a576eab171adc04ab",
+      "scripts/run_bm25.py": "2943265e91fe3bac1ccd87e06d0a3b81b57385de56c535e1ee7834bd1bd0e6c3",
+      "scripts/ranking_metrics.py": "bc5ba836fd2c631958d5bffccffb4545bedcdcbf25bc00d216714540070726d0",
+      "scripts/audit_esci.py": "425d6d4669046f028b57bd36cc54e88c8fd3d9a8eb56403d246957944e277eed",
+      "scripts/prepare_esci_splits.py": "92f70acfc7eac243fd2b54c59eb38ee643ad811d09b9034796e95f28b15599c3",
+      "src/main/java/lab/commerce/search/Bm25Cli.java": "3dfa8b384ace68bda85af4b36cf7106f09158efbf33f6ab8b1841a0970a3f781",
+      "uv.lock": "290dac5f55f5976d52787fb70326944194d1fe22e91531f9943d222ffe449d35"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "products.tsv",
+      "bytes": 5285200,
+      "sha256": "b953c31b3bf8f0a5994198bbf5217800e93431f9e72beeef86e769341e052eb9"
+    },
+    {
+      "name": "queries.tsv",
+      "bytes": 13355,
+      "sha256": "1c62280f6e875e840ed4fbc3cedcadb50f4ef976347f33398e7c9ff91ebce1ad"
+    },
+    {
+      "name": "reference.tsv",
+      "bytes": 697220,
+      "sha256": "466bbaf6f170413538140e82dfe0fc48561adc1ab5dd7ddc52a2d640927c9e33"
+    },
+    {
+      "name": "reference-status.tsv",
+      "bytes": 4457,
+      "sha256": "9caaf8703796dfbdf749af6ffbd5fa2fd341800086fe729934468f672bc0dc7b"
+    },
+    {
+      "name": "probes.tsv",
+      "bytes": 26694,
+      "sha256": "f0a1d220976aaa22c41d7182b3496a465848a28052b45025abc853c0ef07489e"
+    },
+    {
+      "name": "reference-tokens.tsv",
+      "bytes": 41886,
+      "sha256": "a6c4dfed963a6ef9f401fa54ad1485f53e6e39bdb587109c06f7fc1e570f54cc"
+    },
+    {
+      "name": "analysis.json",
+      "bytes": 620042,
+      "sha256": "c22228a7aa36b71da5c9da134829c4d4b01827741f4eec481c0bf59b6705a528"
+    },
+    {
+      "name": "elasticsearch.tsv",
+      "bytes": 691649,
+      "sha256": "d1585fa3ffc4eb5e9df19936092f8b6719334319ec28e17685612b8df1035786"
+    },
+    {
+      "name": "parity-per-query.json",
+      "bytes": 85308,
+      "sha256": "ad25892fd5d272c288f3f5cd81148df663c6fa2250ba306a814b39ee71df2286"
+    }
+  ],
+  "main_wall_seconds": 6.913310208001349,
+  "limits": "30k independently sampled metadata products and 300 validation queries, not full-catalog relevance or a serving API. Lucene versions differ and ES legacy scores are normalized only for comparison. Probe parity is for selected strings; finite observed parity does not prove universal equivalence. No hybrid, ANN adoption, training, update/freshness, production capacity or official-test claim."
+}
