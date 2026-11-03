@@ -1,0 +1,487 @@
+{
+  "config": {
+    "version": "ann-miss-analysis-v1",
+    "partition": "validation",
+    "primary_method": "hnsw-512",
+    "reference": "flat",
+    "cutoff": 100,
+    "score_equivalence_absolute": 1e-10,
+    "score_calculation": "float64 dot product of saved float32 query/product vectors, np.einsum with optimize=False; no renormalization, encoding or full-catalog float64 search",
+    "pairing": "missing exact members versus ANN-only members; match identical float32 vector bytes first with ID ties, then maximum-cardinality score-equivalent pairs by ascending float64 score/ID and two-pointer matching, then pair remaining members by descending score/ascending ID",
+    "categories": [
+      "identical_vector",
+      "score_equivalent",
+      "strict_score_loss",
+      "float64_order_reversal"
+    ],
+    "adjusted_agreement": "strict overlap plus identical-vector and score-equivalent pair credits, divided by 100; diagnostic only, never substitute it into the prior adoption rule",
+    "depth_context": "count primary missing members also absent from saved hnsw-128 and hnsw-256 lists; no new search depth or graph construction",
+    "labels": "preserve human E/S/C/I and unknown; count new/lost known Exact products separately in dense and hybrid lists, by locale and category",
+    "cases": "up to one largest strict-score-loss count, one greatest negative hybrid recall delta, and one largest identical-vector count per locale; require a positive count/negative delta; break ties by query_id; merge overlapping cases, include at most two pairs per case",
+    "repeat": "fresh diagnostic runs must reproduce all per-query, pair and case artifacts plus aggregates; sources, saved results and index bytes must remain unchanged",
+    "scope": "diagnostic only; no ANN parameter changes, new retrieval, training, encoding, new labels, int8, serving or official test access"
+  },
+  "partition": "validation",
+  "official_test_read": false,
+  "overall": {
+    "queries": 3379,
+    "missing_neighbors": 30705,
+    "strict_agreement": 0.9091299200947025,
+    "equivalent_credit_agreement": 0.9092926901450133,
+    "category_counts": {
+      "identical_vector": 55,
+      "score_equivalent": 0,
+      "strict_score_loss": 30650,
+      "float64_order_reversal": 0
+    },
+    "queries_with_category": {
+      "identical_vector": 16,
+      "score_equivalent": 0,
+      "strict_score_loss": 2781,
+      "float64_order_reversal": 0
+    },
+    "lost_known_exact_by_category": {
+      "identical_vector": 0,
+      "score_equivalent": 0,
+      "strict_score_loss": 596,
+      "float64_order_reversal": 0
+    },
+    "lost_known_exact": 596,
+    "new_known_exact": 189,
+    "dense_net_improved_queries": 147,
+    "dense_net_regressed_queries": 306,
+    "hybrid_net_improved_queries": 71,
+    "hybrid_net_regressed_queries": 81,
+    "hybrid_regressions_with_no_dense_known_exact_loss": 8,
+    "hybrid_lost_known_exact": 103,
+    "hybrid_new_known_exact": 81,
+    "still_missing_at_shallower_depth": {
+      "128": 30676,
+      "256": 30690
+    },
+    "strict_pair_gap64": {
+      "count": 30650,
+      "mean": 0.005775779849783081,
+      "p50": 0.004181619502415301,
+      "p95": 0.015683697623755863,
+      "max": 0.09855316493196176
+    }
+  },
+  "by_locale": {
+    "es": {
+      "queries": 563,
+      "missing_neighbors": 4658,
+      "strict_agreement": 0.9172646536412078,
+      "equivalent_credit_agreement": 0.9173001776198934,
+      "category_counts": {
+        "identical_vector": 2,
+        "score_equivalent": 0,
+        "strict_score_loss": 4656,
+        "float64_order_reversal": 0
+      },
+      "queries_with_category": {
+        "identical_vector": 2,
+        "score_equivalent": 0,
+        "strict_score_loss": 485,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact_by_category": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 121,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact": 121,
+      "new_known_exact": 55,
+      "dense_net_improved_queries": 36,
+      "dense_net_regressed_queries": 57,
+      "hybrid_net_improved_queries": 14,
+      "hybrid_net_regressed_queries": 13,
+      "hybrid_regressions_with_no_dense_known_exact_loss": 2,
+      "hybrid_lost_known_exact": 14,
+      "hybrid_new_known_exact": 15,
+      "still_missing_at_shallower_depth": {
+        "128": 4656,
+        "256": 4657
+      },
+      "strict_pair_gap64": {
+        "count": 4656,
+        "mean": 0.0053931794637487145,
+        "p50": 0.003800177357753065,
+        "p95": 0.014373579910457679,
+        "max": 0.07701772417876529
+      }
+    },
+    "jp": {
+      "queries": 728,
+      "missing_neighbors": 7484,
+      "strict_agreement": 0.8971978021978022,
+      "equivalent_credit_agreement": 0.8972802197802198,
+      "category_counts": {
+        "identical_vector": 6,
+        "score_equivalent": 0,
+        "strict_score_loss": 7478,
+        "float64_order_reversal": 0
+      },
+      "queries_with_category": {
+        "identical_vector": 3,
+        "score_equivalent": 0,
+        "strict_score_loss": 623,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact_by_category": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 210,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact": 210,
+      "new_known_exact": 52,
+      "dense_net_improved_queries": 43,
+      "dense_net_regressed_queries": 91,
+      "hybrid_net_improved_queries": 20,
+      "hybrid_net_regressed_queries": 27,
+      "hybrid_regressions_with_no_dense_known_exact_loss": 0,
+      "hybrid_lost_known_exact": 33,
+      "hybrid_new_known_exact": 25,
+      "still_missing_at_shallower_depth": {
+        "128": 7480,
+        "256": 7481
+      },
+      "strict_pair_gap64": {
+        "count": 7478,
+        "mean": 0.0052012130175970415,
+        "p50": 0.0037838224357729655,
+        "p95": 0.014069665799582578,
+        "max": 0.07717431717286027
+      }
+    },
+    "us": {
+      "queries": 2088,
+      "missing_neighbors": 18563,
+      "strict_agreement": 0.9110967432950191,
+      "equivalent_credit_agreement": 0.9113218390804597,
+      "category_counts": {
+        "identical_vector": 47,
+        "score_equivalent": 0,
+        "strict_score_loss": 18516,
+        "float64_order_reversal": 0
+      },
+      "queries_with_category": {
+        "identical_vector": 11,
+        "score_equivalent": 0,
+        "strict_score_loss": 1673,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact_by_category": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 265,
+        "float64_order_reversal": 0
+      },
+      "lost_known_exact": 265,
+      "new_known_exact": 82,
+      "dense_net_improved_queries": 68,
+      "dense_net_regressed_queries": 158,
+      "hybrid_net_improved_queries": 37,
+      "hybrid_net_regressed_queries": 41,
+      "hybrid_regressions_with_no_dense_known_exact_loss": 6,
+      "hybrid_lost_known_exact": 56,
+      "hybrid_new_known_exact": 41,
+      "still_missing_at_shallower_depth": {
+        "128": 18540,
+        "256": 18552
+      },
+      "strict_pair_gap64": {
+        "count": 18516,
+        "mean": 0.006104036393770077,
+        "p50": 0.004474596998345182,
+        "p95": 0.01648181132864121,
+        "max": 0.09855316493196176
+      }
+    }
+  },
+  "case_manifest": [
+    {
+      "locale": "es",
+      "query_id": 31379,
+      "reasons": [
+        "identical_vector"
+      ],
+      "missing_neighbors": 1,
+      "category_counts": {
+        "identical_vector": 1,
+        "score_equivalent": 0,
+        "strict_score_loss": 0,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": 0.0
+    },
+    {
+      "locale": "es",
+      "query_id": 62012,
+      "reasons": [
+        "hybrid_recall_loss"
+      ],
+      "missing_neighbors": 2,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 2,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": -0.33333333333333337
+    },
+    {
+      "locale": "es",
+      "query_id": 66668,
+      "reasons": [
+        "strict_score_loss"
+      ],
+      "missing_neighbors": 53,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 53,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": 0.0
+    },
+    {
+      "locale": "jp",
+      "query_id": 109214,
+      "reasons": [
+        "hybrid_recall_loss"
+      ],
+      "missing_neighbors": 47,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 47,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": -0.5
+    },
+    {
+      "locale": "jp",
+      "query_id": 117012,
+      "reasons": [
+        "identical_vector"
+      ],
+      "missing_neighbors": 3,
+      "category_counts": {
+        "identical_vector": 3,
+        "score_equivalent": 0,
+        "strict_score_loss": 0,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": 0.0
+    },
+    {
+      "locale": "jp",
+      "query_id": 118621,
+      "reasons": [
+        "strict_score_loss"
+      ],
+      "missing_neighbors": 93,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 93,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": -0.25
+    },
+    {
+      "locale": "us",
+      "query_id": 17999,
+      "reasons": [
+        "hybrid_recall_loss"
+      ],
+      "missing_neighbors": 11,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 11,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": -1.0
+    },
+    {
+      "locale": "us",
+      "query_id": 27074,
+      "reasons": [
+        "strict_score_loss"
+      ],
+      "missing_neighbors": 96,
+      "category_counts": {
+        "identical_vector": 0,
+        "score_equivalent": 0,
+        "strict_score_loss": 96,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": -0.14285714285714285
+    },
+    {
+      "locale": "us",
+      "query_id": 80040,
+      "reasons": [
+        "identical_vector"
+      ],
+      "missing_neighbors": 24,
+      "category_counts": {
+        "identical_vector": 24,
+        "score_equivalent": 0,
+        "strict_score_loss": 0,
+        "float64_order_reversal": 0
+      },
+      "hybrid_recall_delta": 0.0
+    }
+  ],
+  "prior_nomination_unchanged": {
+    "selected_efSearch": null,
+    "checks": {
+      "128": {
+        "locale_coverage": true,
+        "overall_agreement": false,
+        "locale_agreement": false,
+        "hybrid_paired_lower_budget": false,
+        "locale_hybrid_loss_budget": false
+      },
+      "256": {
+        "locale_coverage": true,
+        "overall_agreement": false,
+        "locale_agreement": false,
+        "hybrid_paired_lower_budget": false,
+        "locale_hybrid_loss_budget": true
+      },
+      "512": {
+        "locale_coverage": true,
+        "overall_agreement": false,
+        "locale_agreement": false,
+        "hybrid_paired_lower_budget": true,
+        "locale_hybrid_loss_budget": true
+      }
+    },
+    "production_or_final_test_adoption": false
+  },
+  "checks": {
+    "all_query_and_locale_identities_verified": true,
+    "saved_metrics_reproduced": true,
+    "pair_and_known_exact_counts_conserved": true,
+    "all_missing_neighbors_classified_once": true,
+    "index_and_input_artifacts_unchanged": true,
+    "no_new_nearest_neighbor_search": true
+  },
+  "provenance": {
+    "ann_report_sha256": "b5aa6bc039fb2cd21d50f081a4c1ed06cc51fa992ac9fd72a1323467a52981f6",
+    "products_input": {
+      "name": "shopping_queries_dataset_products.parquet",
+      "bytes": 1108857465,
+      "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+    },
+    "ann_contract": {
+      "policy": {
+        "version": "catalog-ann-v1",
+        "partition": "validation",
+        "dimensions": 384,
+        "cutoff": 100,
+        "faiss_version": "1.15.1",
+        "index": "one IndexHNSWFlat per locale, METRIC_INNER_PRODUCT, saved float32 unit vectors",
+        "M": 16,
+        "efConstruction": 100,
+        "build_threads": 4,
+        "seed": 20261102,
+        "efSearch": [
+          128,
+          256,
+          512
+        ],
+        "query_threads": 1,
+        "warmup_queries": 16,
+        "timed_passes": 3,
+        "timing_order_seed": 20261102,
+        "exact_control": "Faiss IndexFlatIP using the identical stored vectors; singleton searches with complete cutoff-tie expansion and score/ascending-ID order; separately report agreement/numeric differences with saved Torch exact results",
+        "ann_ties": "sort the 100 returned candidates by score then ascending ID; unvisited or excluded cutoff ties are approximation loss, not a global deterministic-tie guarantee",
+        "metrics": "set agreement@100 with matched Faiss Flat exact control, known-Exact Recall@100, judgment coverage@10, and fixed c=60 RRF impact versus matched Flat hybrid and frozen Torch hybrid",
+        "confidence": {
+          "resamples": 2000,
+          "seed": 20261101
+        },
+        "selection": "lowest efSearch with overall agreement >=0.95, every locale agreement >=0.90, and hybrid recall paired lower bound >=-0.005 overall plus mean loss <=0.005 per locale versus matched Flat hybrid; otherwise no candidate nominated",
+        "replay": "persist one multithread-built graph per locale with hashes, then repeat singleton queries from fresh worker processes on the same graphs; all three timed passes and reload must reproduce rankings; do not claim bit-identical independent graph construction",
+        "measurement": "separate build, index read, index bytes, per-locale query-worker peak RSS and warm singleton retrieval p50/p95/p99; timings include native search/tie handling/sorting but exclude encoding, HTTP, serialization and file writes; no concurrent/API QPS claim",
+        "scope": "fixed float32 ANN tradeoff grid only, no post-result parameter sweep, int8, new encoding, training, serving or official test access"
+      },
+      "source_sha256": {
+        "config/catalog-ann-v1.json": "a8825fab682f596f6ca593235dd68b63ab4f7901b71c7be2f19b627c9c90444c",
+        "docs/decisions/0008-ann-cost-quality.md": "c9182f45c3525c089472a62a09c8909066606d515dda3f1b55779e27394c0dee",
+        "experiments/ann-benchmark/pyproject.toml": "b6e0343f79ac63972839d8e67dea1432ba4fa24a4cbe8c519f1e662efdae8463",
+        "experiments/ann-benchmark/uv.lock": "b336a4bd06684f21f7b766b96565aded7c65503946140c1540d39c065eefbf84",
+        "experiments/ann-benchmark/ann_core.py": "bfb36e9fb1dd2992db43ccd6322aa35a59dc32cb8d8e2dc86d436189319b941a",
+        "experiments/ann-benchmark/worker.py": "929e008de81c533f0cab1b28868b5ea7a9c291a0240418db3c362054b8f758a7",
+        "experiments/ann-benchmark/benchmark.py": "5bd777bb675647601cd24c1c26fbd4dde868ce2a7ec59b068ae4bdb8bbb83e07",
+        "experiments/ann-benchmark/tests/test_ann.py": "a2ecdd6ca1e21f67eaae901cfb57b837c3a5af7cb344632dbb6a3f4d43167077"
+      },
+      "catalog_manifest_sha256": "d0a05ada184796e1678c27b187c48784d3b2dc76006c9d01fca42bc9f1844172",
+      "catalog_contract_sha256": "211c81cc35e9a630a919c757f525f9f0bc5486ea98fee71dc71ea7900c5b757b",
+      "report_sha256": {
+        "catalog-bm25-title-v1": "1c741278e78256d91f122d261d35c1a510ed88d7574306cc4c676beeef85bcbf",
+        "catalog-dense-exact-v1": "6d7d92516316da15f4c93396f19726b346379a402829a6930d551102a2859d3f",
+        "catalog-rrf-v1": "1cc571641ec2c93f35124ac3ce21a3ae350b2ff41b4994fd387e0da2352e7a24",
+        "catalog-embeddings-v1": "35ea4613e3ea3d6565239076b0e0b9ae7c4680e722cde392e0ffb6c3717550a5"
+      },
+      "query_vector_sha256": "201cb9ca16c800700e41f3ad6a97521289271dc19dbc351f6e3db47d4bd0ec9a",
+      "query_identity_sha256": "4ec3a4b1148514d25dc090872d2095cd986623de7c3d2dc31229731c63b5824b",
+      "runtime": {
+        "python": "3.12.16",
+        "faiss": "1.15.1",
+        "numpy": "2.3.4",
+        "duckdb": "2.0.0",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "faiss_compile": "OPTIMIZE DD ARM_NEON MAC_METAL "
+      }
+    },
+    "index_build_sha256": {
+      "es": "e2ec31fe148d90ed4d10b839a0ec7ab34a190cc65704049c2c974e18510c40d2",
+      "jp": "508d0a9e6988e2cba296e78456a527f67cdb37406d16c53ec53530513ee8cbe9",
+      "us": "92c1af54ba2ccbedc676b1f1cde27c947405372ddba1c957b15b3f29388238e5"
+    },
+    "source_sha256": {
+      "config/ann-miss-analysis-v1.json": "cfea2846f9645bb827aaee24066a0e326579e690a2c3c620a50eace8b9a1fee8",
+      "docs/decisions/0009-ann-miss-analysis.md": "3e885412f42d19f04aaac375bdd36b19f49f23e01d8340631420735032152590",
+      "experiments/ann-benchmark/analyze_misses.py": "840f8cbd1c981a99d137233c2a6218f192d73ea9f49a8a54f665a19758f4f0e6",
+      "experiments/ann-benchmark/miss_diagnostics.py": "e20bd8cc95a5e8dfe395a69dbb1796f31921a47e862fa96e71d328434c7629b4",
+      "experiments/ann-benchmark/tests/test_misses.py": "6ccfe7ac194d6969d8596fcdbb9b4c1d547d7f3e3a4cbae4822f37f659ec1ccc"
+    },
+    "runtime": {
+      "python": "3.12.16",
+      "numpy": "2.3.4",
+      "faiss": "1.15.1",
+      "duckdb": "2.0.0"
+    }
+  },
+  "execution": {
+    "main_wall_seconds": 15.038256333995378,
+    "max_process_rss_bytes": 3002384384,
+    "note": "One Flat locale index and at most 200 reconstructed vectors per query; aggregate pair records retained. Main wall includes verification, reconstruction, diagnostic scoring, cases and output, excluding imports/final report construction. This is not retrieval latency or serving memory."
+  },
+  "artifacts": [
+    {
+      "name": "per-query.json",
+      "bytes": 2760980,
+      "sha256": "f391a29ac08480cae8be6ac1bee2402dfc2f9a1abfa3b53e2180d427470dfa46"
+    },
+    {
+      "name": "pairs.json",
+      "bytes": 11231704,
+      "sha256": "63faf83228628799cd28148b90c38bb19bae7d1253e2c38cf5d823bf6780bad1"
+    },
+    {
+      "name": "cases.json",
+      "bytes": 13312,
+      "sha256": "e9fefe7e1140cc06cdd9c7f4aa046a1e9ab7acdea7b658c28c0cf3f7a0361ad7"
+    }
+  ],
+  "limits": "Query-specific union reconstruction/scoring, not full-catalog float64 ground truth or graph-traversal causality. Pairing and 1e-10 equivalence are diagnostics, not a changed adoption metric. Equal vectors/scores do not imply equal relevance. Cases are purpose-selected; judgments remain incomplete. No parameter changes, new labels or official test exposure."
+}
