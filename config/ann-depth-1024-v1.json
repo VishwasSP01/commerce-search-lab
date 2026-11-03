@@ -1,0 +1,17 @@
+{
+  "version": "ann-depth-1024-v1",
+  "partition": "validation",
+  "candidate_efSearch": 1024,
+  "timing_control_efSearch": 512,
+  "graph_source": "catalog-ann-v1, original immutable per-locale HNSW files and ID maps",
+  "fixed": "original M=16, efConstruction=100, construction seed/order, float32 vectors, model, locale routing, cutoff=100, library/lock, single search thread, 16 warmup queries and 3 timed passes",
+  "worker_contract": "use the verified original build contract for unchanged index/query workers; this separate experiment authorizes the additional depth without editing the old grid or its source files",
+  "confidence": {"resamples": 2000, "seed": 20261101},
+  "metrics": "strict top-100 agreement with saved matched Faiss Flat, known-Exact Recall@100, judgment coverage@10 and fixed c=60 RRF impact versus matched Flat and depth 512",
+  "nomination": "unchanged: overall agreement >=0.95, each locale >=0.90; hybrid recall paired lower delta bound >=-0.005 overall and mean delta >=-0.005 in each locale versus matched Flat hybrid",
+  "timing": "fresh per-locale workers for both 512 and 1024 with original shuffled query orders, warmup/passes/thread limits; first run 512 then 1024 per locale, replay reverse worker order; native retrieval/tie-sort timings exclude encoding/API/concurrency/output I/O",
+  "exact_control": "reuse checksummed matched Flat rankings/metrics; its old timing is historical, not a newly measured speed comparator",
+  "repeat": "fresh-process replay on identical graphs, all 3 passes within workers and both runs must reproduce rankings/metrics/selection; timing/order/RSS observations may differ",
+  "stop": "one new search-depth point only; if any quality budget fails, nominate none and retain exact RRF; do not add another point or relax budgets inside this experiment",
+  "scope": "validation development only; no graph build, encoding, training, quantization, new labels, serving or official test access"
+}
