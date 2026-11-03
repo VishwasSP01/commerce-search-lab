@@ -26,17 +26,17 @@ Finite agreement across different Lucene versions does not prove universal analy
 
 The local free Basic node runs with **two container CPUs, 3 GiB memory limit and fixed 1 GiB JVM heap**, bound only to `127.0.0.1:19200`. ML and GeoIP downloads are disabled. The image digest and Kuromoji plugin checksum are pinned in the [configuration](../config/elasticsearch-pilot-v1.json) and [Dockerfile](../infra/elasticsearch/Dockerfile).
 
-The first index occupies **6,296,104 bytes (6.00 MiB)** after refresh/merge. Its observed heap use is **269,399,040 bytes (256.92 MiB)**, with 1 GiB committed/max. Cgroup memory after that run is **1,510,395,904 bytes (1.407 GiB)**, including JVM, native memory and cache. This container also held the tiny fixture indexes; the repeat adds another 30,000-product index. Cgroup peaks are container-lifetime observations, not isolated per-run or whole-machine RSS. Do not extrapolate these sample sizes to a full-catalog capacity claim.
+The first index occupies **6,296,104 bytes (6.00 MiB)** after refresh/merge. Its observed heap use is **204,458,056 bytes (194.99 MiB)**, with 1 GiB committed/max. Cgroup memory after that run is **1,490,186,240 bytes (1.388 GiB)**, including JVM, native memory and cache. This container also held two tiny fixture indexes and the two original 30,000-product indexes from before the readiness fix; the corrected repeat adds a fourth 30,000-product index. These are repeated copies of the same sample, not catalog expansion. Cgroup peaks are container-lifetime observations, not isolated per-run or whole-machine RSS. Do not extrapolate these sample sizes to a full-catalog capacity claim.
 
 | Recorded batch duration, seconds | First | Fresh repeat |
 | --- | ---: | ---: |
-| Reference build and retrieval | 1.712 | 1.528 |
-| Elasticsearch load, refresh and merge | 1.543 | 0.952 |
-| Elasticsearch HTTP retrieval batch | 0.673 | 0.421 |
+| Reference build and retrieval | 1.665 | 1.556 |
+| Elasticsearch load, refresh and merge | 1.893 | 1.015 |
+| Elasticsearch HTTP retrieval batch | 0.679 | 0.406 |
 
 The repeat values are recorded in the [repeat evidence](../reports/elasticsearch-pilot-v1-reproduction.json). These are sequential bounded batches, with setup/JVM/cache effects and concurrent local processes; they are **not** search API latency percentiles, QPS or a controlled backend speed comparison.
 
-The verification command gracefully stops and restarts only this Compose service on its existing project volume. Both index UUIDs and 30,000-document counts survive, and all 300 queries on each index reproduce their original result-file hashes. Graceful stop takes **2.565 seconds**; restart to ready/green takes **12.279 seconds**, including the Compose command and readiness polling. It finishes by stopping the service and preserving the volume. This checks graceful local persistence, not crash recovery or delivery of streaming updates. Docker Desktop and unrelated services remain running.
+The verification command gracefully stops and restarts only this Compose service on its existing project volume. Both index UUIDs and 30,000-document counts survive, and all 300 queries on each index reproduce their original result-file hashes. Graceful stop takes **2.604 seconds**; restart to ready/green takes **8.198 seconds**, including the Compose command and readiness polling. It finishes by stopping the service and preserving the volume. This checks graceful local persistence, not crash recovery or delivery of streaming updates. Docker Desktop and unrelated services remain running.
 
 ## Reproduce locally
 
@@ -66,6 +66,8 @@ docker compose -f infra/elasticsearch/compose.yml stop elasticsearch
 ```
 
 For readiness, `curl --fail http://127.0.0.1:19200/` exposes the backend version; `curl --fail 'http://127.0.0.1:19200/_cluster/health?wait_for_status=green&timeout=30s'` checks shard health. The scripts additionally enforce Basic license, plugin version, ownership/resource envelope, exact document counts and complete responses. If a bulk call fails, inspect its item failures and the concrete task-owned index; do not blindly retry ambiguous writes. Refresh is disabled during this immutable batch pilot, so newly written documents require an explicit refresh. This profile does not yet implement an update path.
+
+The initial CI run exposed a startup race: the root endpoint responded before `/_license` had a license. Elastic documents this transient startup 404 in its [license API reference](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get). The harness now polls only that missing read for up to 120 seconds, still rejecting a non-Basic/inactive license immediately. Regression tests cover the transient response, deadline and wrong license. The published sample runs were repeated on fresh `csl-pilot-es-v1-c`/`-d` indexes after this fix; all nine artifact hashes remain identical to the original runs.
 
 CI adds a real-Elasticsearch synthetic fixture job alongside the Java/Python, embedding and ANN jobs. It builds the pinned image on Ubuntu, checks the small multilingual corpus, and removes only its own temporary stack. No ESCI download or benchmark rerun occurs in CI.
 

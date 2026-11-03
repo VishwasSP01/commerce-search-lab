@@ -76,9 +76,9 @@
     "active_shards_percent_as_number": 100.0
   },
   "execution": {
-    "reference_build_and_batch_seconds": 1.7124022920033894,
-    "es_load_refresh_merge_seconds": 1.542927000002237,
-    "es_http_retrieval_batch_seconds": 0.6730527920008171,
+    "reference_build_and_batch_seconds": 1.6651039169955766,
+    "es_load_refresh_merge_seconds": 1.8934029579977505,
+    "es_http_retrieval_batch_seconds": 0.6794680829989375,
     "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
   },
   "analysis_mismatches": [],
@@ -106,7 +106,7 @@
       }
     ]
   },
-  "index_name": "csl-pilot-es-v1-a",
+  "index_name": "csl-pilot-es-v1-c",
   "observed_index_stats": {
     "docs": {
       "count": 30000,
@@ -124,64 +124,64 @@
       "wlHusn0DS5-81dYkT9R7xQ": {
         "process": {
           "mem": {
-            "total_virtual_in_bytes": 8929427456
+            "total_virtual_in_bytes": 7782227968
           }
         },
         "jvm": {
           "mem": {
-            "heap_used_in_bytes": 269399040,
-            "heap_used_percent": 25,
+            "heap_used_in_bytes": 204458056,
+            "heap_used_percent": 19,
             "heap_committed_in_bytes": 1073741824,
             "heap_max_in_bytes": 1073741824,
-            "non_heap_used_in_bytes": 254957608,
-            "non_heap_committed_in_bytes": 262012928,
+            "non_heap_used_in_bytes": 248655408,
+            "non_heap_committed_in_bytes": 255983616,
             "pools": {
               "CodeHeap 'non-nmethods'": {
-                "used_in_bytes": 2452096,
+                "used_in_bytes": 2437632,
                 "max_in_bytes": 5828608,
-                "peak_used_in_bytes": 2592576,
+                "peak_used_in_bytes": 2505216,
                 "peak_max_in_bytes": 5828608
               },
               "Metaspace": {
-                "used_in_bytes": 178306928,
+                "used_in_bytes": 176181032,
                 "max_in_bytes": 0,
-                "peak_used_in_bytes": 178306928,
+                "peak_used_in_bytes": 176181032,
                 "peak_max_in_bytes": 0
               },
               "CodeHeap 'profiled nmethods'": {
-                "used_in_bytes": 27422400,
+                "used_in_bytes": 24350912,
                 "max_in_bytes": 122916864,
-                "peak_used_in_bytes": 27422400,
+                "peak_used_in_bytes": 24350912,
                 "peak_max_in_bytes": 122916864
               },
               "Compressed Class Space": {
-                "used_in_bytes": 39202552,
+                "used_in_bytes": 38810056,
                 "max_in_bytes": 1073741824,
-                "peak_used_in_bytes": 39202552,
+                "peak_used_in_bytes": 38810056,
                 "peak_max_in_bytes": 1073741824
               },
               "young": {
-                "used_in_bytes": 159383552,
+                "used_in_bytes": 92274688,
                 "max_in_bytes": 0,
                 "peak_used_in_bytes": 624951296,
                 "peak_max_in_bytes": 0
               },
               "old": {
-                "used_in_bytes": 70169600,
+                "used_in_bytes": 70240328,
                 "max_in_bytes": 1073741824,
-                "peak_used_in_bytes": 70169600,
+                "peak_used_in_bytes": 70240328,
                 "peak_max_in_bytes": 1073741824
               },
               "survivor": {
-                "used_in_bytes": 39845888,
+                "used_in_bytes": 41943040,
                 "max_in_bytes": 0,
                 "peak_used_in_bytes": 58720256,
                 "peak_max_in_bytes": 0
               },
               "CodeHeap 'non-profiled nmethods'": {
-                "used_in_bytes": 7573632,
+                "used_in_bytes": 6875776,
                 "max_in_bytes": 122916864,
-                "peak_used_in_bytes": 7573632,
+                "peak_used_in_bytes": 6875776,
                 "peak_max_in_bytes": 122916864
               }
             }
@@ -203,8 +203,8 @@
         }
       ]
     },
-    "observed_cgroup_memory_current_bytes": 1479311360,
-    "container_lifetime_cgroup_memory_peak_bytes": 1479311360,
+    "observed_cgroup_memory_current_bytes": 1446055936,
+    "container_lifetime_cgroup_memory_peak_bytes": 1446318080,
     "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
   },
   "container_after": {
@@ -220,8 +220,8 @@
         }
       ]
     },
-    "observed_cgroup_memory_current_bytes": 1510395904,
-    "container_lifetime_cgroup_memory_peak_bytes": 1510395904,
+    "observed_cgroup_memory_current_bytes": 1490186240,
+    "container_lifetime_cgroup_memory_peak_bytes": 1490186240,
     "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
   },
   "provenance": {
@@ -242,11 +242,11 @@
       "docs/decisions/0011-elasticsearch-parity-pilot.md": "a2361acfc04209a2d4c445b13ce1d185b48b72864bb320cee293f7b8c545fc12",
       "infra/elasticsearch/Dockerfile": "eed5380c2586569a42dceb0d72bfde58ecf84f6882650893c8bdcc07167db9ed",
       "infra/elasticsearch/compose.yml": "e02fc57ce7ce86fcf60c9519de0f3379d2d452e3d58b792dff676a25dd7d804e",
-      "scripts/es_pilot.py": "5729511baf80f173d45befb8195785bdbc475e786b5f3afa75fa3b59307741f1",
-      "scripts/run_elasticsearch_pilot.py": "59745d35fb954cb6392ba63b78da6957d1e6d302bd3cc6a0039edba5d2cad479",
+      "scripts/es_pilot.py": "dab0664b0a0bfbaedba95be17d51712fc90ab086e0834264428e73a0203f3825",
+      "scripts/run_elasticsearch_pilot.py": "4688980e9e3042d748dd292419f90c53f9c066d68728e10cc171aa383d893b0b",
       "scripts/elasticsearch_fixture.py": "dff2a461c9787fe60fa15fb06c87d1dd4049500cc63b158ecd8345609e32cb5d",
       "tools/java/lab/commerce/search/AnalyzerParity.java": "3b25c966d69703fcbae1b00a69e48daa9864ca585fa3dd291c3d62993e729ec1",
-      "tests/test_es_pilot.py": "6b1d5cc501ca55b25e3236a09d75555f4849e2626833a69b24783b53341d3492"
+      "tests/test_es_pilot.py": "a837a418560b60a3f452f42880bce92347acb0e616534708f79d9712fe839c50"
     },
     "frozen_source_sha256": {
       "config/bm25-title-v1.json": "ecefec5d2c6b6ca381ae2164f504eaf92b50af523f0283e1cad46cc5dfa694bc",
@@ -306,6 +306,6 @@
       "sha256": "ad25892fd5d272c288f3f5cd81148df663c6fa2250ba306a814b39ee71df2286"
     }
   ],
-  "main_wall_seconds": 6.913310208001349,
+  "main_wall_seconds": 7.146754041001259,
   "limits": "30k independently sampled metadata products and 300 validation queries, not full-catalog relevance or a serving API. Lucene versions differ and ES legacy scores are normalized only for comparison. Probe parity is for selected strings; finite observed parity does not prove universal equivalence. No hybrid, ANN adoption, training, update/freshness, production capacity or official-test claim."
 }

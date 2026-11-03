@@ -1,6 +1,6 @@
 {
-  "first_report_sha256": "2ad9100d35d40e126cda638e672ed7ab38a07cc50eb9681e233ba6d35c6d7914",
-  "repeat_report_sha256": "89be15111470242f354afa8bcb61800c386dd6aff375162888b5914140e4d0cf",
+  "first_report_sha256": "16aa1fbf708a37da9217cea921a6c5a74ad8d90e21f376bd376206582053e532",
+  "repeat_report_sha256": "068b61be9e9b8a77dd05203673d3ca97e9c947eb4fb75e9549b38679a0f2a5f3",
   "verification_script_sha256": "9f50552fb5b2d47dee3be2b50966f3c0830c1caea37f95f6137627af5ffb4761",
   "equal_report_fields": [
     "config",
@@ -91,15 +91,15 @@
     }
   ],
   "first_execution": {
-    "reference_build_and_batch_seconds": 1.7124022920033894,
-    "es_load_refresh_merge_seconds": 1.542927000002237,
-    "es_http_retrieval_batch_seconds": 0.6730527920008171,
+    "reference_build_and_batch_seconds": 1.6651039169955766,
+    "es_load_refresh_merge_seconds": 1.8934029579977505,
+    "es_http_retrieval_batch_seconds": 0.6794680829989375,
     "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
   },
   "repeat_execution": {
-    "reference_build_and_batch_seconds": 1.528266416004044,
-    "es_load_refresh_merge_seconds": 0.9524829169968143,
-    "es_http_retrieval_batch_seconds": 0.42146470800071256,
+    "reference_build_and_batch_seconds": 1.5559239170033834,
+    "es_load_refresh_merge_seconds": 1.0153848330010078,
+    "es_http_retrieval_batch_seconds": 0.4063358750063344,
     "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
   },
   "container_before_restart": {
@@ -115,13 +115,13 @@
         }
       ]
     },
-    "observed_cgroup_memory_current_bytes": 1522302976,
-    "container_lifetime_cgroup_memory_peak_bytes": 1527808000,
+    "observed_cgroup_memory_current_bytes": 1506029568,
+    "container_lifetime_cgroup_memory_peak_bytes": 1506185216,
     "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
   },
   "lifecycle": {
-    "graceful_stop_seconds": 2.564984374999767,
-    "restart_to_ready_green_seconds": 12.279387041999144,
+    "graceful_stop_seconds": 2.603507667001395,
+    "restart_to_ready_green_seconds": 8.198038041002292,
     "both_index_uuids_counts_and_all_300_ranked_results_preserved": true,
     "backend_after_restart": {
       "version": {
@@ -159,8 +159,8 @@
           }
         ]
       },
-      "observed_cgroup_memory_current_bytes": 1463193600,
-      "container_lifetime_cgroup_memory_peak_bytes": 1463193600,
+      "observed_cgroup_memory_current_bytes": 1461252096,
+      "container_lifetime_cgroup_memory_peak_bytes": 1461493760,
       "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
     },
     "pilot_service_stopped_at_end_volume_preserved": true
