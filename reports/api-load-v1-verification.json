@@ -1,0 +1,267 @@
+{
+  "report_sha256": "e8784fde39c71fca21872121aed403500c1638951e8912c61c3fe7288973cb65",
+  "verification_script_sha256": "b6650277c1720482cca6ab99d2db5310c3ac1cf4710dabc56894d7260e4d76e5",
+  "raw_artifacts": [
+    {
+      "name": "ascending/warmup/raw.ndjson",
+      "bytes": 11401604,
+      "sha256": "b5f3f8cd2b77eb8db3c028aa7bb230848eb29e23936a78a3b6f02d05dac2afe1"
+    },
+    {
+      "name": "ascending/rate-20/raw.ndjson",
+      "bytes": 2313013,
+      "sha256": "1ed23d27dd0a715d3d945a0f73c60d41d444eec3da0b82c589d0e7d3878e6041"
+    },
+    {
+      "name": "ascending/rate-100/raw.ndjson",
+      "bytes": 11526261,
+      "sha256": "4ba10632b20e00b13e7f076c615de7f5b75bf974f4582fa0dc14e7641c7e6f95"
+    },
+    {
+      "name": "ascending/rate-200/raw.ndjson",
+      "bytes": 23047727,
+      "sha256": "5fd391d7ee610482b8422d63cf1c7be2d38fbc6c70536653dc6199538fde23a1"
+    },
+    {
+      "name": "ascending/rate-500/raw.ndjson",
+      "bytes": 57594022,
+      "sha256": "8f3f7a45ecaef9aabb01a2dee6083edcf76fea356e49467c9f66e38a4b108f6b"
+    },
+    {
+      "name": "ascending/rate-1000/raw.ndjson",
+      "bytes": 115171869,
+      "sha256": "6f70a58e19a333fde6f37ef3bc6831e688fcb171fb9c4f68262c261311751f76"
+    },
+    {
+      "name": "descending/warmup/raw.ndjson",
+      "bytes": 11526708,
+      "sha256": "cf744046712398490cf07fe966cd85f93a4720a84e17e7e282444ad6742e3b1f"
+    },
+    {
+      "name": "descending/rate-1000/raw.ndjson",
+      "bytes": 115170626,
+      "sha256": "8cb7090ddaffdc9a2d9ef7c9bc4b5184f57d270e5b34a45c3cbc3c46f5626e82"
+    },
+    {
+      "name": "descending/rate-500/raw.ndjson",
+      "bytes": 57597156,
+      "sha256": "bd163b0a325fb869eea26f9a59bae8c9fd93555f128dffe5ed1966725174dc70"
+    },
+    {
+      "name": "descending/rate-200/raw.ndjson",
+      "bytes": 23047474,
+      "sha256": "9266e5f714cba0abcb781e7ae27a0a0becc673c2d6dca232b382e3fbc5b7c030"
+    },
+    {
+      "name": "descending/rate-100/raw.ndjson",
+      "bytes": 11526462,
+      "sha256": "f556d4ecbc6d8dbe3aaafd798d1a5ae2f6c93f66b27b8524b3b6ba066bfa7b9b"
+    },
+    {
+      "name": "descending/rate-20/raw.ndjson",
+      "bytes": 2316896,
+      "sha256": "788ec77e6b306c9785bf54c5d4b185e3de36844964c891d9f8222bd30b4d401c"
+    }
+  ],
+  "all_counts_percentiles_and_qualifications_recomputed": true,
+  "workload_and_sources_unchanged": true,
+  "resource_observations": {
+    "ascending": {
+      "cooldown": {
+        "samples": 21,
+        "sampled_max_api_rss_bytes": 236273664,
+        "sampled_max_generator_rss_bytes": null,
+        "max_observed_api_ps_cpu_lifetime_percent": 0.7,
+        "max_observed_generator_ps_cpu_lifetime_percent": null,
+        "sampled_max_es_cpu_percent": 4,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 412240568,
+        "observed_cgroup_lifetime_peak_bytes": 2033655808
+      },
+      "rate-100": {
+        "samples": 27,
+        "sampled_max_api_rss_bytes": 236273664,
+        "sampled_max_generator_rss_bytes": 70909952,
+        "max_observed_api_ps_cpu_lifetime_percent": 42.3,
+        "max_observed_generator_ps_cpu_lifetime_percent": 16.8,
+        "sampled_max_es_cpu_percent": 24,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 695356088,
+        "observed_cgroup_lifetime_peak_bytes": 2029256704
+      },
+      "rate-1000": {
+        "samples": 28,
+        "sampled_max_api_rss_bytes": 232751104,
+        "sampled_max_generator_rss_bytes": 79298560,
+        "max_observed_api_ps_cpu_lifetime_percent": 22.3,
+        "max_observed_generator_ps_cpu_lifetime_percent": 45.1,
+        "sampled_max_es_cpu_percent": 55,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 733446584,
+        "observed_cgroup_lifetime_peak_bytes": 2034225152
+      },
+      "rate-20": {
+        "samples": 26,
+        "sampled_max_api_rss_bytes": 234930176,
+        "sampled_max_generator_rss_bytes": 68239360,
+        "max_observed_api_ps_cpu_lifetime_percent": 20.1,
+        "max_observed_generator_ps_cpu_lifetime_percent": 7.5,
+        "sampled_max_es_cpu_percent": 8,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 403851960,
+        "observed_cgroup_lifetime_peak_bytes": 2025758720
+      },
+      "rate-200": {
+        "samples": 27,
+        "sampled_max_api_rss_bytes": 237191168,
+        "sampled_max_generator_rss_bytes": 71811072,
+        "max_observed_api_ps_cpu_lifetime_percent": 70.7,
+        "max_observed_generator_ps_cpu_lifetime_percent": 19.2,
+        "sampled_max_es_cpu_percent": 22,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 695356088,
+        "observed_cgroup_lifetime_peak_bytes": 2031005696
+      },
+      "rate-500": {
+        "samples": 28,
+        "sampled_max_api_rss_bytes": 230195200,
+        "sampled_max_generator_rss_bytes": 74104832,
+        "max_observed_api_ps_cpu_lifetime_percent": 23.9,
+        "max_observed_generator_ps_cpu_lifetime_percent": 34.8,
+        "sampled_max_es_cpu_percent": 34,
+        "sampled_max_es_search_queue": 1,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 712134944,
+        "observed_cgroup_lifetime_peak_bytes": 2032676864
+      },
+      "starting": {
+        "samples": 1,
+        "sampled_max_api_rss_bytes": 196116480,
+        "sampled_max_generator_rss_bytes": null,
+        "max_observed_api_ps_cpu_lifetime_percent": 205.3,
+        "max_observed_generator_ps_cpu_lifetime_percent": null,
+        "sampled_max_es_cpu_percent": 18,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 216006656,
+        "observed_cgroup_lifetime_peak_bytes": 1903636480
+      },
+      "warmup": {
+        "samples": 27,
+        "sampled_max_api_rss_bytes": 232898560,
+        "sampled_max_generator_rss_bytes": 71761920,
+        "max_observed_api_ps_cpu_lifetime_percent": 42.2,
+        "max_observed_generator_ps_cpu_lifetime_percent": 10.8,
+        "sampled_max_es_cpu_percent": 77,
+        "sampled_max_es_search_queue": 12,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 672480704,
+        "observed_cgroup_lifetime_peak_bytes": 2025152512
+      }
+    },
+    "descending": {
+      "cooldown": {
+        "samples": 22,
+        "sampled_max_api_rss_bytes": 257114112,
+        "sampled_max_generator_rss_bytes": null,
+        "max_observed_api_ps_cpu_lifetime_percent": 8.1,
+        "max_observed_generator_ps_cpu_lifetime_percent": null,
+        "sampled_max_es_cpu_percent": 4,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 578254832,
+        "observed_cgroup_lifetime_peak_bytes": 2040020992
+      },
+      "rate-100": {
+        "samples": 27,
+        "sampled_max_api_rss_bytes": 242466816,
+        "sampled_max_generator_rss_bytes": 70500352,
+        "max_observed_api_ps_cpu_lifetime_percent": 10.8,
+        "max_observed_generator_ps_cpu_lifetime_percent": 14.0,
+        "sampled_max_es_cpu_percent": 10,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 729742624,
+        "observed_cgroup_lifetime_peak_bytes": 2040020992
+      },
+      "rate-1000": {
+        "samples": 28,
+        "sampled_max_api_rss_bytes": 255393792,
+        "sampled_max_generator_rss_bytes": 78659584,
+        "max_observed_api_ps_cpu_lifetime_percent": 70.1,
+        "max_observed_generator_ps_cpu_lifetime_percent": 44.3,
+        "sampled_max_es_cpu_percent": 60,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 742069832,
+        "observed_cgroup_lifetime_peak_bytes": 2035712000
+      },
+      "rate-20": {
+        "samples": 26,
+        "sampled_max_api_rss_bytes": 242401280,
+        "sampled_max_generator_rss_bytes": 69337088,
+        "max_observed_api_ps_cpu_lifetime_percent": 1.5,
+        "max_observed_generator_ps_cpu_lifetime_percent": 9.0,
+        "sampled_max_es_cpu_percent": 5,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 524216448,
+        "observed_cgroup_lifetime_peak_bytes": 2040020992
+      },
+      "rate-200": {
+        "samples": 27,
+        "sampled_max_api_rss_bytes": 257130496,
+        "sampled_max_generator_rss_bytes": 72712192,
+        "max_observed_api_ps_cpu_lifetime_percent": 12.2,
+        "max_observed_generator_ps_cpu_lifetime_percent": 20.1,
+        "sampled_max_es_cpu_percent": 16,
+        "sampled_max_es_search_queue": 1,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 733891280,
+        "observed_cgroup_lifetime_peak_bytes": 2039336960
+      },
+      "rate-500": {
+        "samples": 28,
+        "sampled_max_api_rss_bytes": 257114112,
+        "sampled_max_generator_rss_bytes": 75694080,
+        "max_observed_api_ps_cpu_lifetime_percent": 19.0,
+        "max_observed_generator_ps_cpu_lifetime_percent": 34.4,
+        "sampled_max_es_cpu_percent": 30,
+        "sampled_max_es_search_queue": 1,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 729478032,
+        "observed_cgroup_lifetime_peak_bytes": 2039017472
+      },
+      "starting": {
+        "samples": 1,
+        "sampled_max_api_rss_bytes": 220217344,
+        "sampled_max_generator_rss_bytes": null,
+        "max_observed_api_ps_cpu_lifetime_percent": 183.7,
+        "max_observed_generator_ps_cpu_lifetime_percent": null,
+        "sampled_max_es_cpu_percent": 13,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 658061664,
+        "observed_cgroup_lifetime_peak_bytes": 2034225152
+      },
+      "warmup": {
+        "samples": 26,
+        "sampled_max_api_rss_bytes": 240451584,
+        "sampled_max_generator_rss_bytes": 70664192,
+        "max_observed_api_ps_cpu_lifetime_percent": 45.3,
+        "max_observed_generator_ps_cpu_lifetime_percent": 12.9,
+        "sampled_max_es_cpu_percent": 10,
+        "sampled_max_es_search_queue": 0,
+        "sampled_es_search_rejections_delta": 0,
+        "sampled_max_es_heap_used_bytes": 741947744,
+        "observed_cgroup_lifetime_peak_bytes": 2034741248
+      }
+    }
+  },
+  "limits": "Metric accounting reproducibility only; timing distributions are distinct measured runs. One-second resource samples/lifetime CPU snapshots cannot isolate Tomcat queueing or prove a bottleneck."
+}
