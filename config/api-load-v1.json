@@ -1,0 +1,26 @@
+{
+  "version": "api-load-v1",
+  "k6_version": "2.0.0",
+  "k6_archives": {
+    "Darwin-arm64": {"name": "k6-v2.0.0-macos-arm64.zip", "sha256": "9a725f3faf8fc9de70f0bd86fb9783e6fb02f822492862846375ec0d8f2b35f7"},
+    "Linux-x86_64": {"name": "k6-v2.0.0-linux-amd64.tar.gz", "sha256": "2ae87d976f6cdba17185bdd980d8819a3a98e9092c6f0638cd58272ecefc8b90"}
+  },
+  "index": "csl-pilot-catalog-v1-a",
+  "sample_seed": "commerce-api-load-v1",
+  "queries_per_locale": 100,
+  "limit": 10,
+  "rates": [20, 100, 200, 500, 1000],
+  "duration_seconds": 30,
+  "warmup_rate": 100,
+  "warmup_seconds": 30,
+  "cooldown_seconds": 5,
+  "preallocated_vus": 64,
+  "maximum_vus": 64,
+  "client_timeout_seconds": 3,
+  "graceful_stop_seconds": 5,
+  "sample_seconds": 1,
+  "qualification": "zero incorrect HTTP200 results; correct HTTP200 completions / scheduled slots >=0.99, including HTTP/transport failures and dropped iterations in the denominator; no numeric latency SLO in this baseline campaign",
+  "repeat": "fresh Java process and the same 30s warm-up, reverse offered-rate order on the same immutable index; exact workload/source contracts, distinct timing observations",
+  "stop": "no extra rates, tuning, resource increases or longer reruns inside this campaign; stop on incorrect successful results, backend/process death or monitor failure and preserve partial evidence",
+  "scope": "local warm-cache title-BM25 API baseline on 1,814,924 records with a fixed balanced 300-query stress mix, not real traffic, cold-cache, long-duration capacity or production SLO evidence"
+}

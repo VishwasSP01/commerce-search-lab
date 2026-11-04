@@ -1,0 +1,1017 @@
+{
+  "config": {
+    "version": "api-load-v1",
+    "k6_version": "2.0.0",
+    "k6_archives": {
+      "Darwin-arm64": {
+        "name": "k6-v2.0.0-macos-arm64.zip",
+        "sha256": "9a725f3faf8fc9de70f0bd86fb9783e6fb02f822492862846375ec0d8f2b35f7"
+      },
+      "Linux-x86_64": {
+        "name": "k6-v2.0.0-linux-amd64.tar.gz",
+        "sha256": "2ae87d976f6cdba17185bdd980d8819a3a98e9092c6f0638cd58272ecefc8b90"
+      }
+    },
+    "index": "csl-pilot-catalog-v1-a",
+    "sample_seed": "commerce-api-load-v1",
+    "queries_per_locale": 100,
+    "limit": 10,
+    "rates": [
+      20,
+      100,
+      200,
+      500,
+      1000
+    ],
+    "duration_seconds": 30,
+    "warmup_rate": 100,
+    "warmup_seconds": 30,
+    "cooldown_seconds": 5,
+    "preallocated_vus": 64,
+    "maximum_vus": 64,
+    "client_timeout_seconds": 3,
+    "graceful_stop_seconds": 5,
+    "sample_seconds": 1,
+    "qualification": "zero incorrect HTTP200 results; correct HTTP200 completions / scheduled slots >=0.99, including HTTP/transport failures and dropped iterations in the denominator; no numeric latency SLO in this baseline campaign",
+    "repeat": "fresh Java process and the same 30s warm-up, reverse offered-rate order on the same immutable index; exact workload/source contracts, distinct timing observations",
+    "stop": "no extra rates, tuning, resource increases or longer reruns inside this campaign; stop on incorrect successful results, backend/process death or monitor failure and preserve partial evidence",
+    "scope": "local warm-cache title-BM25 API baseline on 1,814,924 records with a fixed balanced 300-query stress mix, not real traffic, cold-cache, long-duration capacity or production SLO evidence"
+  },
+  "partition": "validation-query sample",
+  "official_test_read": false,
+  "server": {
+    "version": {
+      "number": "9.5.6",
+      "build_flavor": "default",
+      "build_type": "docker",
+      "build_hash": "fd1e8011342a0988e432b999cea4bf884ca120ed",
+      "build_date": "2026-10-28T22:37:54.387301573Z",
+      "build_snapshot": false,
+      "lucene_version": "10.5.2",
+      "minimum_wire_compatibility_version": "8.19.0",
+      "minimum_index_compatibility_version": "8.0.0"
+    },
+    "license": {
+      "type": "basic",
+      "status": "active"
+    },
+    "plugins": [
+      {
+        "name": "analysis-kuromoji",
+        "version": "9.5.6"
+      }
+    ]
+  },
+  "index_uuid": "tC091MYhSI6HzyHMDhy_aQ",
+  "products": 1814924,
+  "workload_queries": 300,
+  "workload_sha256": "cd7d7188f229fc14debcf846b946370bfffa6f9d07540902b85f6138bcae1f03",
+  "campaigns": [
+    {
+      "rate_order": [
+        20,
+        100,
+        200,
+        500,
+        1000
+      ],
+      "warmup": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3001,
+        "started": 2966,
+        "completed": 2966,
+        "dropped": 35,
+        "correct_http200": 2966,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.01166277907364212,
+        "achieved_started_rps": 98.86666666666666,
+        "correct_completion_rps_per_scheduled_window": 98.86666666666666,
+        "statuses": {
+          "200": 2966
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "us": 1000,
+          "jp": 983,
+          "es": 983
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 2966,
+          "p50_ms": 3.0,
+          "p95_ms": 10.0,
+          "p99_ms": 807.1499999999992,
+          "max_ms": 982
+        },
+        "correct_http200_wall_ms": {
+          "samples": 2966,
+          "p50_ms": 3.0,
+          "p95_ms": 10.0,
+          "p99_ms": 807.1499999999992,
+          "max_ms": 982
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 2966,
+            "p50_ms": 3.1414999999999997,
+            "p95_ms": 9.555499999999999,
+            "p99_ms": 807.0026499999991,
+            "max_ms": 980.189
+          },
+          "http_req_blocked": {
+            "samples": 2966,
+            "p50_ms": 0.003,
+            "p95_ms": 0.008,
+            "p99_ms": 0.2233499999999999,
+            "max_ms": 1.034
+          },
+          "http_req_connecting": {
+            "samples": 2966,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.1876999999999998,
+            "max_ms": 0.545
+          },
+          "http_req_waiting": {
+            "samples": 2966,
+            "p50_ms": 3.0975,
+            "p95_ms": 9.48775,
+            "p99_ms": 806.9472999999991,
+            "max_ms": 979.939
+          }
+        },
+        "observed_max_vus": 49,
+        "qualified": false,
+        "raw_sha256": "b5f3f8cd2b77eb8db3c028aa7bb230848eb29e23936a78a3b6f02d05dac2afe1",
+        "k6_exit_code": 0
+      },
+      "points": [
+        {
+          "offered_rps": 20,
+          "duration_seconds": 30,
+          "planned_slots": 600,
+          "scheduled_slots": 600,
+          "started": 600,
+          "completed": 600,
+          "dropped": 0,
+          "correct_http200": 600,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 20.0,
+          "correct_completion_rps_per_scheduled_window": 20.0,
+          "statuses": {
+            "200": 600
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 200,
+            "us": 200,
+            "es": 200
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 600,
+            "p50_ms": 7.0,
+            "p95_ms": 13.0,
+            "p99_ms": 20.0,
+            "max_ms": 25
+          },
+          "correct_http200_wall_ms": {
+            "samples": 600,
+            "p50_ms": 7.0,
+            "p95_ms": 13.0,
+            "p99_ms": 20.0,
+            "max_ms": 25
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 600,
+              "p50_ms": 6.3580000000000005,
+              "p95_ms": 12.41344999999999,
+              "p99_ms": 19.77427999999999,
+              "max_ms": 24.501
+            },
+            "http_req_blocked": {
+              "samples": 600,
+              "p50_ms": 0.007,
+              "p95_ms": 0.3010999999999999,
+              "p99_ms": 0.45204,
+              "max_ms": 0.529
+            },
+            "http_req_connecting": {
+              "samples": 600,
+              "p50_ms": 0.0,
+              "p95_ms": 0.246,
+              "p99_ms": 0.36904,
+              "max_ms": 0.438
+            },
+            "http_req_waiting": {
+              "samples": 600,
+              "p50_ms": 6.2575,
+              "p95_ms": 12.331149999999994,
+              "p99_ms": 19.639319999999994,
+              "max_ms": 24.394
+            }
+          },
+          "observed_max_vus": 0,
+          "qualified": true,
+          "raw_sha256": "1ed23d27dd0a715d3d945a0f73c60d41d444eec3da0b82c589d0e7d3878e6041",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 100,
+          "duration_seconds": 30,
+          "planned_slots": 3000,
+          "scheduled_slots": 3000,
+          "started": 3000,
+          "completed": 3000,
+          "dropped": 0,
+          "correct_http200": 3000,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 100.0,
+          "correct_completion_rps_per_scheduled_window": 100.0,
+          "statuses": {
+            "200": 3000
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 1000,
+            "us": 1000,
+            "es": 1000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 3000,
+            "p50_ms": 2.0,
+            "p95_ms": 6.0,
+            "p99_ms": 10.0,
+            "max_ms": 25
+          },
+          "correct_http200_wall_ms": {
+            "samples": 3000,
+            "p50_ms": 2.0,
+            "p95_ms": 6.0,
+            "p99_ms": 10.0,
+            "max_ms": 25
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 3000,
+              "p50_ms": 2.28,
+              "p95_ms": 5.857449999999987,
+              "p99_ms": 9.80144999999999,
+              "max_ms": 24.803
+            },
+            "http_req_blocked": {
+              "samples": 3000,
+              "p50_ms": 0.003,
+              "p95_ms": 0.009,
+              "p99_ms": 0.24200999999999975,
+              "max_ms": 3.085
+            },
+            "http_req_connecting": {
+              "samples": 3000,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.2000299999999993,
+              "max_ms": 0.522
+            },
+            "http_req_waiting": {
+              "samples": 3000,
+              "p50_ms": 2.235,
+              "p95_ms": 5.810599999999986,
+              "p99_ms": 9.718029999999976,
+              "max_ms": 24.719
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "4ba10632b20e00b13e7f076c615de7f5b75bf974f4582fa0dc14e7641c7e6f95",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 200,
+          "duration_seconds": 30,
+          "planned_slots": 6000,
+          "scheduled_slots": 6001,
+          "started": 6001,
+          "completed": 6001,
+          "dropped": 0,
+          "correct_http200": 6001,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 200.03333333333333,
+          "correct_completion_rps_per_scheduled_window": 200.03333333333333,
+          "statuses": {
+            "200": 6001
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 2001,
+            "us": 2000,
+            "es": 2000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 6001,
+            "p50_ms": 2.0,
+            "p95_ms": 5.0,
+            "p99_ms": 8.0,
+            "max_ms": 22
+          },
+          "correct_http200_wall_ms": {
+            "samples": 6001,
+            "p50_ms": 2.0,
+            "p95_ms": 5.0,
+            "p99_ms": 8.0,
+            "max_ms": 22
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 6001,
+              "p50_ms": 1.56,
+              "p95_ms": 4.925,
+              "p99_ms": 8.253,
+              "max_ms": 21.47
+            },
+            "http_req_blocked": {
+              "samples": 6001,
+              "p50_ms": 0.002,
+              "p95_ms": 0.006,
+              "p99_ms": 0.106,
+              "max_ms": 0.307
+            },
+            "http_req_connecting": {
+              "samples": 6001,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.09,
+              "max_ms": 0.291
+            },
+            "http_req_waiting": {
+              "samples": 6001,
+              "p50_ms": 1.524,
+              "p95_ms": 4.877,
+              "p99_ms": 8.218,
+              "max_ms": 21.399
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "5fd391d7ee610482b8422d63cf1c7be2d38fbc6c70536653dc6199538fde23a1",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 500,
+          "duration_seconds": 30,
+          "planned_slots": 15000,
+          "scheduled_slots": 15000,
+          "started": 15000,
+          "completed": 15000,
+          "dropped": 0,
+          "correct_http200": 15000,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 500.0,
+          "correct_completion_rps_per_scheduled_window": 500.0,
+          "statuses": {
+            "200": 15000
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 5000,
+            "us": 5000,
+            "es": 5000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 15000,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 47
+          },
+          "correct_http200_wall_ms": {
+            "samples": 15000,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 47
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 15000,
+              "p50_ms": 1.105,
+              "p95_ms": 4.163199999999997,
+              "p99_ms": 7.316050000000001,
+              "max_ms": 47.398
+            },
+            "http_req_blocked": {
+              "samples": 15000,
+              "p50_ms": 0.002,
+              "p95_ms": 0.004,
+              "p99_ms": 0.111,
+              "max_ms": 0.384
+            },
+            "http_req_connecting": {
+              "samples": 15000,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.092,
+              "max_ms": 0.249
+            },
+            "http_req_waiting": {
+              "samples": 15000,
+              "p50_ms": 1.08,
+              "p95_ms": 4.142,
+              "p99_ms": 7.299060000000002,
+              "max_ms": 47.369
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "8f3f7a45ecaef9aabb01a2dee6083edcf76fea356e49467c9f66e38a4b108f6b",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 1000,
+          "duration_seconds": 30,
+          "planned_slots": 30000,
+          "scheduled_slots": 30001,
+          "started": 30001,
+          "completed": 30001,
+          "dropped": 0,
+          "correct_http200": 30001,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 1000.0333333333333,
+          "correct_completion_rps_per_scheduled_window": 1000.0333333333333,
+          "statuses": {
+            "200": 30001
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 10001,
+            "us": 10000,
+            "es": 10000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 30001,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 17
+          },
+          "correct_http200_wall_ms": {
+            "samples": 30001,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 17
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 30001,
+              "p50_ms": 0.965,
+              "p95_ms": 3.915,
+              "p99_ms": 6.762,
+              "max_ms": 16.101
+            },
+            "http_req_blocked": {
+              "samples": 30001,
+              "p50_ms": 0.001,
+              "p95_ms": 0.002,
+              "p99_ms": 0.084,
+              "max_ms": 0.443
+            },
+            "http_req_connecting": {
+              "samples": 30001,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.071,
+              "max_ms": 0.407
+            },
+            "http_req_waiting": {
+              "samples": 30001,
+              "p50_ms": 0.952,
+              "p95_ms": 3.899,
+              "p99_ms": 6.744,
+              "max_ms": 16.068
+            }
+          },
+          "observed_max_vus": 3,
+          "qualified": true,
+          "raw_sha256": "6f70a58e19a333fde6f37ef3bc6831e688fcb171fb9c4f68262c261311751f76",
+          "k6_exit_code": 0
+        }
+      ],
+      "post_load_recovery_queries": 300,
+      "resource_samples": 185,
+      "resources_sha256": "d86fcfc8ae7e39d89ff1bfa070c7b581b4f4d93a68e9f52b35aaa72aae5a1726"
+    },
+    {
+      "rate_order": [
+        1000,
+        500,
+        200,
+        100,
+        20
+      ],
+      "warmup": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3000,
+        "started": 3000,
+        "completed": 3000,
+        "dropped": 0,
+        "correct_http200": 3000,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.0,
+        "achieved_started_rps": 100.0,
+        "correct_completion_rps_per_scheduled_window": 100.0,
+        "statuses": {
+          "200": 3000
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "jp": 1000,
+          "us": 1000,
+          "es": 1000
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 3000,
+          "p50_ms": 3.0,
+          "p95_ms": 6.0,
+          "p99_ms": 10.0,
+          "max_ms": 22
+        },
+        "correct_http200_wall_ms": {
+          "samples": 3000,
+          "p50_ms": 3.0,
+          "p95_ms": 6.0,
+          "p99_ms": 10.0,
+          "max_ms": 22
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 3000,
+            "p50_ms": 2.6734999999999998,
+            "p95_ms": 6.461149999999999,
+            "p99_ms": 10.211229999999972,
+            "max_ms": 21.17
+          },
+          "http_req_blocked": {
+            "samples": 3000,
+            "p50_ms": 0.003,
+            "p95_ms": 0.007,
+            "p99_ms": 0.16301999999999953,
+            "max_ms": 0.926
+          },
+          "http_req_connecting": {
+            "samples": 3000,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.14100999999999975,
+            "max_ms": 0.227
+          },
+          "http_req_waiting": {
+            "samples": 3000,
+            "p50_ms": 2.6275,
+            "p95_ms": 6.399749999999996,
+            "p99_ms": 10.179179999999972,
+            "max_ms": 21.092
+          }
+        },
+        "observed_max_vus": 1,
+        "qualified": true,
+        "raw_sha256": "cf744046712398490cf07fe966cd85f93a4720a84e17e7e282444ad6742e3b1f",
+        "k6_exit_code": 0
+      },
+      "points": [
+        {
+          "offered_rps": 1000,
+          "duration_seconds": 30,
+          "planned_slots": 30000,
+          "scheduled_slots": 30000,
+          "started": 30000,
+          "completed": 30000,
+          "dropped": 0,
+          "correct_http200": 30000,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 1000.0,
+          "correct_completion_rps_per_scheduled_window": 1000.0,
+          "statuses": {
+            "200": 30000
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 10000,
+            "us": 10000,
+            "es": 10000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 30000,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 59
+          },
+          "correct_http200_wall_ms": {
+            "samples": 30000,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 59
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 30000,
+              "p50_ms": 1.023,
+              "p95_ms": 4.028049999999999,
+              "p99_ms": 7.181029999999995,
+              "max_ms": 58.959
+            },
+            "http_req_blocked": {
+              "samples": 30000,
+              "p50_ms": 0.001,
+              "p95_ms": 0.002,
+              "p99_ms": 0.082,
+              "max_ms": 0.635
+            },
+            "http_req_connecting": {
+              "samples": 30000,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.068,
+              "max_ms": 0.601
+            },
+            "http_req_waiting": {
+              "samples": 30000,
+              "p50_ms": 1.008,
+              "p95_ms": 4.012049999999999,
+              "p99_ms": 7.165039999999993,
+              "max_ms": 58.649
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "8cb7090ddaffdc9a2d9ef7c9bc4b5184f57d270e5b34a45c3cbc3c46f5626e82",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 500,
+          "duration_seconds": 30,
+          "planned_slots": 15000,
+          "scheduled_slots": 15001,
+          "started": 15001,
+          "completed": 15001,
+          "dropped": 0,
+          "correct_http200": 15001,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 500.03333333333336,
+          "correct_completion_rps_per_scheduled_window": 500.03333333333336,
+          "statuses": {
+            "200": 15001
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 5001,
+            "us": 5000,
+            "es": 5000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 15001,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 14
+          },
+          "correct_http200_wall_ms": {
+            "samples": 15001,
+            "p50_ms": 1.0,
+            "p95_ms": 4.0,
+            "p99_ms": 7.0,
+            "max_ms": 14
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 15001,
+              "p50_ms": 1.106,
+              "p95_ms": 4.038,
+              "p99_ms": 7.019,
+              "max_ms": 14.525
+            },
+            "http_req_blocked": {
+              "samples": 15001,
+              "p50_ms": 0.002,
+              "p95_ms": 0.004,
+              "p99_ms": 0.105,
+              "max_ms": 3.908
+            },
+            "http_req_connecting": {
+              "samples": 15001,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.089,
+              "max_ms": 0.311
+            },
+            "http_req_waiting": {
+              "samples": 15001,
+              "p50_ms": 1.079,
+              "p95_ms": 4.007,
+              "p99_ms": 6.996,
+              "max_ms": 14.497
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "bd163b0a325fb869eea26f9a59bae8c9fd93555f128dffe5ed1966725174dc70",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 200,
+          "duration_seconds": 30,
+          "planned_slots": 6000,
+          "scheduled_slots": 6001,
+          "started": 6001,
+          "completed": 6001,
+          "dropped": 0,
+          "correct_http200": 6001,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 200.03333333333333,
+          "correct_completion_rps_per_scheduled_window": 200.03333333333333,
+          "statuses": {
+            "200": 6001
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 2001,
+            "us": 2000,
+            "es": 2000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 6001,
+            "p50_ms": 2.0,
+            "p95_ms": 5.0,
+            "p99_ms": 8.0,
+            "max_ms": 17
+          },
+          "correct_http200_wall_ms": {
+            "samples": 6001,
+            "p50_ms": 2.0,
+            "p95_ms": 5.0,
+            "p99_ms": 8.0,
+            "max_ms": 17
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 6001,
+              "p50_ms": 1.529,
+              "p95_ms": 4.992,
+              "p99_ms": 8.379,
+              "max_ms": 16.146
+            },
+            "http_req_blocked": {
+              "samples": 6001,
+              "p50_ms": 0.003,
+              "p95_ms": 0.007,
+              "p99_ms": 0.12,
+              "max_ms": 1.664
+            },
+            "http_req_connecting": {
+              "samples": 6001,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.101,
+              "max_ms": 0.271
+            },
+            "http_req_waiting": {
+              "samples": 6001,
+              "p50_ms": 1.489,
+              "p95_ms": 4.956,
+              "p99_ms": 8.341,
+              "max_ms": 16.028
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "9266e5f714cba0abcb781e7ae27a0a0becc673c2d6dca232b382e3fbc5b7c030",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 100,
+          "duration_seconds": 30,
+          "planned_slots": 3000,
+          "scheduled_slots": 3000,
+          "started": 3000,
+          "completed": 3000,
+          "dropped": 0,
+          "correct_http200": 3000,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 100.0,
+          "correct_completion_rps_per_scheduled_window": 100.0,
+          "statuses": {
+            "200": 3000
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 1000,
+            "us": 1000,
+            "es": 1000
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 3000,
+            "p50_ms": 2.0,
+            "p95_ms": 6.0,
+            "p99_ms": 10.0,
+            "max_ms": 17
+          },
+          "correct_http200_wall_ms": {
+            "samples": 3000,
+            "p50_ms": 2.0,
+            "p95_ms": 6.0,
+            "p99_ms": 10.0,
+            "max_ms": 17
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 3000,
+              "p50_ms": 1.954,
+              "p95_ms": 5.678649999999997,
+              "p99_ms": 9.77207,
+              "max_ms": 16.538
+            },
+            "http_req_blocked": {
+              "samples": 3000,
+              "p50_ms": 0.003,
+              "p95_ms": 0.008,
+              "p99_ms": 0.2000299999999993,
+              "max_ms": 1.177
+            },
+            "http_req_connecting": {
+              "samples": 3000,
+              "p50_ms": 0.0,
+              "p95_ms": 0.0,
+              "p99_ms": 0.16,
+              "max_ms": 0.321
+            },
+            "http_req_waiting": {
+              "samples": 3000,
+              "p50_ms": 1.903,
+              "p95_ms": 5.618999999999994,
+              "p99_ms": 9.724099999999998,
+              "max_ms": 16.504
+            }
+          },
+          "observed_max_vus": 1,
+          "qualified": true,
+          "raw_sha256": "f556d4ecbc6d8dbe3aaafd798d1a5ae2f6c93f66b27b8524b3b6ba066bfa7b9b",
+          "k6_exit_code": 0
+        },
+        {
+          "offered_rps": 20,
+          "duration_seconds": 30,
+          "planned_slots": 600,
+          "scheduled_slots": 601,
+          "started": 601,
+          "completed": 601,
+          "dropped": 0,
+          "correct_http200": 601,
+          "incorrect_http200": 0,
+          "non200_or_transport_failures": 0,
+          "loss_fraction": 0.0,
+          "achieved_started_rps": 20.033333333333335,
+          "correct_completion_rps_per_scheduled_window": 20.033333333333335,
+          "statuses": {
+            "200": 601
+          },
+          "error_codes": {},
+          "locale_requests": {
+            "jp": 201,
+            "us": 200,
+            "es": 200
+          },
+          "unique_queries": 300,
+          "all_attempt_wall_ms": {
+            "samples": 601,
+            "p50_ms": 4.0,
+            "p95_ms": 11.0,
+            "p99_ms": 17.0,
+            "max_ms": 20
+          },
+          "correct_http200_wall_ms": {
+            "samples": 601,
+            "p50_ms": 4.0,
+            "p95_ms": 11.0,
+            "p99_ms": 17.0,
+            "max_ms": 20
+          },
+          "k6_timings_ms": {
+            "http_req_duration": {
+              "samples": 601,
+              "p50_ms": 4.337,
+              "p95_ms": 10.174,
+              "p99_ms": 17.143,
+              "max_ms": 19.671
+            },
+            "http_req_blocked": {
+              "samples": 601,
+              "p50_ms": 0.006,
+              "p95_ms": 0.372,
+              "p99_ms": 0.475,
+              "max_ms": 1.377
+            },
+            "http_req_connecting": {
+              "samples": 601,
+              "p50_ms": 0.0,
+              "p95_ms": 0.304,
+              "p99_ms": 0.385,
+              "max_ms": 1.124
+            },
+            "http_req_waiting": {
+              "samples": 601,
+              "p50_ms": 4.252,
+              "p95_ms": 9.928,
+              "p99_ms": 17.021,
+              "max_ms": 19.491
+            }
+          },
+          "observed_max_vus": 0,
+          "qualified": true,
+          "raw_sha256": "788ec77e6b306c9785bf54c5d4b185e3de36844964c891d9f8222bd30b4d401c",
+          "k6_exit_code": 0
+        }
+      ],
+      "post_load_recovery_queries": 300,
+      "resource_samples": 185,
+      "resources_sha256": "cc833490a0454e7ef262ef0f9e5a8e73f83e5295e698fe8b51a8960cc253cfd6"
+    }
+  ],
+  "highest_qualifying_tested_rate_in_both_runs": 1000,
+  "k6_version": "k6 v2.0.0 (commit/8c3be52cc1, go1.26.3, darwin/arm64)",
+  "k6_binary_sha256": "6330ad48de699142138e468a6f6b2230f224da8db11dab3cb674e9f0c6a61eb1",
+  "initial_container": {
+    "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+    "memory_limit": 3221225472,
+    "nano_cpus": 2000000000,
+    "owner": "commerce-search-lab-pilot",
+    "ports": {
+      "9200/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "19200"
+        }
+      ]
+    },
+    "observed_cgroup_memory_current_bytes": 1873244160,
+    "container_lifetime_cgroup_memory_peak_bytes": 1873502208,
+    "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+  },
+  "host": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "architecture": "arm64",
+    "logical_cpus": 15
+  },
+  "provenance": {
+    "api_jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+    "full_catalog_report_sha256": "e8c3d91f6558b1fd714b4efaab40dac03e678a0e82b1dd2171747ea6581fbe99",
+    "source_sha256": {
+      "config/api-load-v1.json": "0c86cc868515a797efb63eb29e36528b8e333b93b1182fd8bce9b9808c357b05",
+      "docs/decisions/0014-api-load-baseline.md": "c74842554369e4202702f6183276ec4c4b043fdf72bc1225cf93d8021541fd39",
+      "load/api-load.js": "ba3c824640f08df437f3824984ab4cb8352e829253894d00542b66f0e7459dd1",
+      "scripts/api_load.py": "731550d23135498d0a4f1c5e960114b83cdcdcc462febfa9163305209eb54b09",
+      "scripts/install_k6.py": "dca436e80d0c1f2efd93a19693820fe1135623a7c47dead0f14239165df0f34a",
+      "scripts/k6_fixture.py": "773955d33985776f7bdf5bc8e305723987118ed3fd15800bfcec8dbcd3291454",
+      "scripts/run_api_load.py": "e5ce6adc7e6afa395c7f1b2d45864d9f4a27ff746b92205ac12a6e6d199d6103",
+      "tests/test_api_load.py": "e37c6793fe6e04beab2192f524341ca2bda17f234e9a1c3af605d888979809ea",
+      ".github/workflows/ci.yml": "67059505bd3c86564a072e20aa95de891590316175842ad1dcc0a3eb855b0df9"
+    }
+  },
+  "project_services_stopped_volume_preserved": true,
+  "limits": "Short local warm-cache open-arrival benchmark on a balanced fixed 300-query workload; shared host, bounded64VUs, no direct Tomcat queue instrumentation. Report errors/drops and all-attempt latency; no production SLO, cold-cache, exact saturation ceiling or long-duration capacity claim."
+}
