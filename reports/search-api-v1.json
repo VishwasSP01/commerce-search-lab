@@ -1,0 +1,141 @@
+{
+  "partition": "validation",
+  "official_test_read": false,
+  "products": 30000,
+  "queries": 300,
+  "index": "csl-pilot-es-v1-c",
+  "limits_checked": [
+    100,
+    "default 10",
+    1
+  ],
+  "runs": [
+    {
+      "http_search_requests": 900,
+      "mismatch_cases": [],
+      "ranked_sha256": "d1585fa3ffc4eb5e9df19936092f8b6719334319ec28e17685612b8df1035786"
+    },
+    {
+      "http_search_requests": 900,
+      "mismatch_cases": [],
+      "ranked_sha256": "d1585fa3ffc4eb5e9df19936092f8b6719334319ec28e17685612b8df1035786"
+    }
+  ],
+  "failure_checks": {
+    "backend_stopped_search_503": true,
+    "backend_stopped_ready_503": true,
+    "backend_stopped_live_200": true,
+    "backend_restart_ready_200": true
+  },
+  "backend": {
+    "version": {
+      "number": "9.5.6",
+      "build_flavor": "default",
+      "build_type": "docker",
+      "build_hash": "fd1e8011342a0988e432b999cea4bf884ca120ed",
+      "build_date": "2026-10-28T22:37:54.387301573Z",
+      "build_snapshot": false,
+      "lucene_version": "10.5.2",
+      "minimum_wire_compatibility_version": "8.19.0",
+      "minimum_index_compatibility_version": "8.0.0"
+    },
+    "license": {
+      "type": "basic",
+      "status": "active"
+    },
+    "plugins": [
+      {
+        "name": "analysis-kuromoji",
+        "version": "9.5.6"
+      }
+    ]
+  },
+  "container": {
+    "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+    "memory_limit": 3221225472,
+    "nano_cpus": 2000000000,
+    "owner": "commerce-search-lab-pilot",
+    "ports": {
+      "9200/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "19200"
+        }
+      ]
+    },
+    "observed_cgroup_memory_current_bytes": 1795973120,
+    "container_lifetime_cgroup_memory_peak_bytes": 1795989504,
+    "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+  },
+  "jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+  "source_sha256": {
+    "scripts/verify_search_api.py": "8c81039eeada6d1c721299a7bb5807c4cb81695f318c38ecf4eec7a2ed4e856b",
+    "docs/decisions/0012-java-search-api.md": "f848a7352bdc3ee3d384c7a3c3b9ec514bf7c518e1feb9563087b0ab96395953",
+    ".github/workflows/ci.yml": "5247fcd40a0c83959fa6116ee0ae4a8be4a614871e28a7a157945a683493d8fd",
+    "services/search-api/pom.xml": "355b6d8a10affc8d9ef3aabe635e0987ab8d7ebb414ad28a8a7493e30a5f6ef3",
+    "services/search-api/src/main/java/lab/commerce/api/ApiErrors.java": "d71eebac69aef5e45e45235cfdc67e5868ff3c5a83fdaa6fc3ed23b3b500ed64",
+    "services/search-api/src/main/java/lab/commerce/api/ApiFailure.java": "13ff10965a2f6c46f11a815823b77bad72e465f79d69a45ba46cee475b27f97c",
+    "services/search-api/src/main/java/lab/commerce/api/BackendSettings.java": "9f58f42ce4a26689555745aea751c1f1df8c27f7f623cebbb37bad2cddb7b46b",
+    "services/search-api/src/main/java/lab/commerce/api/ElasticsearchBackend.java": "72cb33e09846ef1269e871f358a674e3c6c02758434fcff7db0fdec672a0778d",
+    "services/search-api/src/main/java/lab/commerce/api/SearchApplication.java": "3027f57da5ffab053b0aab676cd1f831d33d4c403537f8dc686a9d7351bd9c94",
+    "services/search-api/src/main/java/lab/commerce/api/SearchContract.java": "37c559992e71beeefa8dde076c2a096e0a270851a85ea5adadaca8ee1cd8b819",
+    "services/search-api/src/main/java/lab/commerce/api/SearchController.java": "54aad69140596ddde1b96ebd93a60645e23bfbcaaf6048be257b09e4f410d5ba",
+    "services/search-api/src/main/resources/application.properties": "1ea021f7b5d4c34832c9a5670fa6dc1df2dde4cdbf593feb3a4e639f5f4e872f",
+    "services/search-api/src/test/java/lab/commerce/api/BackendBoundsTest.java": "366311c581e0cbad5c7617678e450af70db95b68da46df3a07d5090d5552477c",
+    "services/search-api/src/test/java/lab/commerce/api/HttpContractTest.java": "de80f27017e62a7d4f7fb1bc273d743908f965fbc3089ac17264e076d8fd651d"
+  },
+  "provenance": {
+    "pilot_report_sha256": "16aa1fbf708a37da9217cea921a6c5a74ad8d90e21f376bd376206582053e532",
+    "pilot_artifacts": [
+      {
+        "name": "products.tsv",
+        "bytes": 5285200,
+        "sha256": "b953c31b3bf8f0a5994198bbf5217800e93431f9e72beeef86e769341e052eb9"
+      },
+      {
+        "name": "queries.tsv",
+        "bytes": 13355,
+        "sha256": "1c62280f6e875e840ed4fbc3cedcadb50f4ef976347f33398e7c9ff91ebce1ad"
+      },
+      {
+        "name": "reference.tsv",
+        "bytes": 697220,
+        "sha256": "466bbaf6f170413538140e82dfe0fc48561adc1ab5dd7ddc52a2d640927c9e33"
+      },
+      {
+        "name": "reference-status.tsv",
+        "bytes": 4457,
+        "sha256": "9caaf8703796dfbdf749af6ffbd5fa2fd341800086fe729934468f672bc0dc7b"
+      },
+      {
+        "name": "probes.tsv",
+        "bytes": 26694,
+        "sha256": "f0a1d220976aaa22c41d7182b3496a465848a28052b45025abc853c0ef07489e"
+      },
+      {
+        "name": "reference-tokens.tsv",
+        "bytes": 41886,
+        "sha256": "a6c4dfed963a6ef9f401fa54ad1485f53e6e39bdb587109c06f7fc1e570f54cc"
+      },
+      {
+        "name": "analysis.json",
+        "bytes": 620042,
+        "sha256": "c22228a7aa36b71da5c9da134829c4d4b01827741f4eec481c0bf59b6705a528"
+      },
+      {
+        "name": "elasticsearch.tsv",
+        "bytes": 691649,
+        "sha256": "d1585fa3ffc4eb5e9df19936092f8b6719334319ec28e17685612b8df1035786"
+      },
+      {
+        "name": "parity-per-query.json",
+        "bytes": 85308,
+        "sha256": "ad25892fd5d272c288f3f5cd81148df663c6fa2250ba306a814b39ee71df2286"
+      }
+    ]
+  },
+  "java_processes_gracefully_stopped": true,
+  "pilot_service_stopped": true,
+  "passed": true,
+  "limits": "Sequential functional HTTP requests on the bounded lexical corpus, including default/limit prefixes and fresh Java-process restart. No load/percentile/QPS, full-catalog serving, circuit-breaker, hybrid, update recovery or final-test claim. Backend scores remain native and equal to saved sample scores."
+}
