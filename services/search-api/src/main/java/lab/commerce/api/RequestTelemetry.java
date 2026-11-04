@@ -25,6 +25,7 @@ final class RequestTelemetry {
 
     static final class State {
         final String id = UUID.randomUUID().toString();
+        final String spanId = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
         final long start = System.nanoTime();
         final Map<String, Long> stages = new LinkedHashMap<>();
         String locale = "unknown", outcome = "success";
@@ -41,6 +42,10 @@ final class RequestTelemetry {
         State state = new State(); current.set(state); return state;
     }
     String requestId() { State state = current.get(); return state == null ? null : state.id; }
+    String traceparent() {
+        State state = current.get();
+        return state == null ? null : "00-" + state.id.replace("-", "") + "-" + state.spanId + "-00";
+    }
     void locale(String locale) { State state = current.get(); if (state != null) state.locale = SearchContract.LOCALES.contains(locale) ? locale : "unknown"; }
     void failure(String code) { State state = current.get(); if (state != null) state.outcome = outcome(code); }
     void acquired() { inflight.incrementAndGet(); }

@@ -124,7 +124,8 @@ final class ElasticsearchBackend implements AutoCloseable {
                 var builder = HttpRequest.newBuilder(URI.create(base + path)).timeout(Duration.ofMillis(settings.requestTimeoutMs()))
                     .header("Content-Type", "application/json")
                     .method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofByteArray(mapper.writeValueAsBytes(body)));
-                if (telemetry.requestId() != null) builder.header("X-Opaque-Id", telemetry.requestId());
+                builder.header("X-Opaque-Id", "commerce-search-lab-api");
+                if (telemetry.traceparent() != null) builder.header("traceparent", telemetry.traceparent());
                 return builder.build();
             });
             var response = telemetry.stage(operation, "http_wait", () -> send(request));

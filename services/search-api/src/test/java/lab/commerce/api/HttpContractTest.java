@@ -35,6 +35,7 @@ class HttpContractTest {
     static final AtomicReference<JsonNode> LAST = new AtomicReference<>();
     static final AtomicInteger CALLS = new AtomicInteger();
     static final AtomicReference<String> OPAQUE = new AtomicReference<>();
+    static final AtomicReference<String> TRACEPARENT = new AtomicReference<>();
     static final HttpServer STUB;
     static final java.util.concurrent.ExecutorService WORKERS = Executors.newVirtualThreadPerTaskExecutor();
     static {
@@ -47,7 +48,7 @@ class HttpContractTest {
                     CALLS.incrementAndGet();
                     byte[] input = exchange.getRequestBody().readAllBytes();
                     boolean ready = exchange.getRequestURI().getPath().contains("_cluster/health");
-                    if (!ready) { LAST.set(JSON.readTree(input)); OPAQUE.set(exchange.getRequestHeaders().getFirst("X-Opaque-Id")); }
+                    if (!ready) { LAST.set(JSON.readTree(input)); OPAQUE.set(exchange.getRequestHeaders().getFirst("X-Opaque-Id")); TRACEPARENT.set(exchange.getRequestHeaders().getFirst("traceparent")); }
                     int status = mode.equals("missing") ? 404 : mode.equals("unavailable") ? 503 : 200;
                     String response = ready ? "{\"status\":\"green\",\"timed_out\":false,\"active_primary_shards\":1}" : results(mode);
                     if (mode.equals("slowHeaders")) Thread.sleep(600);
@@ -190,7 +191,9 @@ class HttpContractTest {
             .POST(HttpRequest.BodyPublishers.ofString("{\"query\":\"private-query-marker\",\"locale\":\"us\"}")).build(), HttpResponse.BodyHandlers.ofString());
         assertEquals(200, response.statusCode());
         String id = response.headers().firstValue("X-Request-ID").orElseThrow();
-        assertDoesNotThrow(() -> java.util.UUID.fromString(id)); assertEquals(id, OPAQUE.get());
+        assertDoesNotThrow(() -> java.util.UUID.fromString(id)); assertEquals("commerce-search-lab-api", OPAQUE.get());
+        assertTrue(TRACEPARENT.get().matches("00-[0-9a-f]{32}-[0-9a-f]{16}-00"));
+        assertEquals(id.replace("-", ""), TRACEPARENT.get().split("-")[1]);
         await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> assertFalse(registry.find("commerce.search.request").timers().isEmpty()));
         String metrics = send("GET", "/actuator/prometheus", "application/json", "").body();
         assertTrue(metrics.contains("commerce_search_request_seconds_count"), metrics);
