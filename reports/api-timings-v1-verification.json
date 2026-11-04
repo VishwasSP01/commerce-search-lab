@@ -1,0 +1,100 @@
+{
+  "report_sha256": "3a8290ffea662be0c7e2b727513f5151c20a7b0a9582ecf33793002af01560ba",
+  "verification_script_sha256": "a527f0a3189381680fa09df24817f5e7b80e31bc1b3daf948ef9a5196784c283",
+  "all_raw_metrics_and_correlations_recomputed": true,
+  "meter_audits": [
+    {
+      "burst": 0,
+      "request_backend_and_es_took_counts_and_seconds_match": true,
+      "backend_inflight_drained": true
+    },
+    {
+      "burst": 3,
+      "request_backend_and_es_took_counts_and_seconds_match": true,
+      "backend_inflight_drained": true
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "0-instrumented/raw.ndjson",
+      "sha256": "2a7ed345a97c0796cbe80fd08e682a7d2447b8341242b686c3620b2a512c1bb9"
+    },
+    {
+      "name": "0-instrumented/api.log",
+      "sha256": "055a24cb08e5f66f62e08eb92e797d5c51d86db6e6b80def527318de90238b49"
+    },
+    {
+      "name": "0-instrumented/client.log",
+      "sha256": "22a430b7da6746e8e20e1636b96cf430cb6984d9126d246e40e930c664c97e4d"
+    },
+    {
+      "name": "0-instrumented/resources.json",
+      "sha256": "e4da2715e032efb5027c45f33abc9afff25e17a655b89df0a19af510185389de"
+    },
+    {
+      "name": "0-instrumented/before.prom",
+      "sha256": "50f60b8809d778618aabd8b3c92cce5bb71618b176546779872e4d4143a86008"
+    },
+    {
+      "name": "0-instrumented/after.prom",
+      "sha256": "f0df5c7cacfd087c14d8bfa2ae4c64a837ee54f8a8204efc76b7399a4ebde500"
+    },
+    {
+      "name": "1-reference/raw.ndjson",
+      "sha256": "d79f969190380a6621107d0da4fb634132dccea73015d901ac41464a87b88454"
+    },
+    {
+      "name": "1-reference/api.log",
+      "sha256": "1fcb1ef7cd270d8eb7b4acb21ad84cd73800ef79f65f1b2900d5c9d143f65b96"
+    },
+    {
+      "name": "1-reference/client.log",
+      "sha256": "d193f56290634b4b5e18987bdfcdab10afcfe2e00dbad3ec51d5b07339028734"
+    },
+    {
+      "name": "1-reference/resources.json",
+      "sha256": "0e77506a662a7ec7c67949fd985467bc3ca8a09409861f09001254248881d847"
+    },
+    {
+      "name": "2-reference/raw.ndjson",
+      "sha256": "f33ccea4364809dca63aabb58424106f5134765147deda0e858bfbf749aea65e"
+    },
+    {
+      "name": "2-reference/api.log",
+      "sha256": "f852b59d60545d5af02fbfcf85d878d8a1ddd3ff32789e868a5377a73c530ee1"
+    },
+    {
+      "name": "2-reference/client.log",
+      "sha256": "2b52f64f9d2617ae89493c77c4db26405b2a1540b4756a6ab09efe67bb857017"
+    },
+    {
+      "name": "2-reference/resources.json",
+      "sha256": "8b1c90275d262620cc47ff83eece6b2f418f2e6437e890e5c31ad9a62d9d9672"
+    },
+    {
+      "name": "3-instrumented/raw.ndjson",
+      "sha256": "db1ca4f3342e4ab81ad533794a2d689280182f009b527823d1fb0768a8c50d43"
+    },
+    {
+      "name": "3-instrumented/api.log",
+      "sha256": "7bcc2d6d4074a06ceae66d9a154a6368afbcdb74b67dcf8bd084ba7964d79f5d"
+    },
+    {
+      "name": "3-instrumented/client.log",
+      "sha256": "60fc34c7fb21502ed0fbd2665ba2cd573a6d7b506e8942fdb798574b83e523e1"
+    },
+    {
+      "name": "3-instrumented/resources.json",
+      "sha256": "4855b9d3dfe99a2441a412996bb06c39610953aeea6440fe5b62d02d82f4b6ed"
+    },
+    {
+      "name": "3-instrumented/before.prom",
+      "sha256": "dbfef138fe6cf6772ecccc87896944cf8e465c4abc05fe8ae1e566d8e6ad3df6"
+    },
+    {
+      "name": "3-instrumented/after.prom",
+      "sha256": "6ac9b3deaae1626bad475655535a61e29c27220f68b007c9ce7787eb53c5d3ef"
+    }
+  ],
+  "limits": "Accounting/unit/correlation audit, not repeated timings or proof of historical causality. Nested timers and marginal percentiles are not additive; paired residuals retain unmeasured boundaries."
+}
