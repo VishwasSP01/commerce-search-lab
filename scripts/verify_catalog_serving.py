@@ -14,6 +14,13 @@ from run_elasticsearch_pilot import backend, docker_observation, write_results
 from verify_search_api import COMPOSE, process, request
 
 
+def restored_index(client, index, counts):
+    health = client.request('GET', f'/_cluster/health/{index}?wait_for_status=green&timeout=30s')
+    if health.get('timed_out') or health.get('status') != 'green' or health.get('active_primary_shards') != 1:
+        raise ValueError('Restored primary has not reached green index health')
+    return verify_index(client, index, counts)
+
+
 def main():
     paths = [ROOT / 'reports/catalog-serving-v1.json', ROOT / 'data/processed/catalog-serving-v1-repeat-report.json']
     directories = [ROOT / 'data/processed/catalog-serving-v1', ROOT / 'data/processed/catalog-serving-v1-repeat']
@@ -40,7 +47,7 @@ def main():
     try:
         backend(client, json.loads((ROOT / 'config/elasticsearch-pilot-v1.json').read_text())); docker_observation()
         for i, report in enumerate(reports):
-            state = verify_index(client, report['index_name'], report['config']['catalog_by_locale'])
+            state = restored_index(client, report['index_name'], report['config']['catalog_by_locale'])
             if state['uuid'] != report['index']['uuid']: raise ValueError('Index identity did not persist')
             actual = {}
             with process(report['index_name'], directory, f'api-restored-{i}'):
