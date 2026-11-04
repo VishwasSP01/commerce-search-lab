@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the offline retrieval foundation, RRF fusion, ANN benchmark/diagnosis and separate depth-1024 experiment are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100. The new depth improves agreement to **94.74%**, still below its unchanged 95% overall budget; no ANN setting is nominated. Serving integration is next; int8 and training remain future work, and the official test stays reserved.
+**Status:** the offline retrieval foundation, ANN experiments and bounded local Elasticsearch parity pilot are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100; no ANN setting is nominated. Elasticsearch matches the frozen lexical reference on **30,000 sampled products, 300 queries and 399 analyzer probes**, with fresh-run and graceful-restart verification. A small Java search API is next; int8 and training remain future work, and the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -196,11 +196,19 @@ Read the [outcome, limits and reproduction instructions](docs/ann-depth-1024.md)
 uv run --locked --no-sync --project experiments/ann-benchmark python experiments/ann-benchmark/run_depth_1024.py
 ```
 
+## Completed step: local Elasticsearch parity
+
+The pinned Elasticsearch **9.5.6** node reproduces all ordered top-100 product IDs for **300 validation queries** on **30,000 independently sampled titles** across three locales. All **399 analyzer probes** match, and scores agree within the predeclared tolerance after the fixed legacy-BM25 normalization. The frozen Lucene baseline is unchanged.
+
+Two fresh runs reproduce all nine input/analyzer/result artifact hashes. A graceful same-volume restart preserves both index UUIDs, document counts and every query result. The free Basic node uses a **3 GiB container limit, two CPUs and 1 GiB heap**, bound to loopback, and is stopped after verification. This is bounded lexical compatibility evidence; full-catalog API performance and hybrid deployment remain unmeasured.
+
+Read the [results and local runbook](docs/elasticsearch-pilot.md), [predeclared protocol](docs/decisions/0011-elasticsearch-parity-pilot.md), [aggregate report](reports/elasticsearch-pilot-v1.json) and [fresh-repeat/restart evidence](reports/elasticsearch-pilot-v1-reproduction.json). The runbook explains fresh index/report paths and prerequisites before rerunning published experiments.
+
 ## Continuous integration
 
-The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled, and each job has a five-minute timeout.
+The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled. The Java/Python, embedding and ANN jobs have five-minute timeouts; the Elasticsearch fixture job allows twelve minutes for image setup and verification.
 
-The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. A third CPU job checks native ANN persistence/reload, ties, locale identities and quality budgets in its own locked environment. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. A third CPU job checks native ANN persistence/reload, ties, locale identities and quality budgets in its own locked environment. A fourth builds the pinned Elasticsearch/Kuromoji image and checks multilingual lexical parity on a tiny synthetic corpus against the packaged Lucene reference. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
 To run the same commands locally:
 

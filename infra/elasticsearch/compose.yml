@@ -1,0 +1,26 @@
+name: commerce-search-lab-pilot
+services:
+  elasticsearch:
+    build:
+      context: .
+    image: commerce-search-lab/elasticsearch-pilot:9.5.6-kuromoji
+    labels:
+      lab.commerce.owner: commerce-search-lab-pilot
+    ports:
+      - "127.0.0.1:19200:9200"
+    environment:
+      discovery.type: single-node
+      cluster.name: commerce-search-lab-pilot
+      node.name: pilot-es
+      xpack.security.enabled: "false"
+      xpack.license.self_generated.type: basic
+      xpack.ml.enabled: "false"
+      ingest.geoip.downloader.enabled: "false"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    mem_limit: 3g
+    cpus: 2.0
+    restart: "no"
+    volumes:
+      - pilot-data:/usr/share/elasticsearch/data
+volumes:
+  pilot-data:

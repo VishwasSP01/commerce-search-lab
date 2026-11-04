@@ -1,0 +1,169 @@
+{
+  "first_report_sha256": "16aa1fbf708a37da9217cea921a6c5a74ad8d90e21f376bd376206582053e532",
+  "repeat_report_sha256": "068b61be9e9b8a77dd05203673d3ca97e9c947eb4fb75e9549b38679a0f2a5f3",
+  "verification_script_sha256": "9f50552fb5b2d47dee3be2b50966f3c0830c1caea37f95f6137627af5ffb4761",
+  "equal_report_fields": [
+    "config",
+    "official_test_read",
+    "partition",
+    "summary",
+    "analysis_mismatches",
+    "retrieval_mismatches",
+    "provenance",
+    "artifacts",
+    "limits"
+  ],
+  "all_nine_artifact_hashes_equal": true,
+  "summary": {
+    "products": 30000,
+    "queries": 300,
+    "analyzer_probes": 399,
+    "analyzer_mismatches": 0,
+    "ordered_id_mismatch_queries": 0,
+    "normalized_score_mismatch_queries": 0,
+    "max_normalized_absolute_score_error": 4.0000000041118255e-06,
+    "zero_result_queries_reference": 10,
+    "zero_result_queries_es": 10,
+    "passed_bounded_parity": true,
+    "by_locale": {
+      "es": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      },
+      "jp": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      },
+      "us": {
+        "queries": 100,
+        "ordered_id_mismatch_queries": 0,
+        "normalized_score_mismatch_queries": 0
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "name": "products.tsv",
+      "bytes": 5285200,
+      "sha256": "b953c31b3bf8f0a5994198bbf5217800e93431f9e72beeef86e769341e052eb9"
+    },
+    {
+      "name": "queries.tsv",
+      "bytes": 13355,
+      "sha256": "1c62280f6e875e840ed4fbc3cedcadb50f4ef976347f33398e7c9ff91ebce1ad"
+    },
+    {
+      "name": "reference.tsv",
+      "bytes": 697220,
+      "sha256": "466bbaf6f170413538140e82dfe0fc48561adc1ab5dd7ddc52a2d640927c9e33"
+    },
+    {
+      "name": "reference-status.tsv",
+      "bytes": 4457,
+      "sha256": "9caaf8703796dfbdf749af6ffbd5fa2fd341800086fe729934468f672bc0dc7b"
+    },
+    {
+      "name": "probes.tsv",
+      "bytes": 26694,
+      "sha256": "f0a1d220976aaa22c41d7182b3496a465848a28052b45025abc853c0ef07489e"
+    },
+    {
+      "name": "reference-tokens.tsv",
+      "bytes": 41886,
+      "sha256": "a6c4dfed963a6ef9f401fa54ad1485f53e6e39bdb587109c06f7fc1e570f54cc"
+    },
+    {
+      "name": "analysis.json",
+      "bytes": 620042,
+      "sha256": "c22228a7aa36b71da5c9da134829c4d4b01827741f4eec481c0bf59b6705a528"
+    },
+    {
+      "name": "elasticsearch.tsv",
+      "bytes": 691649,
+      "sha256": "d1585fa3ffc4eb5e9df19936092f8b6719334319ec28e17685612b8df1035786"
+    },
+    {
+      "name": "parity-per-query.json",
+      "bytes": 85308,
+      "sha256": "ad25892fd5d272c288f3f5cd81148df663c6fa2250ba306a814b39ee71df2286"
+    }
+  ],
+  "first_execution": {
+    "reference_build_and_batch_seconds": 1.6651039169955766,
+    "es_load_refresh_merge_seconds": 1.8934029579977505,
+    "es_http_retrieval_batch_seconds": 0.6794680829989375,
+    "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
+  },
+  "repeat_execution": {
+    "reference_build_and_batch_seconds": 1.5559239170033834,
+    "es_load_refresh_merge_seconds": 1.0153848330010078,
+    "es_http_retrieval_batch_seconds": 0.4063358750063344,
+    "note": "Bounded HTTP/native batches including setup; not API percentile latency, concurrency or QPS."
+  },
+  "container_before_restart": {
+    "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+    "memory_limit": 3221225472,
+    "nano_cpus": 2000000000,
+    "owner": "commerce-search-lab-pilot",
+    "ports": {
+      "9200/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "19200"
+        }
+      ]
+    },
+    "observed_cgroup_memory_current_bytes": 1506029568,
+    "container_lifetime_cgroup_memory_peak_bytes": 1506185216,
+    "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+  },
+  "lifecycle": {
+    "graceful_stop_seconds": 2.603507667001395,
+    "restart_to_ready_green_seconds": 8.198038041002292,
+    "both_index_uuids_counts_and_all_300_ranked_results_preserved": true,
+    "backend_after_restart": {
+      "version": {
+        "number": "9.5.6",
+        "build_flavor": "default",
+        "build_type": "docker",
+        "build_hash": "fd1e8011342a0988e432b999cea4bf884ca120ed",
+        "build_date": "2026-10-28T22:37:54.387301573Z",
+        "build_snapshot": false,
+        "lucene_version": "10.5.2",
+        "minimum_wire_compatibility_version": "8.19.0",
+        "minimum_index_compatibility_version": "8.0.0"
+      },
+      "license": {
+        "type": "basic",
+        "status": "active"
+      },
+      "plugins": [
+        {
+          "name": "analysis-kuromoji",
+          "version": "9.5.6"
+        }
+      ]
+    },
+    "container_after_restart": {
+      "image": "sha256:c089d5d90a4f3457bd5cbe255ea7d02574715929f90fcdc86655904ed8fdd181",
+      "memory_limit": 3221225472,
+      "nano_cpus": 2000000000,
+      "owner": "commerce-search-lab-pilot",
+      "ports": {
+        "9200/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "19200"
+          }
+        ]
+      },
+      "observed_cgroup_memory_current_bytes": 1461252096,
+      "container_lifetime_cgroup_memory_peak_bytes": 1461493760,
+      "note": "Cgroup memory includes container JVM/native/cache; peak is since container startup, not isolated-run or whole-host RSS."
+    },
+    "pilot_service_stopped_at_end_volume_preserved": true
+  },
+  "limits": "Two fresh bounded indexes, then graceful same-volume restart; no crash, event replay, update freshness, API capacity or full-catalog serving claim. Only the task-owned service is stopped; Docker Desktop and unrelated services are left running."
+}
