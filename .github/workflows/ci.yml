@@ -144,6 +144,9 @@ jobs:
       - name: Verify packaged HTTP API against the synthetic Elasticsearch corpus
         run: uv run --locked --no-sync python scripts/verify_search_api.py --fixture
 
+      - name: Verify packaged Prometheus and request timing correlation
+        run: uv run --locked --no-sync python scripts/verify_api_timings.py --fixture
+
       - name: Stop and remove only this fixture stack
         if: always()
         run: docker compose -f infra/elasticsearch/compose.yml down -v

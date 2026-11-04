@@ -17,7 +17,7 @@
   "boundaries": "servlet-filter entry through MVC serialization; backend operation; request build; full-response HTTP wait; JSON decode; ES took (includes its search queue/execution); no isolated Tomcat queue or network duration",
   "tags": "bounded operation/stage/outcome/locale/status only; no query, product ID, request ID or URL as metric labels",
   "events": "optional local JSON timing events disabled by default; enabled for two instrumented diagnostic bursts; generated UUID response X-Request-ID and ES X-Opaque-Id, no raw query/body/results",
-  "targets": "unchanged response bodies/statuses/ranked IDs/native scores; exact client/event correlation for instrumented completed requests; all attempted events and scrape counters reconcile including errors; baseline JAR/experiment files preserved",
+  "targets": "unchanged response bodies/statuses/ranked IDs/native scores; exact client/event correlation for instrumented completed responses with returned correlation headers; all attempted events and scrape counters reconcile including errors; baseline JAR/experiment files preserved",
   "stopping_rule": "four fixed startup-like bursts only; preserve failures, no performance/resource tuning or new load rates; no causal overhead or proof of the historical spike's root cause from this order/history",
   "scope": "versioned instrumentation and bounded startup diagnosis; restart ES without flushing OS caches, local plain HTTP, no latency SLO, saturation campaign, distributed trace exporter, dashboards or update path"
 }

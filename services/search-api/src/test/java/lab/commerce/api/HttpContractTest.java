@@ -18,12 +18,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.awaitility.Awaitility.await;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HttpContractTest {
@@ -31,6 +34,7 @@ class HttpContractTest {
     static final AtomicReference<String> MODE = new AtomicReference<>("good");
     static final AtomicReference<JsonNode> LAST = new AtomicReference<>();
     static final AtomicInteger CALLS = new AtomicInteger();
+    static final AtomicReference<String> OPAQUE = new AtomicReference<>();
     static final HttpServer STUB;
     static final java.util.concurrent.ExecutorService WORKERS = Executors.newVirtualThreadPerTaskExecutor();
     static {
@@ -43,7 +47,7 @@ class HttpContractTest {
                     CALLS.incrementAndGet();
                     byte[] input = exchange.getRequestBody().readAllBytes();
                     boolean ready = exchange.getRequestURI().getPath().contains("_cluster/health");
-                    if (!ready) LAST.set(JSON.readTree(input));
+                    if (!ready) { LAST.set(JSON.readTree(input)); OPAQUE.set(exchange.getRequestHeaders().getFirst("X-Opaque-Id")); }
                     int status = mode.equals("missing") ? 404 : mode.equals("unavailable") ? 503 : 200;
                     String response = ready ? "{\"status\":\"green\",\"timed_out\":false,\"active_primary_shards\":1}" : results(mode);
                     if (mode.equals("slowHeaders")) Thread.sleep(600);
@@ -71,7 +75,7 @@ class HttpContractTest {
             case "empty" -> List.of(); case "duplicate" -> List.of(one, one); case "badOrder" -> List.of(two, one);
             default -> LAST.get().path("size").intValue() == 1 ? List.of(one) : List.of(one, two);
         };
-        return JSON.writeValueAsString(Map.of("timed_out", mode.equals("timedOut"), "_shards",
+        return JSON.writeValueAsString(Map.of("took", 7, "timed_out", mode.equals("timedOut"), "_shards",
             Map.of("failed", mode.equals("partial") ? 1 : 0, "successful", 1, "total", 1), "hits", Map.of("hits", hits)));
     }
 
@@ -82,6 +86,7 @@ class HttpContractTest {
         registry.add("commerce.request-timeout-ms", () -> 250);
     }
     @LocalServerPort int port;
+    @Autowired MeterRegistry registry;
     final HttpClient client = HttpClient.newHttpClient();
     @BeforeEach void reset() { MODE.set("good"); CALLS.set(0); LAST.set(null); }
     @AfterAll static void close() { STUB.stop(0); WORKERS.close(); }
@@ -177,5 +182,34 @@ class HttpContractTest {
             assertThrows(IllegalArgumentException.class, () -> new BackendSettings(URI.create(url), "csl-pilot-api", 50, 250));
         }
         assertThrows(IllegalArgumentException.class, () -> new BackendSettings(URI.create("http://localhost:19200"), "*", 50, 250));
+    }
+
+    @Test void generatedCorrelationAndPrometheusRespectDataBoundaries() throws Exception {
+        var response = client.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/v1/search"))
+            .header("Content-Type", "application/json").header("X-Request-ID", "caller-id-must-be-ignored")
+            .POST(HttpRequest.BodyPublishers.ofString("{\"query\":\"private-query-marker\",\"locale\":\"us\"}")).build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, response.statusCode());
+        String id = response.headers().firstValue("X-Request-ID").orElseThrow();
+        assertDoesNotThrow(() -> java.util.UUID.fromString(id)); assertEquals(id, OPAQUE.get());
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> assertFalse(registry.find("commerce.search.request").timers().isEmpty()));
+        String metrics = send("GET", "/actuator/prometheus", "application/json", "").body();
+        assertTrue(metrics.contains("commerce_search_request_seconds_count"), metrics);
+        assertTrue(metrics.contains("commerce_backend_stage_seconds_count"));
+        assertTrue(metrics.contains("commerce_elasticsearch_took_seconds_count"));
+        assertTrue(metrics.contains("tomcat_threads_busy_threads"));
+        assertFalse(metrics.contains("private-query-marker")); assertFalse(metrics.contains(id));
+        assertFalse(metrics.contains("productId"));
+        assertEquals(404, send("GET", "/actuator/env", "application/json", "").statusCode());
+    }
+
+    @Test void requestOutcomeMetricsIncludeValidationAndBackendErrors() throws Exception {
+        double invalid = registry.find("commerce.search.request").tag("outcome", "invalid_request").timers().stream().mapToDouble(t -> t.count()).sum();
+        error(400, "INVALID_REQUEST", post("{}"));
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> assertEquals(invalid + 1, registry.find("commerce.search.request").tag("outcome", "invalid_request").timers().stream().mapToDouble(t -> t.count()).sum()));
+        MODE.set("slowBody");
+        double prior = registry.find("commerce.backend.stage").tags("operation", "search", "stage", "http_wait", "outcome", "timeout").timers().stream().mapToDouble(t -> t.count()).sum();
+        error(504, "BACKEND_TIMEOUT", post("{\"query\":\"x\",\"locale\":\"us\"}"));
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> assertEquals(prior + 1, registry.find("commerce.backend.stage").tags("operation", "search", "stage", "http_wait", "outcome", "timeout").timers().stream().mapToDouble(t -> t.count()).sum()));
+        assertEquals(0, registry.get("commerce.backend.inflight").gauge().value());
     }
 }

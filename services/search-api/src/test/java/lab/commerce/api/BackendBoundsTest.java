@@ -28,7 +28,7 @@ class BackendBoundsTest {
             finally { exchange.close(); }
         });
         server.start();
-        try (var backend = new ElasticsearchBackend(new BackendSettings(URI.create("http://127.0.0.1:" + server.getAddress().getPort()), "csl-fixture-bound", 300, 5000), JsonMapper.builder().build())) {
+        try (var backend = new ElasticsearchBackend(new BackendSettings(URI.create("http://127.0.0.1:" + server.getAddress().getPort()), "csl-fixture-bound", 300, 5000), JsonMapper.builder().build(), new RequestTelemetry(new io.micrometer.core.instrument.simple.SimpleMeterRegistry(), JsonMapper.builder().build(), false))) {
             var pending = new ArrayList<java.util.concurrent.Future<SearchContract.Result>>();
             var query = new SearchContract.Query("shoes", "us", 10);
             for (int i = 0; i < 16; i++) pending.add(workers.submit(() -> backend.search(query)));
@@ -44,7 +44,7 @@ class BackendBoundsTest {
     @Test void refusedConnectionIsUnavailableAndInvalidUnicodeIsRejected() throws Exception {
         var server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         int port = server.getAddress().getPort(); server.start(); server.stop(0);
-        try (var backend = new ElasticsearchBackend(new BackendSettings(URI.create("http://127.0.0.1:" + port), "csl-fixture-down", 50, 250), JsonMapper.builder().build())) {
+        try (var backend = new ElasticsearchBackend(new BackendSettings(URI.create("http://127.0.0.1:" + port), "csl-fixture-down", 50, 250), JsonMapper.builder().build(), new RequestTelemetry(new io.micrometer.core.instrument.simple.SimpleMeterRegistry(), JsonMapper.builder().build(), false))) {
             var failure = assertThrows(ApiFailure.class, () -> backend.search(new SearchContract.Query("x", "us", 10)));
             assertEquals(503, failure.status);
         }

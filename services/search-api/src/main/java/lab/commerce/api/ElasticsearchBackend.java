@@ -31,8 +31,10 @@ final class ElasticsearchBackend implements AutoCloseable {
     private final JsonMapper mapper;
     private final HttpClient client;
     private final Semaphore permits = new Semaphore(16);
+    private final RequestTelemetry telemetry;
 
-    ElasticsearchBackend(BackendSettings settings, JsonMapper mapper) {
+    ElasticsearchBackend(BackendSettings settings, JsonMapper mapper, RequestTelemetry telemetry) {
+        this.telemetry = telemetry;
         this.settings = settings;
         this.mapper = mapper;
         this.client = HttpClient.newBuilder().connectTimeout(Duration.ofMillis(settings.connectTimeoutMs()))
@@ -44,6 +46,11 @@ final class ElasticsearchBackend implements AutoCloseable {
     }
 
     Result search(Query query) {
+        telemetry.locale(query.locale());
+        return telemetry.stage("search", "operation", () -> searchInternal(query));
+    }
+
+    private Result searchInternal(Query query) {
         var match = Map.of("query", query.query(), "operator", "or", "auto_generate_synonyms_phrase_query", false,
             "zero_terms_query", "none", "fuzziness", 0, "lenient", false);
         var body = Map.of("size", query.limit(), "track_total_hits", true, "track_scores", true, "_source", false,
@@ -51,7 +58,13 @@ final class ElasticsearchBackend implements AutoCloseable {
             "sort", List.of(Map.of("_score", "desc"), Map.of("product_id", "asc")),
             "query", Map.of("bool", Map.of("filter", List.of(Map.of("term", Map.of("locale", query.locale()))),
                 "must", List.of(Map.of("match", Map.of("title_" + query.locale(), match))))));
-        JsonNode response = exchange("POST", "/" + settings.index() + "/_search", body);
+        JsonNode response = exchange("search", "POST", "/" + settings.index() + "/_search", body);
+        JsonNode took = response.get("took");
+        telemetry.took(took != null && took.isIntegralNumber() && took.canConvertToLong() && took.longValue() >= 0 ? took.longValue() : null);
+        return telemetry.stage("search", "result_validation", () -> validateResult(query, response));
+    }
+
+    private Result validateResult(Query query, JsonNode response) {
         try {
             if (response.path("timed_out").isBoolean() && response.path("timed_out").booleanValue()) throw ApiFailure.timeout();
             var shards = response.path("_shards");
@@ -87,7 +100,11 @@ final class ElasticsearchBackend implements AutoCloseable {
     }
 
     void ready() {
-        JsonNode health = exchange("GET", "/_cluster/health/" + settings.index() + "?wait_for_status=green&timeout=500ms", null);
+        telemetry.stage("ready", "operation", () -> { readyInternal(); return null; });
+    }
+
+    private void readyInternal() {
+        JsonNode health = exchange("ready", "GET", "/_cluster/health/" + settings.index() + "?wait_for_status=green&timeout=500ms", null);
         if (!health.path("status").isString() || !"green".equals(health.path("status").asString())
             || !isFalse(health.get("timed_out")) || !numberEquals(health.get("active_primary_shards"), 1)) throw ApiFailure.unavailable();
     }
@@ -98,32 +115,46 @@ final class ElasticsearchBackend implements AutoCloseable {
 
     private static boolean isFalse(JsonNode node) { return node != null && node.isBoolean() && !node.booleanValue(); }
 
-    private JsonNode exchange(String method, String path, Object body) {
+    private JsonNode exchange(String operation, String method, String path, Object body) {
         if (!permits.tryAcquire()) throw new ApiFailure(503, "OVERLOADED", "Search backend request limit reached.");
+        telemetry.acquired();
         try {
-            String base = settings.backendUrl().toString().replaceAll("/$", "");
-            var request = HttpRequest.newBuilder(URI.create(base + path)).timeout(Duration.ofMillis(settings.requestTimeoutMs()))
-                .header("Content-Type", "application/json")
-                .method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofByteArray(mapper.writeValueAsBytes(body))).build();
-            var pending = client.sendAsync(request, info -> new LimitedBody());
-            HttpResponse<byte[]> response;
-            try { response = pending.get(settings.requestTimeoutMs(), TimeUnit.MILLISECONDS); }
-            catch (TimeoutException failure) { pending.cancel(true); throw ApiFailure.timeout(); }
-            catch (InterruptedException failure) { pending.cancel(true); Thread.currentThread().interrupt(); throw ApiFailure.unavailable(); }
-            catch (ExecutionException failure) {
-                if (failure.getCause() instanceof java.net.http.HttpTimeoutException) throw ApiFailure.timeout();
-                if (failure.getCause() instanceof ResponseTooLarge) throw ApiFailure.badResponse();
-                throw ApiFailure.unavailable();
-            }
+            var request = telemetry.stage(operation, "request_build", () -> {
+                String base = settings.backendUrl().toString().replaceAll("/$", "");
+                var builder = HttpRequest.newBuilder(URI.create(base + path)).timeout(Duration.ofMillis(settings.requestTimeoutMs()))
+                    .header("Content-Type", "application/json")
+                    .method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofByteArray(mapper.writeValueAsBytes(body)));
+                if (telemetry.requestId() != null) builder.header("X-Opaque-Id", telemetry.requestId());
+                return builder.build();
+            });
+            var response = telemetry.stage(operation, "http_wait", () -> send(request));
             if (response.statusCode() == 404 || response.statusCode() == 429 || response.statusCode() >= 500) throw ApiFailure.unavailable();
             if (response.statusCode() != 200) throw ApiFailure.badResponse();
-            try {
-                JsonNode result = mapper.readTree(response.body());
-                if (result == null || !result.isObject()) throw ApiFailure.badResponse();
-                return result;
-            } catch (ApiFailure failure) { throw failure; }
-            catch (RuntimeException failure) { throw ApiFailure.badResponse(); }
-        } finally { permits.release(); }
+            return telemetry.stage(operation, "json_decode", () -> decode(response.body()));
+        } finally { telemetry.released(); permits.release(); }
+    }
+
+    private HttpResponse<byte[]> send(HttpRequest request) {
+        var pending = client.sendAsync(request, info -> new LimitedBody());
+        HttpResponse<byte[]> response;
+        try { response = pending.get(settings.requestTimeoutMs(), TimeUnit.MILLISECONDS); }
+        catch (TimeoutException failure) { pending.cancel(true); throw ApiFailure.timeout(); }
+        catch (InterruptedException failure) { pending.cancel(true); Thread.currentThread().interrupt(); throw ApiFailure.unavailable(); }
+        catch (ExecutionException failure) {
+            if (failure.getCause() instanceof java.net.http.HttpTimeoutException) throw ApiFailure.timeout();
+            if (failure.getCause() instanceof ResponseTooLarge) throw ApiFailure.badResponse();
+            throw ApiFailure.unavailable();
+        }
+        return response;
+    }
+
+    private JsonNode decode(byte[] bytes) {
+        try {
+            JsonNode result = mapper.readTree(bytes);
+            if (result == null || !result.isObject()) throw ApiFailure.badResponse();
+            return result;
+        } catch (ApiFailure failure) { throw failure; }
+        catch (RuntimeException failure) { throw ApiFailure.badResponse(); }
     }
 
     private static final class ResponseTooLarge extends IOException {}
