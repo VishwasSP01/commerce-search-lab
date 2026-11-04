@@ -132,6 +132,12 @@ jobs:
       - name: Verify synthetic multilingual parity on real Elasticsearch
         run: uv run --locked --no-sync python scripts/elasticsearch_fixture.py
 
+      - name: Verify and package Java search API
+        run: ./mvnw -f services/search-api/pom.xml --batch-mode --no-transfer-progress verify
+
+      - name: Verify packaged HTTP API against the synthetic Elasticsearch corpus
+        run: uv run --locked --no-sync python scripts/verify_search_api.py --fixture
+
       - name: Stop and remove only this fixture stack
         if: always()
         run: docker compose -f infra/elasticsearch/compose.yml down -v
