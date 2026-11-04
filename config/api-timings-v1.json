@@ -1,0 +1,23 @@
+{
+  "version": "api-timings-v1",
+  "reference_version": "0.1.0",
+  "reference_source_ref": "f6a2acffcc4f7c3c885ac23914f6dde67d1eaccf",
+  "instrumented_version": "0.2.0",
+  "reference_jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+  "index": "csl-pilot-catalog-v1-a",
+  "workload_sha256": "cd7d7188f229fc14debcf846b946370bfffa6f9d07540902b85f6138bcae1f03",
+  "order": ["instrumented", "reference", "reference", "instrumented"],
+  "rate": 100,
+  "duration_seconds": 30,
+  "maximum_vus": 64,
+  "client_timeout_seconds": 3,
+  "backend_restart_before_each_burst": true,
+  "functional_queries": 300,
+  "functional_limits": [100, 10, 1],
+  "boundaries": "servlet-filter entry through MVC serialization; backend operation; request build; full-response HTTP wait; JSON decode; ES took (includes its search queue/execution); no isolated Tomcat queue or network duration",
+  "tags": "bounded operation/stage/outcome/locale/status only; no query, product ID, request ID or URL as metric labels",
+  "events": "optional local JSON timing events disabled by default; enabled for two instrumented diagnostic bursts; generated UUID response X-Request-ID and ES X-Opaque-Id, no raw query/body/results",
+  "targets": "unchanged response bodies/statuses/ranked IDs/native scores; exact client/event correlation for instrumented completed requests; all attempted events and scrape counters reconcile including errors; baseline JAR/experiment files preserved",
+  "stopping_rule": "four fixed startup-like bursts only; preserve failures, no performance/resource tuning or new load rates; no causal overhead or proof of the historical spike's root cause from this order/history",
+  "scope": "versioned instrumentation and bounded startup diagnosis; restart ES without flushing OS caches, local plain HTTP, no latency SLO, saturation campaign, distributed trace exporter, dashboards or update path"
+}
