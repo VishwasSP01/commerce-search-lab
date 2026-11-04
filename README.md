@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the offline retrieval foundation, ANN experiments and bounded local Elasticsearch parity pilot are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100; no ANN setting is nominated. Elasticsearch matches the frozen lexical reference on **30,000 sampled products, 300 queries and 399 analyzer probes**, with fresh-run and graceful-restart verification. A small Java search API is next; int8 and training remain future work, and the official test stays reserved.
+**Status:** the offline retrieval foundation, ANN experiments and bounded local Elasticsearch parity pilot are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100; no ANN setting is nominated. Elasticsearch matches the frozen lexical reference on **30,000 sampled products, 300 queries and 399 analyzer probes**, with fresh-run and graceful-restart verification. A Java 21/Spring Boot search API now reproduces those saved results across 1,800 HTTP checks, including process restart and backend outage handling. Full-catalog serving is next; int8 and training remain future work, and the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -204,11 +204,23 @@ Two fresh runs reproduce all nine input/analyzer/result artifact hashes. A grace
 
 Read the [results and local runbook](docs/elasticsearch-pilot.md), [predeclared protocol](docs/decisions/0011-elasticsearch-parity-pilot.md), [aggregate report](reports/elasticsearch-pilot-v1.json) and [fresh-repeat/restart evidence](reports/elasticsearch-pilot-v1-reproduction.json). The runbook explains fresh index/report paths and prerequisites before rerunning published experiments.
 
+## Completed step: Java search API
+
+A Java 21 / Spring Boot 4.1.2 service exposes `POST /v1/search` with query/locale validation, limits, native scores, bounded backend calls and explicit errors. Liveness and readiness distinguish process health from backend availability.
+
+Across two Java processes, **1,800 HTTP searches** reproduce the saved 300-query sample results at limits 100, default 10 and 1, with **zero mismatches**. Both top-100 artifacts match the original native Elasticsearch hash. During a controlled backend outage, search/readiness return 503 and liveness stays 200; readiness recovers after restart. This is functional sample verification, with API capacity still unmeasured.
+
+Read the [HTTP contract, results and runbook](docs/java-search-api.md), [design decision](docs/decisions/0012-java-search-api.md), and [aggregate verification report](reports/search-api-v1.json).
+
+```sh
+./mvnw -f services/search-api/pom.xml --batch-mode --no-transfer-progress verify
+```
+
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yml) runs on pull requests targeting `main` (including new commits pushed to those PRs) and on pushes to `main`. It installs locked Python dependencies, builds Java 21, and runs the Java, Python and packaged integration tests on Ubuntu. Superseded runs are cancelled. The Java/Python, embedding and ANN jobs have five-minute timeouts; the Elasticsearch fixture job allows twelve minutes for image setup and verification.
 
-The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. A third CPU job checks native ANN persistence/reload, ties, locale identities and quality budgets in its own locked environment. A fourth builds the pinned Elasticsearch/Kuromoji image and checks multilingual lexical parity on a tiny synthetic corpus against the packaged Lucene reference. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The tests use small fabricated fixtures. A separate CPU-only embedding job installs its own locked environment and checks a tiny locally generated model, shard integrity and exhaustive dense retrieval, without downloading pretrained weights. A third CPU job checks native ANN persistence/reload, ties, locale identities and quality budgets in its own locked environment. A fourth builds the pinned Elasticsearch/Kuromoji image, checks multilingual lexical parity on a tiny synthetic corpus, then tests/packages the Java API and checks its actual HTTP results against that corpus. CI does not download ESCI, generate benchmark datasets, or train models; real-data experiments remain separate commands above. No artifact uploads or Actions caches are configured. Standard GitHub-hosted runners in public repositories are [free under GitHub's current billing policy](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
 To run the same commands locally:
 
