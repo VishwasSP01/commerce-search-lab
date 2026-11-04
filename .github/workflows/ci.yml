@@ -132,6 +132,9 @@ jobs:
       - name: Verify synthetic multilingual parity on real Elasticsearch
         run: uv run --locked --no-sync python scripts/elasticsearch_fixture.py
 
+      - name: Verify bounded immutable catalog loader on real Elasticsearch
+        run: uv run --locked --no-sync python scripts/catalog_loader_fixture.py
+
       - name: Verify and package Java search API
         run: ./mvnw -f services/search-api/pom.xml --batch-mode --no-transfer-progress verify
 
