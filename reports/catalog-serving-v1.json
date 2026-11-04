@@ -1,0 +1,403 @@
+{
+  "config": {
+    "version": "catalog-serving-v1",
+    "products": 1814924,
+    "catalog_by_locale": {
+      "es": 260011,
+      "jp": 339059,
+      "us": 1215854
+    },
+    "queries": 3379,
+    "partition": "validation",
+    "bulk_max_documents": 500,
+    "bulk_max_bytes": 1048576,
+    "container_memory_bytes": 3221225472,
+    "container_cpus": 2,
+    "es_heap_bytes": 1073741824,
+    "api_heap_bytes": 268435456,
+    "python_rss_stop_bytes": 1073741824,
+    "minimum_free_disk_bytes": 10737418240,
+    "maximum_indexing_seconds": 1800,
+    "maximum_merge_seconds": 600,
+    "resource_sample_seconds": 5,
+    "k1": 1.2,
+    "b": 0.75,
+    "raw_score_factor": 2.2,
+    "score_absolute_tolerance": 1e-06,
+    "score_relative_tolerance": 1e-05,
+    "layout": "unchanged pilot mapping and queries, one primary/zero replicas, locale fields, immutable write-blocked index merged to one segment",
+    "targets": "all query analyzer probes equal; identical ordered top-100 IDs/counts and normalized scores within declared tolerance versus frozen full-catalog Lucene; all API results equal native ES at 100/default10/1",
+    "repeat": "two fresh full-catalog ES indexes, restart owned service before each to reset cgroup lifetime peak, same export and validation queries; require analyzer/retrieval/parity/metric/API artifacts and decisions to reproduce",
+    "failure": "publish mismatches/failed targets without score fitting, query changes, extra parameter points or larger resource envelope; retain failed owned index/evidence, no blind write retry",
+    "scope": "full-catalog lexical functional feasibility and resource observations; no concurrency capacity, percentiles, update path, hybrid deployment or official test exposure"
+  },
+  "partition": "validation",
+  "official_test_read": false,
+  "index_name": "csl-pilot-catalog-v1-a",
+  "summary": {
+    "products": 1814924,
+    "queries": 3379,
+    "analyzer_probes": 3478,
+    "analyzer_mismatches": 0,
+    "ordered_id_mismatch_queries": 0,
+    "normalized_score_mismatch_queries": 0,
+    "api_http_search_requests": 10137,
+    "api_mismatch_cases": 0,
+    "passed_lucene_parity": true,
+    "passed_native_api_parity": true
+  },
+  "metrics": {
+    "overall": {
+      "queries": 3379,
+      "normalized_query_groups": 3379,
+      "known_exact_recall_at_100": {
+        "mean": 0.5028993427898031,
+        "ci95": [
+          0.49073264864860894,
+          0.5150464129576836
+        ],
+        "defined_queries": 3379,
+        "normalized_query_groups": 3379
+      },
+      "judgment_coverage_at_10": {
+        "mean": 0.32911657905738995,
+        "ci95": [
+          0.31855949679862083,
+          0.33927519177741133
+        ],
+        "defined_queries": 3379,
+        "normalized_query_groups": 3379
+      },
+      "queries_without_known_exact": 0,
+      "known_exact_products": 34232,
+      "retrieved_known_exact_at_100": 16307,
+      "queries_with_a_known_exact_hit_at_100": 2809,
+      "zero_result_queries": 26,
+      "zero_analyzed_term_queries": 1,
+      "queries_with_fewer_than_10_results": 79,
+      "queries_with_fewer_than_100_results": 180,
+      "mean_returned_at_10": 9.837821840781297,
+      "mean_top_10_slot_fill": 0.9837821840781296,
+      "returned_at_100": 324567,
+      "judged_at_10_count": 10910
+    },
+    "by_locale": {
+      "es": {
+        "queries": 563,
+        "normalized_query_groups": 563,
+        "known_exact_recall_at_100": {
+          "mean": 0.5807686390237166,
+          "ci95": [
+            0.5523712160327799,
+            0.6074487549407538
+          ],
+          "defined_queries": 563,
+          "normalized_query_groups": 563
+        },
+        "judgment_coverage_at_10": {
+          "mean": 0.4245707519242155,
+          "ci95": [
+            0.3990519538188277,
+            0.4516044997039668
+          ],
+          "defined_queries": 563,
+          "normalized_query_groups": 563
+        },
+        "queries_without_known_exact": 0,
+        "known_exact_products": 6384,
+        "retrieved_known_exact_at_100": 3507,
+        "queries_with_a_known_exact_hit_at_100": 514,
+        "zero_result_queries": 3,
+        "zero_analyzed_term_queries": 1,
+        "queries_with_fewer_than_10_results": 10,
+        "queries_with_fewer_than_100_results": 39,
+        "mean_returned_at_10": 9.88632326820604,
+        "mean_top_10_slot_fill": 0.988632326820604,
+        "returned_at_100": 53717,
+        "judged_at_10_count": 2365
+      },
+      "jp": {
+        "queries": 728,
+        "normalized_query_groups": 728,
+        "known_exact_recall_at_100": {
+          "mean": 0.5377128326738196,
+          "ci95": [
+            0.5125753150045209,
+            0.5635803218016223
+          ],
+          "defined_queries": 728,
+          "normalized_query_groups": 728
+        },
+        "judgment_coverage_at_10": {
+          "mean": 0.4360560570381999,
+          "ci95": [
+            0.41137444400837264,
+            0.46196121958398745
+          ],
+          "defined_queries": 728,
+          "normalized_query_groups": 728
+        },
+        "queries_without_known_exact": 0,
+        "known_exact_products": 9784,
+        "retrieved_known_exact_at_100": 4970,
+        "queries_with_a_known_exact_hit_at_100": 639,
+        "zero_result_queries": 8,
+        "zero_analyzed_term_queries": 0,
+        "queries_with_fewer_than_10_results": 32,
+        "queries_with_fewer_than_100_results": 85,
+        "mean_returned_at_10": 9.721153846153847,
+        "mean_top_10_slot_fill": 0.9721153846153847,
+        "returned_at_100": 66627,
+        "judged_at_10_count": 3086
+      },
+      "us": {
+        "queries": 2088,
+        "normalized_query_groups": 2088,
+        "known_exact_recall_at_100": {
+          "mean": 0.46976493933422014,
+          "ci95": [
+            0.4546034063471871,
+            0.4854168740982039
+          ],
+          "defined_queries": 2088,
+          "normalized_query_groups": 2088
+        },
+        "judgment_coverage_at_10": {
+          "mean": 0.26609328437633034,
+          "ci95": [
+            0.2545364383780332,
+            0.27760017560664113
+          ],
+          "defined_queries": 2088,
+          "normalized_query_groups": 2088
+        },
+        "queries_without_known_exact": 0,
+        "known_exact_products": 18064,
+        "retrieved_known_exact_at_100": 7830,
+        "queries_with_a_known_exact_hit_at_100": 1656,
+        "zero_result_queries": 15,
+        "zero_analyzed_term_queries": 0,
+        "queries_with_fewer_than_10_results": 37,
+        "queries_with_fewer_than_100_results": 56,
+        "mean_returned_at_10": 9.865421455938698,
+        "mean_top_10_slot_fill": 0.9865421455938698,
+        "returned_at_100": 204223,
+        "judged_at_10_count": 5459
+      }
+    }
+  },
+  "index": {
+    "uuid": "tC091MYhSI6HzyHMDhy_aQ",
+    "stats": {
+      "docs": {
+        "count": 1814924,
+        "deleted": 0,
+        "total_size_in_bytes": 308407926
+      },
+      "store": {
+        "size_in_bytes": 308408317,
+        "total_data_set_size_in_bytes": 308408317,
+        "reserved_in_bytes": 0
+      },
+      "segments": {
+        "count": 1,
+        "memory_in_bytes": 0,
+        "terms_memory_in_bytes": 0,
+        "stored_fields_memory_in_bytes": 0,
+        "term_vectors_memory_in_bytes": 0,
+        "norms_memory_in_bytes": 0,
+        "points_memory_in_bytes": 0,
+        "doc_values_memory_in_bytes": 0,
+        "index_writer_memory_in_bytes": 0,
+        "version_map_memory_in_bytes": 0,
+        "fixed_bit_set_memory_in_bytes": 0,
+        "max_unsafe_auto_id_timestamp": -1,
+        "file_sizes": {}
+      }
+    },
+    "counts": {
+      "es": 260011,
+      "jp": 339059,
+      "us": 1215854
+    },
+    "health": {
+      "cluster_name": "commerce-search-lab-pilot",
+      "status": "green",
+      "timed_out": false,
+      "number_of_nodes": 1,
+      "number_of_data_nodes": 1,
+      "active_primary_shards": 1,
+      "active_shards": 1,
+      "relocating_shards": 0,
+      "initializing_shards": 0,
+      "unassigned_shards": 0,
+      "unassigned_primary_shards": 0,
+      "delayed_unassigned_shards": 0,
+      "number_of_pending_tasks": 0,
+      "number_of_in_flight_fetch": 0,
+      "task_max_waiting_in_queue_millis": 0,
+      "active_shards_percent_as_number": 100.0
+    }
+  },
+  "server": {
+    "version": {
+      "number": "9.5.6",
+      "build_flavor": "default",
+      "build_type": "docker",
+      "build_hash": "fd1e8011342a0988e432b999cea4bf884ca120ed",
+      "build_date": "2026-10-28T22:37:54.387301573Z",
+      "build_snapshot": false,
+      "lucene_version": "10.5.2",
+      "minimum_wire_compatibility_version": "8.19.0",
+      "minimum_index_compatibility_version": "8.0.0"
+    },
+    "license": {
+      "type": "basic",
+      "status": "active"
+    },
+    "plugins": [
+      {
+        "name": "analysis-kuromoji",
+        "version": "9.5.6"
+      }
+    ]
+  },
+  "inventory": [
+    {
+      "index": "csl-fixture-catalog-loader-v1",
+      "uuid": "TRbHLR61R9qkO3YAN-QqQA",
+      "docs.count": "3",
+      "store.size": "6890"
+    },
+    {
+      "index": "csl-pilot-es-v1-c",
+      "uuid": "pIl0CFaDRrG1j8EyKJ0T1Q",
+      "docs.count": "30000",
+      "store.size": "6296108"
+    },
+    {
+      "index": "csl-pilot-es-v1-d",
+      "uuid": "qz40fdAoSLaVwy3HR1Go2A",
+      "docs.count": "30000",
+      "store.size": "6296108"
+    },
+    {
+      "index": "csl-pilot-catalog-v1-a",
+      "uuid": "tC091MYhSI6HzyHMDhy_aQ",
+      "docs.count": "1814924",
+      "store.size": "308408317"
+    },
+    {
+      "index": "csl-fixture-parity-v2",
+      "uuid": "KSFJGP-ZT5iVg-JApxgxuA",
+      "docs.count": "10",
+      "store.size": "7467"
+    },
+    {
+      "index": "csl-pilot-es-v1-a",
+      "uuid": "LKGcuYHTREuUyKgcbE7ajw",
+      "docs.count": "30000",
+      "store.size": "6296108"
+    },
+    {
+      "index": "csl-fixture-parity-v1",
+      "uuid": "ZaFurtxRTYGLujVx1LCaBA",
+      "docs.count": "10",
+      "store.size": "7467"
+    },
+    {
+      "index": "csl-pilot-es-v1-b",
+      "uuid": "GcLJsU77Rm-85Y2LlxgZKQ",
+      "docs.count": "30000",
+      "store.size": "6296108"
+    }
+  ],
+  "execution": {
+    "bulk_batches": 3630,
+    "bulk_seconds": 42.53952700000082,
+    "merge_seconds": 5.055924582993612,
+    "retrieval_batch_seconds": 9.897023583005648,
+    "api_functional_batch_seconds": 28.163371249989723,
+    "main_wall_seconds": 91.82877399999416
+  },
+  "resources": {
+    "samples": 19,
+    "observed_cgroup_peak_bytes": 2547154944,
+    "sampled_max_jvm_heap_used_bytes": 743385936,
+    "python_peak_rss_bytes": 769081344,
+    "note": "Cgroup lifetime peak since pre-run restart includes old indexes/cache/native memory; JVM heap use sampled every five seconds. Batch timings are not API capacity or percentiles."
+  },
+  "artifacts": [
+    {
+      "name": "analysis.json",
+      "bytes": 4198750,
+      "sha256": "e62bf61170cfdc63fdc774eb5e2f2c9d90e3311f3b2f2d5f31435a9f4e7655ce"
+    },
+    {
+      "name": "reference-tokens.tsv",
+      "bytes": 279445,
+      "sha256": "fe7320a9043dfa0db5699c0c57f7aa024f12bb1764a03bbb26503aae18c7eab1"
+    },
+    {
+      "name": "elasticsearch.tsv",
+      "bytes": 10636164,
+      "sha256": "5c9f73252af8cfd0959dca918f40d5d18bdff43d10423d76d959ac0c4cf2253c"
+    },
+    {
+      "name": "parity-per-query.json",
+      "bytes": 966439,
+      "sha256": "d9290b9bfd487f14c6128d6203c78ac43bf46214f67955a791d8a92bc25d1693"
+    },
+    {
+      "name": "query-status.tsv",
+      "bytes": 51097,
+      "sha256": "e659fd44c20e8ea2d90c658d0cb5179730a1512f331c9655cabb61d99e453d7d"
+    },
+    {
+      "name": "per-query.json",
+      "bytes": 1419273,
+      "sha256": "6347b9d29aa3822c3e1240270e6097489aa3e381a32a56f7ae1166589fd2987e"
+    },
+    {
+      "name": "metrics.json",
+      "bytes": 4243,
+      "sha256": "2f71124d4976378f449a2141fc0eadb7a1151e07a0b29a02eaf7ab96085c0089"
+    },
+    {
+      "name": "api.tsv",
+      "bytes": 10636164,
+      "sha256": "5c9f73252af8cfd0959dca918f40d5d18bdff43d10423d76d959ac0c4cf2253c"
+    },
+    {
+      "name": "api-checks.json",
+      "bytes": 147,
+      "sha256": "58a1f2b94a9ea2ad45bcbc7398cac1742819dd2a7198298f270ffa9221cb5c92"
+    }
+  ],
+  "provenance": {
+    "catalog_report_sha256": "1c741278e78256d91f122d261d35c1a510ed88d7574306cc4c676beeef85bcbf",
+    "api_report_sha256": "d541e5d359299217241f04a7acc0770d0e81578a4640509e91e495a89d970f72",
+    "api_jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+    "reused_title_export": {
+      "name": "products.tsv",
+      "bytes": 303680512,
+      "sha256": "4f03c4961243f3c193d8a981bffc146869ded43841defca38452ebae5d61518b"
+    },
+    "validation_input": {
+      "name": "validation.parquet",
+      "bytes": 742502,
+      "sha256": "ef777d8f307f74d03bc5c7c7aa40cc8e6c3d4eca6f441da8c70f0ac28374eb36"
+    },
+    "frozen_runtime_sources_except_historical_ci_workflow_checked": true,
+    "source_sha256": {
+      "config/catalog-serving-v1.json": "7c5d1d48fc7a50059393358a494553f6f6d326c1e696fb32dec7b37c5ec6fedd",
+      "docs/decisions/0013-full-catalog-serving.md": "7e2f54884eb8070edcf5cbea6a92c71173c93134386519a817c32e2c98fda031",
+      "scripts/catalog_serving.py": "23225c7a5bba85ff30dc8e1e19d704dc57a41ee18c2a5ef714bd5c7e63a50222",
+      "scripts/run_catalog_serving.py": "51d1c70a073d6408fcac9f238ea1973d01d7df0e94b8ce1356b5115550ee15b8",
+      "tests/test_catalog_serving.py": "173665f922e8ae7969676d00fca3a321d89ade6ae977a3350623a14817c7e00a",
+      "scripts/catalog_loader_fixture.py": "1efe768a4d65370eae9d316cea50d2f149249eb7c6059eb3ab0019c9f6a728e2",
+      ".github/workflows/ci.yml": "8c41c492ffa291ecea0b0239002ef52c62a328afea879b894067edb08a7ae25e"
+    }
+  },
+  "limits": "Full-catalog lexical functional feasibility; incomplete judgments, fixed versions and one immutable primary. Unknown relevance stays unknown. No concurrent capacity, percentiles, freshness, neural serving, final-test or production claim."
+}
