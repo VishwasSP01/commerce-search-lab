@@ -48,6 +48,9 @@ jobs:
           REQUIRE_BM25_JAR: "1"
         run: uv run --locked --no-sync python -m unittest discover -s tests -v
 
+      - name: Verify native k6 metrics and response validation on loopback fixtures
+        run: uv run --locked --no-sync python scripts/k6_fixture.py
+
   embedding-fixtures:
     name: Embedding contract (CPU, offline fixtures)
     runs-on: ubuntu-24.04
