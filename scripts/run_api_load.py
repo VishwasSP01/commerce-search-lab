@@ -156,6 +156,7 @@ def campaign(binary, folder, full, selected, rates, policy, client):
                     if status != 200 or [(h['productId'], h['score']) for h in body['hits']] != [tuple(h) for h in q['expected']]:
                         raise ValueError('Post-load recovery output differs')
                 sampler.check()
+            sampler.check()
         finally:
             atomic_json(folder / 'resources.json', {'samples': sampler.rows, 'errors': sampler.errors})
     result = {'rate_order': rates, 'warmup': warmup, 'points': points, 'post_load_recovery_queries': len(selected),
