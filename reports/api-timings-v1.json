@@ -1,0 +1,759 @@
+{
+  "config": {
+    "version": "api-timings-v1",
+    "reference_version": "0.1.0",
+    "reference_source_ref": "f6a2acffcc4f7c3c885ac23914f6dde67d1eaccf",
+    "instrumented_version": "0.2.0",
+    "reference_jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+    "index": "csl-pilot-catalog-v1-a",
+    "workload_sha256": "cd7d7188f229fc14debcf846b946370bfffa6f9d07540902b85f6138bcae1f03",
+    "order": [
+      "instrumented",
+      "reference",
+      "reference",
+      "instrumented"
+    ],
+    "rate": 100,
+    "duration_seconds": 30,
+    "maximum_vus": 64,
+    "client_timeout_seconds": 3,
+    "backend_restart_before_each_burst": true,
+    "functional_queries": 300,
+    "functional_limits": [
+      100,
+      10,
+      1
+    ],
+    "boundaries": "servlet-filter entry through MVC serialization; backend operation; request build; full-response HTTP wait; JSON decode; ES took (includes its search queue/execution); no isolated Tomcat queue or network duration",
+    "tags": "bounded operation/stage/outcome/locale/status only; no query, product ID, request ID or URL as metric labels",
+    "events": "optional local JSON timing events disabled by default; enabled for two instrumented diagnostic bursts; generated UUID response X-Request-ID, derived W3C traceparent to ES, fixed client X-Opaque-Id, no raw query/body/results",
+    "targets": "unchanged response bodies/statuses/ranked IDs/native scores; exact client/event correlation for instrumented completed responses with returned correlation headers; all attempted events and scrape counters reconcile including errors; baseline JAR/experiment files preserved",
+    "stopping_rule": "four fixed startup-like bursts only; preserve failures, no performance/resource tuning or new load rates; no causal overhead or proof of the historical spike's root cause from this order/history",
+    "scope": "versioned instrumentation and bounded startup diagnosis; restart ES without flushing OS caches, local plain HTTP, no latency SLO, saturation campaign, distributed trace exporter, dashboards or update path"
+  },
+  "partition": "frozen validation-query cohort",
+  "official_test_read": false,
+  "bursts": [
+    {
+      "version": "0.2.0",
+      "metrics": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3000,
+        "started": 2997,
+        "completed": 2997,
+        "dropped": 3,
+        "correct_http200": 2997,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.001,
+        "achieved_started_rps": 99.9,
+        "correct_completion_rps_per_scheduled_window": 99.9,
+        "statuses": {
+          "200": 2997
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "us": 1000,
+          "jp": 999,
+          "es": 998
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 2997,
+          "p50_ms": 3.0,
+          "p95_ms": 10.0,
+          "p99_ms": 459.03999999999996,
+          "max_ms": 678
+        },
+        "correct_http200_wall_ms": {
+          "samples": 2997,
+          "p50_ms": 3.0,
+          "p95_ms": 10.0,
+          "p99_ms": 459.03999999999996,
+          "max_ms": 678
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 2997,
+            "p50_ms": 2.786,
+            "p95_ms": 9.626999999999995,
+            "p99_ms": 459.38264,
+            "max_ms": 678.223
+          },
+          "http_req_blocked": {
+            "samples": 2997,
+            "p50_ms": 0.003,
+            "p95_ms": 0.007,
+            "p99_ms": 0.185,
+            "max_ms": 0.282
+          },
+          "http_req_connecting": {
+            "samples": 2997,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.15003999999999995,
+            "max_ms": 0.216
+          },
+          "http_req_waiting": {
+            "samples": 2997,
+            "p50_ms": 2.739,
+            "p95_ms": 9.588,
+            "p99_ms": 459.10216,
+            "max_ms": 678.17
+          }
+        },
+        "observed_max_vus": 16,
+        "qualified": true
+      },
+      "correlation": {
+        "client_events": 2997,
+        "server_events": 2997,
+        "paired_requests": 2997,
+        "clients_without_returned_id": 0,
+        "unmatched_server_events": 0,
+        "negative_paired_residuals": 462,
+        "duration_summaries": {
+          "client_ms": {
+            "samples": 2997,
+            "p50_ms": 3.0,
+            "p95_ms": 10.0,
+            "p99_ms": 459.03999999999996,
+            "max_ms": 678
+          },
+          "filter_ms": {
+            "samples": 2997,
+            "p50_ms": 2.385667,
+            "p95_ms": 9.158757999999997,
+            "p99_ms": 88.523832,
+            "max_ms": 676.844834
+          },
+          "paired_client_minus_filter_ms": {
+            "samples": 2997,
+            "p50_ms": 0.432833,
+            "p95_ms": 1.2661415999999996,
+            "p99_ms": 299.62273267999996,
+            "max_ms": 507.892
+          },
+          "es_took_ms": {
+            "samples": 2997,
+            "p50_ms": 1.0,
+            "p95_ms": 7.0,
+            "p99_ms": 76.03999999999996,
+            "max_ms": 653
+          },
+          "search.request_build_ms": {
+            "samples": 2997,
+            "p50_ms": 0.045209,
+            "p95_ms": 0.11229159999999996,
+            "p99_ms": 0.15681531999999995,
+            "max_ms": 8.230959
+          },
+          "search.http_wait_ms": {
+            "samples": 2997,
+            "p50_ms": 2.068834,
+            "p95_ms": 8.72079959999998,
+            "p99_ms": 87.601772,
+            "max_ms": 675.505084
+          },
+          "search.json_decode_ms": {
+            "samples": 2997,
+            "p50_ms": 0.025459,
+            "p95_ms": 0.05826719999999994,
+            "p99_ms": 0.19630999999999982,
+            "max_ms": 1.7815
+          },
+          "search.result_validation_ms": {
+            "samples": 2997,
+            "p50_ms": 0.008333,
+            "p95_ms": 0.021299399999999993,
+            "p99_ms": 0.03447231999999999,
+            "max_ms": 0.376584
+          },
+          "search.operation_ms": {
+            "samples": 2997,
+            "p50_ms": 2.17225,
+            "p95_ms": 8.872374999999998,
+            "p99_ms": 87.99231032,
+            "max_ms": 676.155166
+          }
+        },
+        "slowest_paired_requests_anonymized": [
+          {
+            "client_ms": 678,
+            "filter_ms": 676.844834,
+            "paired_client_minus_filter_ms": 1.1551660000000084,
+            "es_took_ms": 618,
+            "search.request_build_ms": 0.129583,
+            "search.http_wait_ms": 675.505084,
+            "search.json_decode_ms": 0.320958,
+            "search.result_validation_ms": 0.037542,
+            "search.operation_ms": 676.155166
+          },
+          {
+            "client_ms": 661,
+            "filter_ms": 660.122375,
+            "paired_client_minus_filter_ms": 0.8776249999999663,
+            "es_took_ms": 653,
+            "search.request_build_ms": 0.135375,
+            "search.http_wait_ms": 658.927459,
+            "search.json_decode_ms": 0.290125,
+            "search.result_validation_ms": 0.027083,
+            "search.operation_ms": 659.494042
+          },
+          {
+            "client_ms": 652,
+            "filter_ms": 649.454584,
+            "paired_client_minus_filter_ms": 2.5454160000000456,
+            "es_took_ms": 615,
+            "search.request_build_ms": 8.230959,
+            "search.http_wait_ms": 626.528916,
+            "search.json_decode_ms": 1.701375,
+            "search.result_validation_ms": 0.376584,
+            "search.operation_ms": 638.309875
+          },
+          {
+            "client_ms": 652,
+            "filter_ms": 651.31475,
+            "paired_client_minus_filter_ms": 0.6852499999999964,
+            "es_took_ms": 569,
+            "search.request_build_ms": 0.122916,
+            "search.http_wait_ms": 649.673583,
+            "search.json_decode_ms": 0.906625,
+            "search.result_validation_ms": 0.026291,
+            "search.operation_ms": 650.850125
+          },
+          {
+            "client_ms": 640,
+            "filter_ms": 638.058,
+            "paired_client_minus_filter_ms": 1.9420000000000073,
+            "es_took_ms": 620,
+            "search.request_build_ms": 0.143,
+            "search.http_wait_ms": 630.599375,
+            "search.json_decode_ms": 0.579875,
+            "search.result_validation_ms": 0.025,
+            "search.operation_ms": 631.491458
+          },
+          {
+            "client_ms": 638,
+            "filter_ms": 636.724042,
+            "paired_client_minus_filter_ms": 1.275957999999946,
+            "es_took_ms": 568,
+            "search.request_build_ms": 0.1195,
+            "search.http_wait_ms": 635.640208,
+            "search.json_decode_ms": 0.387,
+            "search.result_validation_ms": 0.022458,
+            "search.operation_ms": 636.27375
+          },
+          {
+            "client_ms": 631,
+            "filter_ms": 630.224666,
+            "paired_client_minus_filter_ms": 0.7753340000000435,
+            "es_took_ms": 622,
+            "search.request_build_ms": 0.141833,
+            "search.http_wait_ms": 628.84425,
+            "search.json_decode_ms": 0.319083,
+            "search.result_validation_ms": 0.024333,
+            "search.operation_ms": 629.442
+          },
+          {
+            "client_ms": 620,
+            "filter_ms": 617.80175,
+            "paired_client_minus_filter_ms": 2.19825000000003,
+            "es_took_ms": 607,
+            "search.request_build_ms": 0.122375,
+            "search.http_wait_ms": 610.596916,
+            "search.json_decode_ms": 0.403625,
+            "search.result_validation_ms": 0.02675,
+            "search.operation_ms": 611.279292
+          },
+          {
+            "client_ms": 619,
+            "filter_ms": 617.640416,
+            "paired_client_minus_filter_ms": 1.3595840000000408,
+            "es_took_ms": 541,
+            "search.request_build_ms": 0.128375,
+            "search.http_wait_ms": 616.568291,
+            "search.json_decode_ms": 0.288708,
+            "search.result_validation_ms": 0.026708,
+            "search.operation_ms": 617.118541
+          },
+          {
+            "client_ms": 608,
+            "filter_ms": 606.829166,
+            "paired_client_minus_filter_ms": 1.1708340000000135,
+            "es_took_ms": 541,
+            "search.request_build_ms": 0.175083,
+            "search.http_wait_ms": 605.698875,
+            "search.json_decode_ms": 0.31425,
+            "search.result_validation_ms": 0.023333,
+            "search.operation_ms": 606.322042
+          }
+        ]
+      },
+      "raw_sha256": "2a7ed345a97c0796cbe80fd08e682a7d2447b8341242b686c3620b2a512c1bb9",
+      "server_log_sha256": "055a24cb08e5f66f62e08eb92e797d5c51d86db6e6b80def527318de90238b49",
+      "client_log_sha256": "22a430b7da6746e8e20e1636b96cf430cb6984d9126d246e40e930c664c97e4d",
+      "resources_sha256": "e4da2715e032efb5027c45f33abc9afff25e17a655b89df0a19af510185389de"
+    },
+    {
+      "version": "0.1.0",
+      "metrics": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3000,
+        "started": 2993,
+        "completed": 2993,
+        "dropped": 7,
+        "correct_http200": 2993,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.0023333333333333335,
+        "achieved_started_rps": 99.76666666666667,
+        "correct_completion_rps_per_scheduled_window": 99.76666666666667,
+        "statuses": {
+          "200": 2993
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "es": 995,
+          "jp": 998,
+          "us": 1000
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 2993,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 500.5599999999995,
+          "max_ms": 703
+        },
+        "correct_http200_wall_ms": {
+          "samples": 2993,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 500.5599999999995,
+          "max_ms": 703
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 2993,
+            "p50_ms": 2.6,
+            "p95_ms": 8.76140000000001,
+            "p99_ms": 500.08947999999947,
+            "max_ms": 701.289
+          },
+          "http_req_blocked": {
+            "samples": 2993,
+            "p50_ms": 0.003,
+            "p95_ms": 0.007,
+            "p99_ms": 0.19307999999999992,
+            "max_ms": 0.3
+          },
+          "http_req_connecting": {
+            "samples": 2993,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.1510799999999999,
+            "max_ms": 0.256
+          },
+          "http_req_waiting": {
+            "samples": 2993,
+            "p50_ms": 2.561,
+            "p95_ms": 8.73200000000001,
+            "p99_ms": 500.04899999999947,
+            "max_ms": 701.187
+          }
+        },
+        "observed_max_vus": 4,
+        "qualified": true
+      },
+      "correlation": null,
+      "raw_sha256": "d79f969190380a6621107d0da4fb634132dccea73015d901ac41464a87b88454",
+      "server_log_sha256": "1fcb1ef7cd270d8eb7b4acb21ad84cd73800ef79f65f1b2900d5c9d143f65b96",
+      "client_log_sha256": "d193f56290634b4b5e18987bdfcdab10afcfe2e00dbad3ec51d5b07339028734",
+      "resources_sha256": "0e77506a662a7ec7c67949fd985467bc3ca8a09409861f09001254248881d847"
+    },
+    {
+      "version": "0.1.0",
+      "metrics": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3001,
+        "started": 2996,
+        "completed": 2996,
+        "dropped": 5,
+        "correct_http200": 2996,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.0016661112962345886,
+        "achieved_started_rps": 99.86666666666666,
+        "correct_completion_rps_per_scheduled_window": 99.86666666666666,
+        "statuses": {
+          "200": 2996
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "es": 997,
+          "us": 1000,
+          "jp": 999
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 2996,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 496.2000000000007,
+          "max_ms": 689
+        },
+        "correct_http200_wall_ms": {
+          "samples": 2996,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 496.2000000000007,
+          "max_ms": 689
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 2996,
+            "p50_ms": 2.583,
+            "p95_ms": 8.99025,
+            "p99_ms": 495.7435000000008,
+            "max_ms": 689.248
+          },
+          "http_req_blocked": {
+            "samples": 2996,
+            "p50_ms": 0.003,
+            "p95_ms": 0.007,
+            "p99_ms": 0.195,
+            "max_ms": 0.324
+          },
+          "http_req_connecting": {
+            "samples": 2996,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.157,
+            "max_ms": 0.257
+          },
+          "http_req_waiting": {
+            "samples": 2996,
+            "p50_ms": 2.542,
+            "p95_ms": 8.965,
+            "p99_ms": 495.6909500000008,
+            "max_ms": 689.203
+          }
+        },
+        "observed_max_vus": 3,
+        "qualified": true
+      },
+      "correlation": null,
+      "raw_sha256": "f33ccea4364809dca63aabb58424106f5134765147deda0e858bfbf749aea65e",
+      "server_log_sha256": "f852b59d60545d5af02fbfcf85d878d8a1ddd3ff32789e868a5377a73c530ee1",
+      "client_log_sha256": "2b52f64f9d2617ae89493c77c4db26405b2a1540b4756a6ab09efe67bb857017",
+      "resources_sha256": "8b1c90275d262620cc47ff83eece6b2f418f2e6437e890e5c31ad9a62d9d9672"
+    },
+    {
+      "version": "0.2.0",
+      "metrics": {
+        "offered_rps": 100,
+        "duration_seconds": 30,
+        "planned_slots": 3000,
+        "scheduled_slots": 3001,
+        "started": 2993,
+        "completed": 2993,
+        "dropped": 8,
+        "correct_http200": 2993,
+        "incorrect_http200": 0,
+        "non200_or_transport_failures": 0,
+        "loss_fraction": 0.0026657780739753416,
+        "achieved_started_rps": 99.76666666666667,
+        "correct_completion_rps_per_scheduled_window": 99.76666666666667,
+        "statuses": {
+          "200": 2993
+        },
+        "error_codes": {},
+        "locale_requests": {
+          "us": 1000,
+          "es": 995,
+          "jp": 998
+        },
+        "unique_queries": 300,
+        "all_attempt_wall_ms": {
+          "samples": 2993,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 511.6399999999994,
+          "max_ms": 713
+        },
+        "correct_http200_wall_ms": {
+          "samples": 2993,
+          "p50_ms": 3.0,
+          "p95_ms": 9.0,
+          "p99_ms": 511.6399999999994,
+          "max_ms": 713
+        },
+        "k6_timings_ms": {
+          "http_req_duration": {
+            "samples": 2993,
+            "p50_ms": 2.813,
+            "p95_ms": 8.7854,
+            "p99_ms": 511.4591999999993,
+            "max_ms": 712.776
+          },
+          "http_req_blocked": {
+            "samples": 2993,
+            "p50_ms": 0.003,
+            "p95_ms": 0.007,
+            "p99_ms": 0.181,
+            "max_ms": 3.356
+          },
+          "http_req_connecting": {
+            "samples": 2993,
+            "p50_ms": 0.0,
+            "p95_ms": 0.0,
+            "p99_ms": 0.1450799999999999,
+            "max_ms": 3.243
+          },
+          "http_req_waiting": {
+            "samples": 2993,
+            "p50_ms": 2.767,
+            "p95_ms": 8.7406,
+            "p99_ms": 511.39907999999934,
+            "max_ms": 712.727
+          }
+        },
+        "observed_max_vus": 8,
+        "qualified": true
+      },
+      "correlation": {
+        "client_events": 2993,
+        "server_events": 2993,
+        "paired_requests": 2993,
+        "clients_without_returned_id": 0,
+        "unmatched_server_events": 0,
+        "negative_paired_residuals": 434,
+        "duration_summaries": {
+          "client_ms": {
+            "samples": 2993,
+            "p50_ms": 3.0,
+            "p95_ms": 9.0,
+            "p99_ms": 511.6399999999994,
+            "max_ms": 713
+          },
+          "filter_ms": {
+            "samples": 2993,
+            "p50_ms": 2.416458,
+            "p95_ms": 8.18180000000001,
+            "p99_ms": 86.315005,
+            "max_ms": 708.9535
+          },
+          "paired_client_minus_filter_ms": {
+            "samples": 2993,
+            "p50_ms": 0.44412499999999966,
+            "p95_ms": 1.3129832000000006,
+            "p99_ms": 353.61718335999996,
+            "max_ms": 551.917708
+          },
+          "es_took_ms": {
+            "samples": 2993,
+            "p50_ms": 1.0,
+            "p95_ms": 6.0,
+            "p99_ms": 76.0,
+            "max_ms": 671
+          },
+          "search.request_build_ms": {
+            "samples": 2993,
+            "p50_ms": 0.044417,
+            "p95_ms": 0.11342520000000003,
+            "p99_ms": 0.17582527999999997,
+            "max_ms": 8.7615
+          },
+          "search.http_wait_ms": {
+            "samples": 2993,
+            "p50_ms": 2.0605,
+            "p95_ms": 7.838483600000007,
+            "p99_ms": 84.74344528,
+            "max_ms": 683.150917
+          },
+          "search.json_decode_ms": {
+            "samples": 2993,
+            "p50_ms": 0.026375,
+            "p95_ms": 0.059875,
+            "p99_ms": 0.2996603599999998,
+            "max_ms": 1.485458
+          },
+          "search.result_validation_ms": {
+            "samples": 2993,
+            "p50_ms": 0.008375,
+            "p95_ms": 0.021307800000000005,
+            "p99_ms": 0.03693035999999999,
+            "max_ms": 2.138
+          },
+          "search.operation_ms": {
+            "samples": 2993,
+            "p50_ms": 2.18275,
+            "p95_ms": 7.902499800000004,
+            "p99_ms": 85.45971999999999,
+            "max_ms": 696.033292
+          }
+        },
+        "slowest_paired_requests_anonymized": [
+          {
+            "client_ms": 713,
+            "filter_ms": 708.9535,
+            "paired_client_minus_filter_ms": 4.046500000000037,
+            "es_took_ms": 671,
+            "search.request_build_ms": 8.7615,
+            "search.http_wait_ms": 682.484833,
+            "search.json_decode_ms": 1.440791,
+            "search.result_validation_ms": 2.138,
+            "search.operation_ms": 696.033292
+          },
+          {
+            "client_ms": 702,
+            "filter_ms": 697.615542,
+            "paired_client_minus_filter_ms": 4.384457999999995,
+            "es_took_ms": 671,
+            "search.request_build_ms": 0.1285,
+            "search.http_wait_ms": 683.150917,
+            "search.json_decode_ms": 0.355167,
+            "search.result_validation_ms": 0.221209,
+            "search.operation_ms": 684.349666
+          },
+          {
+            "client_ms": 692,
+            "filter_ms": 687.563792,
+            "paired_client_minus_filter_ms": 4.436207999999965,
+            "es_took_ms": 669,
+            "search.request_build_ms": 0.132709,
+            "search.http_wait_ms": 673.178083,
+            "search.json_decode_ms": 0.581292,
+            "search.result_validation_ms": 0.550209,
+            "search.operation_ms": 674.569083
+          },
+          {
+            "client_ms": 683,
+            "filter_ms": 678.77075,
+            "paired_client_minus_filter_ms": 4.229249999999979,
+            "es_took_ms": 661,
+            "search.request_build_ms": 0.135459,
+            "search.http_wait_ms": 664.624,
+            "search.json_decode_ms": 0.329916,
+            "search.result_validation_ms": 1.152375,
+            "search.operation_ms": 666.370125
+          },
+          {
+            "client_ms": 672,
+            "filter_ms": 668.240209,
+            "paired_client_minus_filter_ms": 3.75979099999995,
+            "es_took_ms": 652,
+            "search.request_build_ms": 0.134417,
+            "search.http_wait_ms": 657.52375,
+            "search.json_decode_ms": 0.627334,
+            "search.result_validation_ms": 0.034084,
+            "search.operation_ms": 658.463542
+          },
+          {
+            "client_ms": 664,
+            "filter_ms": 659.547792,
+            "paired_client_minus_filter_ms": 4.4522080000000415,
+            "es_took_ms": 642,
+            "search.request_build_ms": 0.153917,
+            "search.http_wait_ms": 645.692459,
+            "search.json_decode_ms": 0.331875,
+            "search.result_validation_ms": 0.263375,
+            "search.operation_ms": 646.552834
+          },
+          {
+            "client_ms": 653,
+            "filter_ms": 649.425334,
+            "paired_client_minus_filter_ms": 3.5746659999999792,
+            "es_took_ms": 632,
+            "search.request_build_ms": 0.134083,
+            "search.http_wait_ms": 637.106666,
+            "search.json_decode_ms": 0.54525,
+            "search.result_validation_ms": 0.039959,
+            "search.operation_ms": 637.984
+          },
+          {
+            "client_ms": 642,
+            "filter_ms": 637.518625,
+            "paired_client_minus_filter_ms": 4.481374999999957,
+            "es_took_ms": 620,
+            "search.request_build_ms": 0.143208,
+            "search.http_wait_ms": 627.415375,
+            "search.json_decode_ms": 0.326792,
+            "search.result_validation_ms": 0.039833,
+            "search.operation_ms": 628.060208
+          },
+          {
+            "client_ms": 639,
+            "filter_ms": 87.082292,
+            "paired_client_minus_filter_ms": 551.917708,
+            "es_took_ms": 79,
+            "search.request_build_ms": 0.256375,
+            "search.http_wait_ms": 85.610917,
+            "search.json_decode_ms": 0.197709,
+            "search.result_validation_ms": 0.026708,
+            "search.operation_ms": 86.227583
+          },
+          {
+            "client_ms": 634,
+            "filter_ms": 629.697708,
+            "paired_client_minus_filter_ms": 4.302291999999966,
+            "es_took_ms": 609,
+            "search.request_build_ms": 0.118041,
+            "search.http_wait_ms": 615.12925,
+            "search.json_decode_ms": 0.374,
+            "search.result_validation_ms": 0.662708,
+            "search.operation_ms": 616.796417
+          }
+        ]
+      },
+      "raw_sha256": "db1ca4f3342e4ab81ad533794a2d689280182f009b527823d1fb0768a8c50d43",
+      "server_log_sha256": "7bcc2d6d4074a06ceae66d9a154a6368afbcdb74b67dcf8bd084ba7964d79f5d",
+      "client_log_sha256": "60fc34c7fb21502ed0fbd2665ba2cd573a6d7b506e8942fdb798574b83e523e1",
+      "resources_sha256": "4855b9d3dfe99a2441a412996bb06c39610953aeea6440fe5b62d02d82f4b6ed"
+    }
+  ],
+  "functional": {
+    "http_search_requests": 900,
+    "mismatch_cases": [],
+    "ranked_sha256": "09750f76ee2b6176b3f7a41bc632fceb823b939d7b78113f4a0844524600b6e0"
+  },
+  "workload_sha256": "cd7d7188f229fc14debcf846b946370bfffa6f9d07540902b85f6138bcae1f03",
+  "reference_jar_sha256": "e488f68dacd7baa8c9648ba3a8fb30b29b404f9fa003d0d6b27d731d8c6cf2d0",
+  "instrumented_jar_sha256": "7d0ff6179549b46735b017ce613242bf4cac5b0cc907bf0764fd4299023d77dc",
+  "index_uuid": "tC091MYhSI6HzyHMDhy_aQ",
+  "provenance": {
+    "previous_load_report_sha256": "e8784fde39c71fca21872121aed403500c1638951e8912c61c3fe7288973cb65",
+    "source_sha256": {
+      "config/api-timings-v1.json": "be1a8811adc27008bcc53a5c7a5758db8ac5cbae16d256071edac8d875797c66",
+      "docs/decisions/0015-api-request-timings.md": "6d91c77a6105b921e92dace1aaec69956f8a46937bd0ceaf09a87bad8c605a4a",
+      "load/api-timings.js": "75e5d3392f8db370f123bb76eaaae82b8f87b98f789221f4a79cadf1ec247ed1",
+      "scripts/api_timings.py": "b3b299157f7360fc9ab81556ac35ca5042e7163fed8b95647158a91cf7b5ddba",
+      "scripts/verify_api_timings.py": "cc7324a8615b8bd25dae9fddcafb7972cc56d3a1c5ccf8fee41c3ee4aa8912f9",
+      "tests/test_api_timings.py": "b3cf39ac8c59b014707aeab6cfacec63a5f299766461ab8d345617bcac7e344b",
+      "services/search-api/pom.xml": "62aaaf1e60199934c4137290f7ce051d5ed96dbb2e79599c43ab8fd348aa5d27",
+      ".github/workflows/ci.yml": "dc2e5e2478ea5a0899a924868778521469343e4c07ace3a8abff4285ace39b6d",
+      "services/search-api/src/main/java/lab/commerce/api/ApiErrors.java": "7a2f8f9aa534bf8a2b3b3ffa5902a9076937a90f4d8b69e55497d164b5d9a55c",
+      "services/search-api/src/main/java/lab/commerce/api/ApiFailure.java": "13ff10965a2f6c46f11a815823b77bad72e465f79d69a45ba46cee475b27f97c",
+      "services/search-api/src/main/java/lab/commerce/api/BackendSettings.java": "9f58f42ce4a26689555745aea751c1f1df8c27f7f623cebbb37bad2cddb7b46b",
+      "services/search-api/src/main/java/lab/commerce/api/ElasticsearchBackend.java": "7c1724193ac447ea5330207e0b6e318b1b15f540b8827145b66b9af7f552a032",
+      "services/search-api/src/main/java/lab/commerce/api/RequestTelemetry.java": "09692e2f563d3bc8e26430a961460a53611cde62cf13b9f85313059ba02e7b6b",
+      "services/search-api/src/main/java/lab/commerce/api/RequestTimingFilter.java": "a609df06e6eeb16427b7b404390b52007b940f47aed7c346267a115a5590bac3",
+      "services/search-api/src/main/java/lab/commerce/api/SearchApplication.java": "3027f57da5ffab053b0aab676cd1f831d33d4c403537f8dc686a9d7351bd9c94",
+      "services/search-api/src/main/java/lab/commerce/api/SearchContract.java": "37c559992e71beeefa8dde076c2a096e0a270851a85ea5adadaca8ee1cd8b819",
+      "services/search-api/src/main/java/lab/commerce/api/SearchController.java": "54aad69140596ddde1b96ebd93a60645e23bfbcaaf6048be257b09e4f410d5ba",
+      "services/search-api/src/main/resources/application.properties": "a9172e3cca70baada952af2e7d837d1f98c35f447aa40b8e624c1ae6ed0a6375",
+      "services/search-api/src/test/java/lab/commerce/api/BackendBoundsTest.java": "df653aaa4a1e42d8786e282a51bbd5622359941cba4674b7c08cf27dc6b1f383",
+      "services/search-api/src/test/java/lab/commerce/api/HttpContractTest.java": "a11ae0a0bbebb990af7fad629b55eaf65801311f20add98d8e94bc9d82e87f3b",
+      "services/search-api/src/test/java/lab/commerce/api/RequestTelemetryTest.java": "6ed670cfbcb294d0454b615efdc871cc633e266b8eeeace1bf3c190077e7306a"
+    }
+  },
+  "project_services_stopped_volume_preserved": true,
+  "limits": "Four fixed diagnostic bursts with backend restarts and retained OS caches. Instrumentation/logging changes runtime work. Per-request timings bound observed layers; residuals are not isolated Tomcat queueing, and these observations do not establish causal overhead or the historical spike root cause. No new load capacity/SLO claim."
+}

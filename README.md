@@ -2,7 +2,7 @@
 
 A planned multilingual product-search system built around reproducible relevance experiments and measured serving behavior.
 
-**Status:** the offline retrieval foundation, ANN experiments and bounded local Elasticsearch parity pilot are complete. Exact-dense RRF remains the reference at **55.27%** validation known-Exact Recall@100; no ANN setting is nominated. Elasticsearch matches the frozen lexical reference on **30,000 sampled products, 300 queries and 399 analyzer probes**, with fresh-run and graceful-restart verification. A Java 21/Spring Boot search API now reproduces those saved results across 1,800 HTTP checks, including process restart and backend outage handling. Full-catalog Elasticsearch/API verification now covers all 1,814,924 products and 3,379 validation queries. A bounded open-arrival API load baseline now records warm-cache latency, offered/achieved load, output correctness and startup loss. Instrumentation is next; int8 and training remain future work, and the official test stays reserved.
+**Status:** full-catalog BM25 serving and the offline retrieval experiments are complete; exact RRF remains the offline reference at **55.27%** validation known-Exact Recall@100. API **0.2.0** now exposes Prometheus metrics and correlated request/backend timings, with 900 functional checks and 5,990 joined diagnostic requests. The closed 0.1.0 warm-load baseline and startup-loss caveat remain preserved. Next is a separately declared search-path readiness experiment; the official test stays reserved.
 
 The project will investigate whether multilingual retrieval and ranking improvements justify their serving cost, and how product updates affect freshness, correctness, and search latency.
 
@@ -227,6 +227,12 @@ The fixed local envelope is **3 GiB/two container CPUs with 1 GiB ES heap**, plu
 The pinned native k6 harness schedules requests independently of response time, records dropped work, and checks each successful response against saved native results. Two fresh Java processes exercise the same 300-query balanced multilingual workload at 20/100/200/500/1,000 offered requests/s, reversing point order in the second campaign. All 109,205 measured searches are correct, with zero errors/drops. At the highest tested rate (1,000/s), both 30-second windows show p50/p95/p99 of 1/4/7 ms. Saturation is not reached. The first warm-up separately drops 35 arrivals with p99 about 807 ms; startup performance needs investigation.
 
 Read the [actual load results, startup caveat and reproduction instructions](docs/api-load-baseline.md), [predeclared protocol](docs/decisions/0014-api-load-baseline.md), [aggregate report](reports/api-load-v1.json) and [raw-metric verification](reports/api-load-v1-verification.json). These short local warm-cache observations establish neither an exact saturation limit nor a production latency SLO.
+
+## Completed step: versioned request/backend timings
+
+API 0.2.0 adds bounded Micrometer/Prometheus meters, opt-in privacy-limited timing events, generated response IDs and outgoing W3C context with a fixed ES client ID. The exact 0.1.0 reference JAR/source is preserved. All 900 functional comparisons pass; 5,990 instrumented diagnostic responses join exactly to server events and reconcile with Prometheus counts/seconds.
+
+The [startup observations and runbook](docs/api-request-timings.md), [registered protocol/amendments](docs/decisions/0015-api-request-timings.md), [report](reports/api-timings-v1.json) and [independent audit](reports/api-timings-v1-verification.json) distinguish filter/backend/ES timing from unmeasured pre-filter work. These observations narrow layers without proving historical causality or a performance fix.
 
 ## Continuous integration
 
