@@ -19,7 +19,8 @@ final class RequestTimingFilter extends OncePerRequestFilter {
         return !request.getMethod().equals("POST") || !request.getRequestURI().equals("/v1/search");
     }
     @Override protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        var state = telemetry.begin();
+        long entry = System.nanoTime();
+        var state = telemetry.begin(entry);
         response.setHeader("X-Request-ID", state.id);
         try { chain.doFilter(request, response); }
         catch (ServletException | IOException | RuntimeException failure) { telemetry.failure("INTERNAL_ERROR"); throw failure; }

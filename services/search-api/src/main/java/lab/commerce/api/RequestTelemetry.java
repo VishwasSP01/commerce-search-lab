@@ -26,10 +26,11 @@ final class RequestTelemetry {
     static final class State {
         final String id = UUID.randomUUID().toString();
         final String spanId = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
-        final long start = System.nanoTime();
+        final long start;
         final Map<String, Long> stages = new LinkedHashMap<>();
         String locale = "unknown", outcome = "success";
         Long tookMs;
+        State(long start) { this.start = start; }
     }
 
     RequestTelemetry(MeterRegistry registry, JsonMapper mapper, @Value("${commerce.telemetry.request-events.enabled:false}") boolean events) {
@@ -38,8 +39,11 @@ final class RequestTelemetry {
     }
 
     State begin() {
+        return begin(System.nanoTime());
+    }
+    State begin(long filterEntryNanos) {
         if (current.get() != null) throw new IllegalStateException("Leaked request timing context");
-        State state = new State(); current.set(state); return state;
+        State state = new State(filterEntryNanos); current.set(state); return state;
     }
     String requestId() { State state = current.get(); return state == null ? null : state.id; }
     String traceparent() {

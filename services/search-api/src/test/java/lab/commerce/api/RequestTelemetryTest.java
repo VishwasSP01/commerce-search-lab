@@ -10,6 +10,14 @@ import tools.jackson.databind.json.JsonMapper;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RequestTelemetryTest {
+    @Test void filterEntryTimestampPrecedesIdentityAllocation() {
+        var telemetry = new RequestTelemetry(new SimpleMeterRegistry(), JsonMapper.builder().build(), false);
+        long entry = System.nanoTime() - java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(25);
+        var state = telemetry.begin(entry);
+        assertEquals(entry, state.start);
+        assertTrue((long) telemetry.finish(state, 200).get("filter_ns") >= java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(25));
+        assertNull(telemetry.requestId());
+    }
     @Test void concurrentEventsHaveDistinctIdsAndClearContextOnErrors() throws Exception {
         var registry = new SimpleMeterRegistry();
         var telemetry = new RequestTelemetry(registry, JsonMapper.builder().build(), false);
